@@ -1,0 +1,13 @@
+Game:
+  does all the main driver stuff:
+    create and init game objects
+    register game objects to the renderer
+    update the game objects
+    process the game loop at FPS rate
+
+Renderer:
+   create and init the SDL window
+   keep a list of game objects
+   render function should render map tiles and all game objects
+   map object and game objects should decide what needs to be rendered and where
+   renderer just calls the function
