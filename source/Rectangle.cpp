@@ -1,4 +1,5 @@
 #include "Rectangle.h"
+#include <iostream>
 
 Rectangle::Rectangle(SDL_Renderer * sdlRenderer, int pixelWidth, int pixelHeight)
 {
@@ -8,7 +9,7 @@ Rectangle::Rectangle(SDL_Renderer * sdlRenderer, int pixelWidth, int pixelHeight
     m_pixelWidth = pixelWidth;
     m_pixelHeight = pixelHeight;
     
-    if (m_sdlRenderer != nullptr)
+    if (sdlRenderer)
     {
         m_sdlRenderer = sdlRenderer;
     }
