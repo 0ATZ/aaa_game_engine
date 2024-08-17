@@ -2,15 +2,17 @@
 #define WINDOW_H
 
 #include "SDL2/SDL.h"
+#include "GameObject.h"
 
-class Renderer
+class Renderer : public GameObject
 {
     public:
         Renderer();
         bool init();
-        void clear();
-        void present();
+        void update();
+        void render();
         void destroy();
+        void clear();
         bool isRunning();
         SDL_Renderer * getSDLRenderer();
         

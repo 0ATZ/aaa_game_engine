@@ -8,11 +8,10 @@ Game::Game()
     running = true;
     lastFrameTime = 0;
     m_objectCount = 0;
-} 
+}
 
 bool Game::init()
 {
-    // TODO: create SDL window renderer
     renderer = new Renderer();
     if (!renderer->init())
     {
@@ -22,6 +21,8 @@ bool Game::init()
     Rectangle * obj1 = new Rectangle(renderer->getSDLRenderer(), 100, 100);
     registerObject(obj1);
     
+    // Renderer gets called last
+    registerObject(renderer);
     return true;
 }
 
@@ -55,12 +56,6 @@ void Game::render()
         {
             obj->render();
         }
-    }
-    
-    //  Present the graphics
-    if (renderer != nullptr)
-    {
-        renderer->present();
     }
 }
 

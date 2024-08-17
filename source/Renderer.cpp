@@ -28,13 +28,9 @@ bool Renderer::init()
     return true;
 }
 
-void Renderer::clear()
-{
-    SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF); // White background
-    SDL_RenderClear(renderer);
-}
+void Renderer::update() {}
 
-void Renderer::present()
+void Renderer::render()
 {
     SDL_RenderPresent(renderer);
 }
@@ -48,6 +44,12 @@ void Renderer::destroy()
         SDL_DestroyWindow(window);
     }
     SDL_Quit();
+}
+
+void Renderer::clear()
+{
+    SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF); // White background
+    SDL_RenderClear(renderer);
 }
 
 SDL_Renderer * Renderer::getSDLRenderer()

@@ -9,7 +9,7 @@ Rectangle::Rectangle(SDL_Renderer * sdlRenderer, int pixelWidth, int pixelHeight
     m_pixelWidth = pixelWidth;
     m_pixelHeight = pixelHeight;
     
-    if (sdlRenderer)
+    if (sdlRenderer != nullptr)
     {
         m_sdlRenderer = sdlRenderer;
     }
