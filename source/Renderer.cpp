@@ -1,10 +1,9 @@
 #include "Renderer.h"
 #include <iostream>
 
-Renderer::Renderer()
+Renderer::Renderer() 
 {
-    xpos=0;
-    ypos=0;
+    m_objectCount = 0;
 }
 
 bool Renderer::init()
@@ -32,16 +31,31 @@ bool Renderer::init()
     return true;
 }
 
+bool Renderer::registerObject(Rectangle * rectangle)
+{
+    if ((rectangle != nullptr) && (m_objectCount < MAX_OBJECTS))
+    {
+        m_objects[m_objectCount] = rectangle;
+        m_objectCount++;
+        return true;
+    }
+    return false;
+}
+
 void Renderer::render()
 {
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF); // White background
     SDL_RenderClear(renderer);
-
-    // Draw game objects here
-    xpos = (xpos + 1) % (800-100);
-    ypos = (ypos + 1) % (600-100);
-    renderRectangle(xpos, ypos);
-
+    
+    // Add game objects here
+    for (int i = 0; i < m_objectCount; i++)
+    {
+        Rectangle * ptr = reinterpret_cast<Rectangle*>(m_objects[i]);
+        if (ptr != nullptr)
+        {
+            ptr->render(renderer);
+        }
+    }
     SDL_RenderPresent(renderer);
 }
 
@@ -65,17 +79,4 @@ bool Renderer::isRunning()
         }
     }
     return true;
-}
-
-void Renderer::renderRectangle(int x, int y)
-{
-    // Define the rectangle
-    SDL_Rect fillRect = { x, y, 100, 100 }; // x, y, width, height
-
-    // Draw the filled rectangle
-    SDL_RenderFillRect(renderer, &fillRect);
-
-    // Optionally, draw the outline of the rectangle
-    SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF); // Black outline
-    SDL_RenderDrawRect(renderer, &fillRect);
 }

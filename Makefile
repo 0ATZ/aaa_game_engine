@@ -1,5 +1,5 @@
 CC=g++
-OBJS=$(ODIR)/Game.o $(ODIR)/Renderer.o
+OBJS=$(ODIR)/Game.o $(ODIR)/Renderer.o $(ODIR)/Rectangle.o
 CFLAGS=-I. -I./include -L./lib -mwindows
 LIBS=-lSDL2
 ODIR=obj
