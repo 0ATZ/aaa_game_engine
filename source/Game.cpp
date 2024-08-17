@@ -37,23 +37,6 @@ bool Game::registerObject(Rectangle * rectangle)
     return false;
 }
 
-// TODO: move the game loop into the main function
-void Game::run()
-{
-    Uint32 frameDuration = 1000 / 60; // Frame duration for 60 FPS
-
-    while (renderer->isRunning())
-    {
-        Uint32 startTime = SDL_GetTicks();
-        update();
-        render();
-        Uint32 frameTime = SDL_GetTicks() - startTime;
-        if (frameDuration > frameTime) {
-            SDL_Delay(frameDuration - frameTime);
-        }
-    }
-}
-
 // TODO: dont need to check for null
 void Game::cleanUp()
 {
@@ -74,6 +57,17 @@ void Game::update()
             ptr->update();
         }
     }
+}
+
+bool Game::isRunning()
+{
+    SDL_Event event;
+    while (SDL_PollEvent(&event) != 0) {
+        if (event.type == SDL_QUIT) {
+            return false;
+        }
+    }
+    return true;
 }
 
 void Game::render()

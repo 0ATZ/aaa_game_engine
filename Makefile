@@ -1,6 +1,7 @@
 CC=g++
 OBJS=$(ODIR)/Game.o $(ODIR)/Renderer.o $(ODIR)/Rectangle.o
-CFLAGS=-I. -I./include -L./lib -mwindows
+CFLAGS=-I. -I./include -L./lib 
+# add this tag to disable the cmd prompt -mwindows
 LIBS=-lSDL2
 ODIR=obj
 INCLUDE_DIR=include

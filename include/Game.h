@@ -11,16 +11,16 @@ class Game
     public:
         Game();
         bool init();
-        void run();
+        void update();
+        void render();
         void cleanUp();
         bool registerObject(Rectangle * rectangle);
+        bool isRunning();
 
     private:
         Renderer * renderer;
         bool running;
         Uint32 lastFrameTime;
-        void update();
-        void render();
         
         static const unsigned int MAX_OBJECTS = 64U;
         void * m_objects[MAX_OBJECTS];
