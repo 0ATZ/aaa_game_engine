@@ -2,11 +2,13 @@
 #define RECTANGLE_H
 
 #include <SDL2/SDL.h>
+#include "GameObject.h"
 
-class Rectangle
+class Rectangle: public GameObject
 {
     public:
         Rectangle(SDL_Renderer * sdlRenderer, int pixelWidth, int pixelHeight);
+        bool init();
         void update();
         void render();
         void destroy();

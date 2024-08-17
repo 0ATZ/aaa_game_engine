@@ -2,7 +2,7 @@
 #define GAME_H
 
 #include <iostream>
-#include "Rectangle.h"
+#include "GameObject.h"
 #include "Renderer.h"
 
 class Game
@@ -13,7 +13,7 @@ class Game
         void update();
         void render();
         void destroy();
-        bool registerObject(Rectangle * rectangle);
+        bool registerObject(GameObject * obj);
         bool isRunning();
         
     private:

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Game.h"
+#include "Rectangle.h"
 
 Game::Game()
 {
@@ -27,13 +28,12 @@ bool Game::init()
 void Game::update()
 {
     // Update game objects
-    // TODO: create game object base class instead of only rendering rectangles
     for (int i = 0; i < m_objectCount; i++)
     {
-        Rectangle * ptr = reinterpret_cast<Rectangle*>(m_objects[i]);
-        if (ptr != nullptr)
+        GameObject * obj = reinterpret_cast<GameObject*>(m_objects[i]);
+        if (obj != nullptr)
         {
-            ptr->update();
+            obj->update();
         }
     }
 }
@@ -48,13 +48,12 @@ void Game::render()
     }
     
     // Render game objects
-    // TODO: create game object base class instead of only rendering rectangles
     for (int i = 0; i < m_objectCount; i++)
     {
-        Rectangle * ptr = reinterpret_cast<Rectangle*>(m_objects[i]);
-        if (ptr != nullptr)
+        GameObject * obj = reinterpret_cast<GameObject*>(m_objects[i]);
+        if (obj != nullptr)
         {
-            ptr->render();
+            obj->render();
         }
     }
     
@@ -72,22 +71,21 @@ void Game::destroy()
         renderer->destroy();
     }
     
-    // TODO: create game object base class instead of only rendering rectangles
     for (int i = 0; i < m_objectCount; i++)
     {
-        Rectangle * ptr = reinterpret_cast<Rectangle*>(m_objects[i]);
-        if (ptr != nullptr)
+        GameObject * obj = reinterpret_cast<GameObject*>(m_objects[i]);
+        if (obj != nullptr)
         {
-            ptr->destroy();
+            obj->destroy();
         }
     }
 }
 
-bool Game::registerObject(Rectangle * rectangle)
+bool Game::registerObject(GameObject * obj)
 {
-    if ((rectangle != nullptr) && (m_objectCount < MAX_OBJECTS))
+    if ((obj != nullptr) && (m_objectCount < MAX_OBJECTS))
     {
-        m_objects[m_objectCount] = rectangle;
+        m_objects[m_objectCount] = obj;
         m_objectCount++;
         return true;
     }

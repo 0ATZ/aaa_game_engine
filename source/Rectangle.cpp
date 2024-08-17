@@ -15,6 +15,11 @@ Rectangle::Rectangle(SDL_Renderer * sdlRenderer, int pixelWidth, int pixelHeight
 
 }
 
+bool Rectangle::init() 
+{
+    return true;
+}
+
 void Rectangle::update()
 {
     m_x_pos = (m_x_pos + 1) % (800-100);
