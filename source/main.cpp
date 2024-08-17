@@ -23,6 +23,6 @@ int WinMain(int argc, char* args[]) {
             SDL_Delay(frameDuration - frameTime);
         }
     }
-    game.cleanUp();
+    game.destroy();
     return 0;
 }

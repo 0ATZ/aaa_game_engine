@@ -1,4 +1,3 @@
-#include <SDL2/SDL.h>
 #include <iostream>
 #include "Game.h"
 
@@ -12,18 +11,76 @@ Game::Game()
 
 bool Game::init()
 {
-    // TODO: move SDL renderer logic back into the game class
+    // TODO: create SDL window renderer
     renderer = new Renderer();
     if (!renderer->init())
     {
         return false;
     }
     
-    Rectangle * obj1 = new Rectangle(100, 100);
-    renderer->registerObject(obj1);
+    Rectangle * obj1 = new Rectangle(renderer->getSDLRenderer(), 100, 100);
     registerObject(obj1);
     
     return true;
+}
+
+void Game::update()
+{
+    // Update game objects
+    // TODO: create game object base class instead of only rendering rectangles
+    for (int i = 0; i < m_objectCount; i++)
+    {
+        Rectangle * ptr = reinterpret_cast<Rectangle*>(m_objects[i]);
+        if (ptr != nullptr)
+        {
+            ptr->update();
+        }
+    }
+}
+
+// TODO: dont need to check for null
+void Game::render()
+{
+    // Clear the screen
+    if (renderer != nullptr)
+    {
+        renderer->clear();
+    }
+    
+    // Render game objects
+    // TODO: create game object base class instead of only rendering rectangles
+    for (int i = 0; i < m_objectCount; i++)
+    {
+        Rectangle * ptr = reinterpret_cast<Rectangle*>(m_objects[i]);
+        if (ptr != nullptr)
+        {
+            ptr->render();
+        }
+    }
+    
+    //  Present the graphics
+    if (renderer != nullptr)
+    {
+        renderer->present();
+    }
+}
+
+void Game::destroy()
+{
+    if (renderer != nullptr)
+    {
+        renderer->destroy();
+    }
+    
+    // TODO: create game object base class instead of only rendering rectangles
+    for (int i = 0; i < m_objectCount; i++)
+    {
+        Rectangle * ptr = reinterpret_cast<Rectangle*>(m_objects[i]);
+        if (ptr != nullptr)
+        {
+            ptr->destroy();
+        }
+    }
 }
 
 bool Game::registerObject(Rectangle * rectangle)
@@ -37,45 +94,13 @@ bool Game::registerObject(Rectangle * rectangle)
     return false;
 }
 
-// TODO: dont need to check for null
-void Game::cleanUp()
-{
-    if (renderer)
-    {
-        renderer->destroy();
-    }
-}
-
-// TODO: dont need to check for null
-void Game::update()
-{
-    for (int i = 0; i < m_objectCount; i++)
-    {
-        Rectangle * ptr = reinterpret_cast<Rectangle*>(m_objects[i]);
-        if (ptr != nullptr)
-        {
-            ptr->update();
-        }
-    }
-}
-
 bool Game::isRunning()
 {
-    SDL_Event event;
-    while (SDL_PollEvent(&event) != 0) {
-        if (event.type == SDL_QUIT) {
-            return false;
-        }
-    }
-    return true;
-}
-
-void Game::render()
-{
-    if (renderer) 
+    if (renderer != nullptr)
     {
-        renderer->render();
+        return renderer->isRunning();
     }
+    return false;
 }
 
 

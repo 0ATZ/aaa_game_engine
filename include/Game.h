@@ -1,9 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <SDL2/SDL.h>
 #include <iostream>
-
+#include "Rectangle.h"
 #include "Renderer.h"
 
 class Game
@@ -13,18 +12,17 @@ class Game
         bool init();
         void update();
         void render();
-        void cleanUp();
+        void destroy();
         bool registerObject(Rectangle * rectangle);
         bool isRunning();
-
-    private:
-        Renderer * renderer;
-        bool running;
-        Uint32 lastFrameTime;
         
+    private:
         static const unsigned int MAX_OBJECTS = 64U;
         void * m_objects[MAX_OBJECTS];
         int m_objectCount;
+        Renderer * renderer;
+        Uint32 lastFrameTime;
+        bool running;
 };
 
 #endif // GAME_H

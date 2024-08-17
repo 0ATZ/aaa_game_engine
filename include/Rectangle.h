@@ -6,9 +6,10 @@
 class Rectangle
 {
     public:
-        Rectangle(int pixelWidth, int pixelHeight);
+        Rectangle(SDL_Renderer * sdlRenderer, int pixelWidth, int pixelHeight);
         void update();
-        void render(SDL_Renderer * sdlRenderer);
+        void render();
+        void destroy();
         
     private:
         SDL_Renderer * m_sdlRenderer;

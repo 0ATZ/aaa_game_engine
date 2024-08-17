@@ -1,10 +1,7 @@
 #include "Renderer.h"
 #include <iostream>
 
-Renderer::Renderer() 
-{
-    m_objectCount = 0;
-}
+Renderer::Renderer() {}
 
 bool Renderer::init()
 {
@@ -31,31 +28,14 @@ bool Renderer::init()
     return true;
 }
 
-bool Renderer::registerObject(Rectangle * rectangle)
-{
-    if ((rectangle != nullptr) && (m_objectCount < MAX_OBJECTS))
-    {
-        m_objects[m_objectCount] = rectangle;
-        m_objectCount++;
-        return true;
-    }
-    return false;
-}
-
-void Renderer::render()
+void Renderer::clear()
 {
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF); // White background
     SDL_RenderClear(renderer);
-    
-    // Add game objects here
-    for (int i = 0; i < m_objectCount; i++)
-    {
-        Rectangle * ptr = reinterpret_cast<Rectangle*>(m_objects[i]);
-        if (ptr != nullptr)
-        {
-            ptr->render(renderer);
-        }
-    }
+}
+
+void Renderer::present()
+{
     SDL_RenderPresent(renderer);
 }
 
@@ -70,11 +50,18 @@ void Renderer::destroy()
     SDL_Quit();
 }
 
+SDL_Renderer * Renderer::getSDLRenderer()
+{
+    return renderer;
+}
+
 bool Renderer::isRunning()
 {
     SDL_Event event;
-    while (SDL_PollEvent(&event) != 0) {
-        if (event.type == SDL_QUIT) {
+    while (SDL_PollEvent(&event) != 0)
+    {
+        if (event.type == SDL_QUIT) 
+        {
             return false;
         }
     }
