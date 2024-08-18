@@ -19,5 +19,6 @@ class Renderer : public GameObject
     private:
         SDL_Window * window;
         SDL_Renderer * renderer;
+        bool m_running;
 };
 #endif
