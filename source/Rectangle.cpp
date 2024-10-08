@@ -18,22 +18,23 @@ bool Rectangle::init()
 void Rectangle::update()
 {
     const int speed = 2;
-    if (m_window->getPlayerKeys() & Window::UP)
+    uint16_t pKeys = m_window->getPlayerKeys();
+    if (pKeys & Window::UP)
     {
         // std::cout << "up" << std::endl;
         m_y_pos = (m_y_pos - speed);
     }
-    if (m_window->getPlayerKeys() & Window::DOWN)
+    if (pKeys & Window::DOWN)
     {
         // std::cout << "down" << std::endl;
         m_y_pos = (m_y_pos + speed);
     }
-    if (m_window->getPlayerKeys() & Window::LEFT)
+    if (pKeys & Window::LEFT)
     {
         // std::cout << "left" << std::endl;
         m_x_pos = (m_x_pos - speed);
     }
-    if (m_window->getPlayerKeys() & Window::RIGHT)
+    if (pKeys & Window::RIGHT)
     {
         // std::cout << "right" << std::endl;
         m_x_pos = (m_x_pos + speed);
