@@ -4,7 +4,7 @@
 
 Game::Game()
 {
-    renderer = nullptr;
+    window = nullptr;
     running = true;
     lastFrameTime = 0;
     m_objectCount = 0;
@@ -12,17 +12,17 @@ Game::Game()
 
 bool Game::init()
 {
-    renderer = new Renderer();
-    if (!renderer->init())
+    window = new Window();
+    if (!window->init())
     {
         return false;
     }
     
-    Rectangle * obj1 = new Rectangle(renderer->getSDLRenderer(), 100, 100);
+    Rectangle * obj1 = new Rectangle(window, 100, 100);
     registerObject(obj1);
     
-    // Renderer gets called last
-    registerObject(renderer);
+    // Window render update gets called last
+    registerObject(window);
     return true;
 }
 
@@ -42,10 +42,10 @@ void Game::update()
 // TODO: dont need to check for null
 void Game::render()
 {
-    // Clear the screen
-    if (renderer != nullptr)
+    // Clear the window
+    if (window != nullptr)
     {
-        renderer->clear();
+        window->clear();
     }
     
     // Render game objects
@@ -61,9 +61,9 @@ void Game::render()
 
 void Game::destroy()
 {
-    if (renderer != nullptr)
+    if (window != nullptr)
     {
-        renderer->destroy();
+        window->destroy();
     }
     
     for (int i = 0; i < m_objectCount; i++)
@@ -89,9 +89,9 @@ bool Game::registerObject(GameObject * obj)
 
 bool Game::isRunning()
 {
-    if (renderer != nullptr)
+    if (window != nullptr)
     {
-        return renderer->isRunning();
+        return window->isRunning();
     }
     return false;
 }

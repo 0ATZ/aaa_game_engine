@@ -1,8 +1,5 @@
-- put the render logic into its own class
-- use the renderer class in the game class
-- move the rectangle to a rectangle class with a render method
-- implement some interface or base class with render and update function
 - create a key listener class and print out key presses
+- create a player class
 - create an entity class which tracks position
 - create a player class which renders a square and can move around using the key presses
 
