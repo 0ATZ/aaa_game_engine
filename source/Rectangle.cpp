@@ -1,7 +1,7 @@
 #include "Rectangle.h"
 #include <iostream>
 
-Rectangle::Rectangle(Window * window, int pixelWidth, int pixelHeight)
+Rectangle::Rectangle(GameWindow * window, int pixelWidth, int pixelHeight)
 {
     m_x_pos = 0;
     m_y_pos = 0;
@@ -19,22 +19,22 @@ void Rectangle::update()
 {
     const int speed = 2;
     uint16_t pKeys = m_window->getPlayerKeys();
-    if (pKeys & Window::UP)
+    if (pKeys & GameWindow::UP)
     {
         // std::cout << "up" << std::endl;
         m_y_pos = (m_y_pos - speed);
     }
-    if (pKeys & Window::DOWN)
+    if (pKeys & GameWindow::DOWN)
     {
         // std::cout << "down" << std::endl;
         m_y_pos = (m_y_pos + speed);
     }
-    if (pKeys & Window::LEFT)
+    if (pKeys & GameWindow::LEFT)
     {
         // std::cout << "left" << std::endl;
         m_x_pos = (m_x_pos - speed);
     }
-    if (pKeys & Window::RIGHT)
+    if (pKeys & GameWindow::RIGHT)
     {
         // std::cout << "right" << std::endl;
         m_x_pos = (m_x_pos + speed);

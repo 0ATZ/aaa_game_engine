@@ -4,10 +4,10 @@
 #include "SDL2/SDL.h"
 #include "GameObject.h"
 
-class Window : public GameObject
+class GameWindow : public GameObject
 {
     public:
-        Window();
+        GameWindow();
         bool init();
         void update();
         void render();

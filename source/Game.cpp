@@ -12,7 +12,7 @@ Game::Game()
 
 bool Game::init()
 {
-    window = new Window();
+    window = new GameWindow();
     if (!window->init())
     {
         return false;

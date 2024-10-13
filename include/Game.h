@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "GameObject.h"
-#include "Window.h"
+#include "GameWindow.h"
 
 class Game
 {
@@ -20,7 +20,7 @@ class Game
         static const unsigned int MAX_OBJECTS = 64U;
         void * m_objects[MAX_OBJECTS];
         int m_objectCount;
-        Window * window;
+        GameWindow * window;
         Uint32 lastFrameTime;
         bool running;
 };

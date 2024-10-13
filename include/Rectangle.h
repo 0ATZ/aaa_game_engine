@@ -1,13 +1,13 @@
 #ifndef RECTANGLE_H
 #define RECTANGLE_H
 
-#include "Window.h"
+#include "GameWindow.h"
 #include "GameObject.h"
 
 class Rectangle: public GameObject
 {
     public:
-        Rectangle(Window * window, int pixelWidth, int pixelHeight);
+        Rectangle(GameWindow * window, int pixelWidth, int pixelHeight);
         bool init();
         void update();
         void render();
@@ -18,6 +18,6 @@ class Rectangle: public GameObject
         int m_pixelHeight;
         int m_x_pos;
         int m_y_pos;
-        Window * m_window;
+        GameWindow * m_window;
 };
 #endif

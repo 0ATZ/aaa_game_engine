@@ -1,13 +1,13 @@
-#include "Window.h"
+#include "GameWindow.h"
 #include <iostream>
 
-Window::Window() 
+GameWindow::GameWindow() 
 {
     m_running = false;
     m_pKeys = 0U;
 }
 
-bool Window::init()
+bool GameWindow::init()
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
@@ -42,7 +42,7 @@ bool Window::init()
  * 0x10: jump
  * 0x20: shift
  */
-void Window::update()
+void GameWindow::update()
 {
     SDL_Event event;
     while (SDL_PollEvent(&event) != 0)
@@ -81,17 +81,17 @@ void Window::update()
     }
 }
 
-uint16_t Window::getPlayerKeys()
+uint16_t GameWindow::getPlayerKeys()
 {
     return m_pKeys;
 }
 
-void Window::render()
+void GameWindow::render()
 {
     SDL_RenderPresent(renderer);
 }
 
-void Window::destroy()
+void GameWindow::destroy()
 {
     if (renderer) {
         SDL_DestroyRenderer(renderer);
@@ -102,18 +102,18 @@ void Window::destroy()
     SDL_Quit();
 }
 
-void Window::clear()
+void GameWindow::clear()
 {
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF); // White background
     SDL_RenderClear(renderer);
 }
 
-SDL_Renderer * Window::getSDLRenderer()
+SDL_Renderer * GameWindow::getSDLRenderer()
 {
     return renderer;
 }
 
-bool Window::isRunning()
+bool GameWindow::isRunning()
 {
     return m_running;
 }
