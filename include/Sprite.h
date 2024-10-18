@@ -3,8 +3,6 @@
 
 #include "BaseTypes.h"
 
-// TODO: create SDL texture here, then pass to the game window to render sprite
-// TODO: decouple from SDL lib somehow?
 class Sprite
 {
     public:
