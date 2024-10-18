@@ -174,3 +174,18 @@ void GameWindow::renderSprite(T_UINT16 textureID, T_UINT16 x, T_UINT16 y, T_UINT
         std::cout << "ERROR: Texture out of bounds." << std::endl;
     }
 }
+
+
+// scale can be 1-4 inclusive
+void GameWindow::renderScaledSprite(T_UINT16 textureID, T_UINT16 x, T_UINT16 y, T_UINT16 width, T_UINT16 height, T_UINT16 scale)
+{
+    if ((scale > 0 && scale < 5) && (textureID < MAX_TEXTURES) && (m_textureCache[textureID]))
+    {
+        SDL_Rect destRect = { x, y, width*scale, height*scale };
+        SDL_RenderCopy(renderer, m_textureCache[textureID], nullptr, &destRect);
+    }
+    else
+    {
+        std::cout << "ERROR: Texture out of bounds." << std::endl;
+    }
+}

@@ -9,8 +9,8 @@ Rectangle::Rectangle(GameWindow * window, int pixelWidth, int pixelHeight)
     m_window = window;
     m_pixelWidth = pixelWidth;
     m_pixelHeight = pixelHeight;
-    T_UINT16 textureID = m_window->createTexture(BIG_SQUARE, 32, 32);
-    m_defaultSprite = new Sprite(BIG_SQUARE, 32, 32, textureID);
+    T_UINT16 textureID = m_window->createTexture(SQUARE, 16, 16);
+    m_defaultSprite = new Sprite(SQUARE, 16, 16, textureID);
 }
 
 bool Rectangle::init()
@@ -48,11 +48,36 @@ void Rectangle::render()
 {
     if (m_window != nullptr)
     {
-        m_window->renderSprite(
+        m_window->renderScaledSprite(
             m_defaultSprite->getTextureID(), /* cached texture ID */
             m_xPos, m_yPos, /* position of the top left corner */
             m_defaultSprite->getWidth(),     /* width of the sprite */
-            m_defaultSprite->getHeight()     /* height of the sprite */
+            m_defaultSprite->getHeight(),     /* height of the sprite */
+            4U
+        );
+
+        m_window->renderScaledSprite(
+            m_defaultSprite->getTextureID(), /* cached texture ID */
+            m_xPos + 80U, m_yPos, /* position of the top left corner */
+            m_defaultSprite->getWidth(),     /* width of the sprite */
+            m_defaultSprite->getHeight(),     /* height of the sprite */
+            3U
+        );
+
+        m_window->renderScaledSprite(
+            m_defaultSprite->getTextureID(), /* cached texture ID */
+            m_xPos + 144U, m_yPos, /* position of the top left corner */
+            m_defaultSprite->getWidth(),     /* width of the sprite */
+            m_defaultSprite->getHeight(),     /* height of the sprite */
+            2U
+        );
+
+        m_window->renderScaledSprite(
+            m_defaultSprite->getTextureID(), /* cached texture ID */
+            m_xPos + 192U, m_yPos, /* position of the top left corner */
+            m_defaultSprite->getWidth(),     /* width of the sprite */
+            m_defaultSprite->getHeight(),     /* height of the sprite */
+            1U
         );
     }
 }

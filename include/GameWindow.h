@@ -17,6 +17,7 @@ class GameWindow : public GameObject
         bool isRunning();
         T_UINT16 createTexture(T_UINT16 * pixels, T_UINT16 width, T_UINT16 height);
         void renderSprite(T_UINT16 textureID, T_UINT16 x, T_UINT16 y, T_UINT16 width, T_UINT16 height);
+        void renderScaledSprite(T_UINT16 textureID, T_UINT16 x, T_UINT16 y, T_UINT16 width, T_UINT16 height, T_UINT16 scale);
         SDL_Renderer * getSDLRenderer();
         T_UINT16 getPlayerKeys();
 
