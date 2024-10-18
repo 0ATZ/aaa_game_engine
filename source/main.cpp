@@ -27,6 +27,7 @@ int WinMain(int argc, char* args[]) {
     // Adjust this variable to change the frame rate
     const T_UINT64 RENDER_DURATION_MS = FRAME_DURATION_140FPS;
 
+    // TODO: use high resolution nanosecond clock
     // keep track of the last update and render time
     const T_UINT64 gameStart = SDL_GetTicks64();
     T_UINT64 prevUpdate = gameStart;
