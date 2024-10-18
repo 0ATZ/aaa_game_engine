@@ -53,42 +53,80 @@ void GameWindow::update()
     SDL_Event event;
     while (SDL_PollEvent(&event) != 0)
     {
-        if (event.type == SDL_QUIT) 
+        switch (event.type)
         {
-            m_running = false;
-        }
-        else if (event.type == SDL_KEYDOWN)
-        {
-            // activate the corresponding bit
-            int keyCode = event.key.keysym.sym;
-            if (keyCode == SDLK_w)
-                m_pKeys |= UP;
-            if (keyCode == SDLK_s)
-                m_pKeys |= DOWN;
-            if (keyCode == SDLK_a)
-                m_pKeys |= LEFT;
-            if (keyCode == SDLK_d)
-                m_pKeys |= RIGHT;
-        }
-        else if (event.type == SDL_KEYUP)
-        {
-            // deactivate the corresponding bit
-            int keyCode = event.key.keysym.sym;
-            if (keyCode == SDLK_w)
-                m_pKeys &= (~UP);
-            if (keyCode == SDLK_s)
-                m_pKeys &= (~DOWN);
-            if (keyCode == SDLK_a)
-                m_pKeys &= (~LEFT);
-            if (keyCode == SDLK_d)
-                m_pKeys &= (~RIGHT);
-        }
+            case SDL_QUIT: 
+                
+                // SDL window closed
+                m_running = false;
 
-        // TODO: handle screen lose focus and gain focus event
-        //   clear keys on lose focus, save current state to back buffer
-        //   on gain focus, check current keys states
-        //   set key states in back buffer, then swap back buffer to front
-        // std::cout << m_pKeys << std::endl;
+            case SDL_KEYDOWN:
+
+                // keypress activates the corresponding bit
+                switch (event.key.keysym.sym)
+                {
+                    case SDLK_w:
+                        m_pKeys |= UP;
+                        break;
+                    case SDLK_s:
+                        m_pKeys |= DOWN;
+                        break;
+                    case SDLK_a:
+                        m_pKeys |= LEFT;
+                        break;
+                    case SDLK_d:
+                        m_pKeys |= RIGHT;
+                        break;
+                    default:
+                        // nothing
+                        break;
+                }
+            case SDL_KEYUP:
+
+                // keyrelease deactivates the corresponding bit
+                switch (event.key.keysym.sym)
+                {
+                    case SDLK_w:
+                        m_pKeys &= (~UP);
+                        break;
+                    case SDLK_s:
+                        m_pKeys &= (~DOWN);
+                        break;
+                    case SDLK_a:
+                        m_pKeys &= (~LEFT);
+                        break;
+                    case SDLK_d:
+                        m_pKeys &= (~RIGHT);
+                        break;
+                    default:
+                        // nothing
+                        break;
+                }
+
+            case SDL_WINDOWEVENT_FOCUS_LOST:
+
+                m_pKeys = 0U;
+            
+            case SDL_WINDOWEVENT_FOCUS_GAINED:
+
+                const T_UINT8 * keyState = SDL_GetKeyboardState(nullptr);
+                if (keyState[SDL_SCANCODE_W])
+                {
+                    m_pKeys |= UP;
+                }
+                if (keyState[SDL_SCANCODE_S])
+                {
+                    m_pKeys |= DOWN;
+                }
+                if (keyState[SDL_SCANCODE_A])
+                {
+                    m_pKeys |= LEFT;
+                }
+                if (keyState[SDL_SCANCODE_D])
+                {
+                    m_pKeys |= RIGHT;
+                }
+        }
     }
 }
 
