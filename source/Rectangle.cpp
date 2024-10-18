@@ -1,13 +1,16 @@
 #include "Rectangle.h"
+#include "Sprites/SquareSprite.h"
 #include <iostream>
 
 Rectangle::Rectangle(GameWindow * window, int pixelWidth, int pixelHeight)
 {
-    m_x_pos = 0;
-    m_y_pos = 0;
+    m_xPos = 0;
+    m_yPos = 0;
     m_window = window;
     m_pixelWidth = pixelWidth;
     m_pixelHeight = pixelHeight;
+    T_UINT16 textureID = m_window->createTexture(BIG_SQUARE, 32, 32);
+    m_defaultSprite = new Sprite(BIG_SQUARE, 32, 32, textureID);
 }
 
 bool Rectangle::init()
@@ -22,22 +25,22 @@ void Rectangle::update()
     if (pKeys & GameWindow::UP)
     {
         // std::cout << "up" << std::endl;
-        m_y_pos = (m_y_pos - speed);
+        m_yPos = (m_yPos - speed);
     }
     if (pKeys & GameWindow::DOWN)
     {
         // std::cout << "down" << std::endl;
-        m_y_pos = (m_y_pos + speed);
+        m_yPos = (m_yPos + speed);
     }
     if (pKeys & GameWindow::LEFT)
     {
         // std::cout << "left" << std::endl;
-        m_x_pos = (m_x_pos - speed);
+        m_xPos = (m_xPos - speed);
     }
     if (pKeys & GameWindow::RIGHT)
     {
         // std::cout << "right" << std::endl;
-        m_x_pos = (m_x_pos + speed);
+        m_xPos = (m_xPos + speed);
     }
 }
 
@@ -45,15 +48,12 @@ void Rectangle::render()
 {
     if (m_window != nullptr)
     {
-        // Define the rectangle (x, y, width, height)
-        SDL_Rect fillRect = { m_x_pos, m_y_pos, m_pixelWidth, m_pixelHeight };
-
-        // Draw the filled rectangle
-        SDL_RenderFillRect(m_window->getSDLRenderer(), &fillRect);
-
-        // Optionally, draw the outline of the rectangle
-        SDL_SetRenderDrawColor(m_window->getSDLRenderer(), 0x00, 0x00, 0x00, 0xFF); // Black outline
-        SDL_RenderDrawRect(m_window->getSDLRenderer(), &fillRect);
+        m_window->renderSprite(
+            m_defaultSprite->getTextureID(), /* cached texture ID */
+            m_xPos, m_yPos, /* position of the top left corner */
+            m_defaultSprite->getWidth(),     /* width of the sprite */
+            m_defaultSprite->getHeight()     /* height of the sprite */
+        );
     }
 }
 

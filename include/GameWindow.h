@@ -1,6 +1,7 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
+#include "BaseTypes.h"
 #include "SDL2/SDL.h"
 #include "GameObject.h"
 
@@ -14,18 +15,24 @@ class GameWindow : public GameObject
         void destroy();
         void clear();
         bool isRunning();
+        T_UINT16 createTexture(T_UINT16 * pixels, T_UINT16 width, T_UINT16 height);
+        void renderSprite(T_UINT16 textureID, T_UINT16 x, T_UINT16 y, T_UINT16 width, T_UINT16 height);
         SDL_Renderer * getSDLRenderer();
-        uint16_t getPlayerKeys();
-        
-        static const uint16_t UP    = 0x01U; // 0001
-        static const uint16_t DOWN  = 0x02U; // 0010
-        static const uint16_t LEFT  = 0x04U; // 0100
-        static const uint16_t RIGHT = 0x08U; // 1000
+        T_UINT16 getPlayerKeys();
+
+        static const T_UINT16 UP    = 0x01U; // 0001
+        static const T_UINT16 DOWN  = 0x02U; // 0010
+        static const T_UINT16 LEFT  = 0x04U; // 0100
+        static const T_UINT16 RIGHT = 0x08U; // 1000
         
     private:
+        static const T_UINT16 MAX_TEXTURES = 32U;
+        SDL_Texture * m_textureCache[MAX_TEXTURES];
+        T_UINT16 m_nextTexture;
+
         SDL_Window * window;
         SDL_Renderer * renderer;
         bool m_running;
-        uint16_t m_pKeys;
+        T_UINT16 m_pKeys;
 };
 #endif

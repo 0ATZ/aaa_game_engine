@@ -14,10 +14,6 @@ class Rectangle: public GameObject
         void destroy();
         
     private:
-        int m_pixelWidth;
-        int m_pixelHeight;
-        int m_x_pos;
-        int m_y_pos;
         GameWindow * m_window;
 };
 #endif

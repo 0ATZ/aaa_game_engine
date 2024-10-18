@@ -5,6 +5,12 @@ GameWindow::GameWindow()
 {
     m_running = false;
     m_pKeys = 0U;
+    m_nextTexture = 0U;
+
+    // Clear out the texture cache pointers
+    for (int i = 0; i < MAX_TEXTURES; ++i) {
+        m_textureCache[i] = nullptr;
+    }
 }
 
 bool GameWindow::init()
@@ -77,11 +83,16 @@ void GameWindow::update()
             if (keyCode == SDLK_d)
                 m_pKeys &= (~RIGHT);
         }
+
+        // TODO: handle screen lose focus and gain focus event
+        //   clear keys on lose focus, save current state to back buffer
+        //   on gain focus, check current keys states
+        //   set key states in back buffer, then swap back buffer to front
         // std::cout << m_pKeys << std::endl;
     }
 }
 
-uint16_t GameWindow::getPlayerKeys()
+T_UINT16 GameWindow::getPlayerKeys()
 {
     return m_pKeys;
 }
@@ -116,4 +127,50 @@ SDL_Renderer * GameWindow::getSDLRenderer()
 bool GameWindow::isRunning()
 {
     return m_running;
+}
+
+T_UINT16 GameWindow::createTexture(T_UINT16 *pixels, T_UINT16 width, T_UINT16 height)
+{
+    T_UINT16 L_retVal = 0xFFFFU;
+    if (m_nextTexture < MAX_TEXTURES)
+    {
+        // TODO: check the width and height against max texture size values
+        //   maybe max texture is 16x16, 32x32, etc ... or the screen size
+        SDL_Texture * L_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STATIC, width, height);
+
+        if (!L_texture)
+        {
+            SDL_Log("Failed to create texture: %s", SDL_GetError());
+        }
+        else
+        {
+            // Update the texture with the pixel data
+            SDL_UpdateTexture(L_texture, nullptr, pixels, width * sizeof(T_UINT16));
+            m_textureCache[m_nextTexture] = L_texture;
+            L_retVal = m_nextTexture;
+            m_nextTexture++;
+        }
+
+    }
+    else
+    {
+        std::cout << "ERROR: could not allocate texture." << std::endl;
+    }
+
+    // return the index for the cached texture
+    // if the texture could not be allocated, then return an invalid index (0xFFFF)
+    return L_retVal;
+}
+
+void GameWindow::renderSprite(T_UINT16 textureID, T_UINT16 x, T_UINT16 y, T_UINT16 width, T_UINT16 height)
+{
+    if ((textureID < MAX_TEXTURES) && (m_textureCache[textureID]))
+    {
+        SDL_Rect destRect = { x, y, width, height };
+        SDL_RenderCopy(renderer, m_textureCache[textureID], nullptr, &destRect);
+    }
+    else
+    {
+        std::cout << "ERROR: Texture out of bounds." << std::endl;
+    }
 }

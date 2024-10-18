@@ -1,6 +1,8 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
+#include "Sprite.h"
+
 class GameObject
 {
     public:
@@ -9,9 +11,11 @@ class GameObject
         virtual void render() = 0;
         virtual void destroy() = 0;
         
-    private:
-        // int m_x_pos;
-        // int m_y_pos;
-        
+    protected:
+        int m_xPos;
+        int m_yPos;
+        int m_pixelHeight;
+        int m_pixelWidth;
+        Sprite * m_defaultSprite;
 };
 #endif
