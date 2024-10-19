@@ -1,0 +1,23 @@
+- install notepad++: https://notepad-plus-plus.org/downloads/
+  add notepad++ to path
+- install git for windows: https://git-scm.com/downloads/win
+  use the "64-bit Git for Windows Setup."
+  use notpad++ as the default editor
+  use autocrlf
+- install visual studio code: https://code.visualstudio.com/Download
+- install mingw64 windows devkit: https://github.com/skeeto/w64devkit/releases
+  download this one: w64devkit-x86-2.0.0.exe
+  extract it to program files or remember where you put it
+- open vscode and install the C++ extension
+- in vscode, set the compiler path to the w64devkit g++.exe
+  press F1 to enter command mode
+  select "C/C++ Configurations (UI)"
+  paste your compiler path into the compiler path section (ex. "C:\Josh\w64devkit\bin\g++.exe")
+- in vscode, open a cmd terminal window
+   view -> terminal (ctrl+`)
+   click the dropdown next to the "+" button to add a terminal
+   select command prompt
+- use the vscode cmd terminal to build and run the game:
+  C:\Josh\aaa_game_engine> build.bat
+  
+   

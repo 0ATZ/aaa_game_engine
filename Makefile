@@ -1,13 +1,14 @@
 CC=g++
 OBJS=$(ODIR)/Game.o $(ODIR)/GameWindow.o $(ODIR)/Rectangle.o $(ODIR)/Sprite.o
-CFLAGS=-I. -I./include -L./lib 
-# add this tag to disable the cmd prompt -mwindows
-LIBS=-lSDL2
+# add this tag to CFLAGS to disable the cmd prompt -mwindows
+CFLAGS=-I. -I./include
+LIBS=-lSDL2 -L.
 ODIR=obj
 INCLUDE_DIR=include
 SOURCE_DIR=source
 
-main: $(OBJS) 
+
+main: $(OBJS)
 	$(CC) -o main.exe $(SOURCE_DIR)/main.cpp $(OBJS) $(CFLAGS) $(LIBS)
 
 $(ODIR)/Game.o: $(SOURCE_DIR)/Game.cpp $(INCLUDE_DIR)/Game.h $(INCLUDE_DIR)/Rectangle.h $(INCLUDE_DIR)/GameWindow.h $(INCLUDE_DIR)/GameObject.h
@@ -25,5 +26,7 @@ $(ODIR)/%.o: $(SOURCE_DIR)/%.cpp $(INCLUDE_DIR)/%.h
 .PHONY: clean
 
 clean:
-	del /q /f $(ODIR)\*.o
-	del /q /f main.exe
+	rm -f obj/*.o
+	rm -f main.exe
+#	del /q /f $(ODIR)\*.o
+#	del /q /f main.exe
