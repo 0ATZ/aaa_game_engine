@@ -4,6 +4,7 @@
 #include "BaseTypes.h"
 #include "SDL2/SDL.h"
 #include "GameObject.h"
+#include "TileSet.h"
 
 class GameWindow : public GameObject
 {
@@ -27,10 +28,12 @@ class GameWindow : public GameObject
         static const T_UINT16 RIGHT = 0x08U; // 1000
         
     private:
+
         static const T_UINT16 MAX_TEXTURES = 32U;
         SDL_Texture * m_textureCache[MAX_TEXTURES];
         T_UINT16 m_nextTexture;
 
+        TileSet * m_tileSet;
         SDL_Window * window;
         SDL_Renderer * renderer;
         bool m_running;

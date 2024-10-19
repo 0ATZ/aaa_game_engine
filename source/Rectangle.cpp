@@ -1,6 +1,6 @@
 #include "Rectangle.h"
-#include "Sprites/SquareSprite.h"
 #include <iostream>
+
 
 Rectangle::Rectangle(GameWindow * window, int pixelWidth, int pixelHeight)
 {
@@ -9,8 +9,16 @@ Rectangle::Rectangle(GameWindow * window, int pixelWidth, int pixelHeight)
     m_window = window;
     m_pixelWidth = pixelWidth;
     m_pixelHeight = pixelHeight;
-    T_UINT16 textureID = m_window->createTexture(SQUARE, 16, 16);
-    m_defaultSprite = new Sprite(SQUARE, 16, 16, textureID);
+
+    // temp hard code a blue square
+    t_tile blue_square;
+    for (int i = 0; i < TILE_SIZE; i++)
+    {
+        blue_square[i] = 0x001FU;
+    }
+    
+    T_UINT16 textureID = m_window->createTexture(blue_square, 16, 16);
+    m_defaultSprite = new Sprite(blue_square, 16, 16, textureID);
 }
 
 bool Rectangle::init()

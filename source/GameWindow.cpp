@@ -1,40 +1,39 @@
 #include "GameWindow.h"
+#include "Sprites/SquareSprite.h"
 #include <iostream>
 
 GameWindow::GameWindow() 
 {
     m_running = false;
     m_pKeys = 0U;
-    m_nextTexture = 0U;
-
-    // Clear out the texture cache pointers
-    for (int i = 0; i < MAX_TEXTURES; ++i) {
-        m_textureCache[i] = nullptr;
-    }
-}
-
-bool GameWindow::init()
-{
+    
+    // initialize SDL video
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
-        return false;
     }
 
+    // create the SDL window
     window = SDL_CreateWindow("SDL2 Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN);
     if (window == nullptr) {
         std::cerr << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl;
         SDL_Quit();
-        return false;
     }
-
+    
+    // create the SDL renderer 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (renderer == nullptr) {
         std::cerr << "Renderer could not be created! SDL_Error: " << SDL_GetError() << std::endl;
         SDL_DestroyWindow(window);
         SDL_Quit();
-        return false;
     }
-    
+
+    m_tileSet = new TileSet(renderer);
+    m_tileSet->addTile(&TILE_BLACK);
+    m_tileSet->addTile(&TILE_GREEN);
+}
+
+bool GameWindow::init()
+{    
     m_running = true;
     return true;
 }
@@ -186,6 +185,7 @@ T_UINT16 GameWindow::createTexture(T_UINT16 *pixels, T_UINT16 width, T_UINT16 he
             SDL_UpdateTexture(L_texture, nullptr, pixels, width * sizeof(T_UINT16));
             m_textureCache[m_nextTexture] = L_texture;
             L_retVal = m_nextTexture;
+            std::cout << "texture created: " << m_nextTexture << std::endl;
             m_nextTexture++;
         }
 
@@ -209,7 +209,7 @@ void GameWindow::renderSprite(T_UINT16 textureID, T_UINT16 x, T_UINT16 y, T_UINT
     }
     else
     {
-        std::cout << "ERROR: Texture out of bounds." << std::endl;
+        //std::cout << "ERROR: Texture out of bounds." << std::endl;
     }
 }
 
@@ -224,6 +224,6 @@ void GameWindow::renderScaledSprite(T_UINT16 textureID, T_UINT16 x, T_UINT16 y, 
     }
     else
     {
-        std::cout << "ERROR: Texture out of bounds." << std::endl;
+        // std::cout << "ERROR: Texture out of bounds." << std::endl;
     }
 }
