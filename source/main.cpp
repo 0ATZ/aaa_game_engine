@@ -5,7 +5,7 @@
 #include "Game.h"
 
 /* Uncomment this line for unreasonably low performance! */
-/* #define LOW_PERFORMANCE_MODE */
+#define LOW_PERFORMANCE_MODE
 
 using namespace std;
 
@@ -25,7 +25,7 @@ int WinMain(int argc, char* args[]) {
     const T_UINT64 UPDATE_DURATION_MS = FRAME_DURATION_60FPS;
 
     // Adjust this variable to change the frame rate
-    const T_UINT64 RENDER_DURATION_MS = FRAME_DURATION_140FPS;
+    const T_UINT64 RENDER_DURATION_MS = FRAME_DURATION_60FPS;
 
     // TODO: use high resolution nanosecond clock
     // keep track of the last update and render time
