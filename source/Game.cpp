@@ -73,7 +73,6 @@ void Game::update()
     }
 }
 
-// TODO: dont need to check for null
 void Game::render()
 {
     // Clear the window before rendering new graphics

@@ -5,8 +5,7 @@
 #include "GameTypes.h"
 #include "GameWindow.h"
 #include "Tile.h"
-
-// TODO: implement delete tile? 
+ 
 class TileSet
 {
     public:

@@ -1,9 +1,6 @@
 #include "TileMap.h"
 #include <cstring>
 
-// TODO: maybe support dynamically sized tilemaps?
-//   can statically allocate a large buffer
-//   then indicate the height and width in the constructor
 TileMap::TileMap(TileSet * tileSet, t_tilemap tileMap, T_UINT16 numRows, T_UINT16 numCols)
 {
     m_position = {0,0};

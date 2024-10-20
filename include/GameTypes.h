@@ -3,7 +3,6 @@
 
 #include "BaseTypes.h"
 
-// TODO: update code to use this instead of separate x and y variables
 // point describes an (x,y) coordinate in a 2D plane
 typedef struct s_point
 {

@@ -171,8 +171,6 @@ t_index GameWindow::createTexture(t_pixel *pixels, T_UINT16 width, T_UINT16 heig
     t_index L_retVal = 0xFFU;
     if (m_nextTexture < MAX_TEXTURES)
     {
-        // TODO: check the width and height against max texture size values
-        //   maybe max texture is 16x16, 32x32, etc ... or the screen size
         SDL_Texture * L_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STATIC, width, height);
 
         if (!L_texture)
