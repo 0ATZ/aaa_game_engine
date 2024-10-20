@@ -8,9 +8,7 @@ class Sprite
 {
     public:
         Sprite(t_pixel *spritePixels, T_UINT16 width, T_UINT16 height);
-        Sprite(t_tile *tilePixels);
 
-        // void setSpritePixels(T_UINT16 *spritePixels, T_UINT16 width, T_UINT16 height, T_UINT16 textureID);
         T_UINT16 *getSpritePixels();
         T_UINT16 getNumPixels();
 

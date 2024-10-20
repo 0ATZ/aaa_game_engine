@@ -8,12 +8,6 @@ Sprite::Sprite(t_pixel *spritePixels, T_UINT16 width, T_UINT16 height)
     m_textureID = 0x00U;
 }
 
-Sprite::Sprite(t_tile *tilePixels) :
-    Sprite((t_pixel *) tilePixels, TILE_WIDTH, TILE_HEIGHT)
-{
-    // do nothing, pass parameters to base constructor 
-}
-
 T_UINT16 * Sprite::getSpritePixels()
 {
     return m_spritePixels;

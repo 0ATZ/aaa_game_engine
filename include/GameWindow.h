@@ -3,7 +3,6 @@
 
 #include "BaseTypes.h"
 #include "SDL2/SDL.h"
-#include "TileSet.h"
 #include "Sprite.h"
 
 class GameWindow
@@ -40,7 +39,6 @@ class GameWindow
         SDL_Texture * m_textureCache[MAX_TEXTURES];
         t_index m_nextTexture;
 
-        TileSet * m_tileSet;
         SDL_Window * window;
         SDL_Renderer * renderer;
         bool m_running;

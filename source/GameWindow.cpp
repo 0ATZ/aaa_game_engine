@@ -7,7 +7,7 @@ GameWindow::GameWindow()
     m_running = false;
     m_pKeys = 0U;
     m_nextTexture = 0U;
-    
+
     // initialize SDL video
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
@@ -182,7 +182,7 @@ t_index GameWindow::createTexture(t_pixel *pixels, T_UINT16 width, T_UINT16 heig
             SDL_UpdateTexture(L_texture, nullptr, pixels, width * sizeof(T_UINT16));
             m_textureCache[m_nextTexture] = L_texture;
             L_retVal = m_nextTexture;
-            std::cout << "texture created: " << m_nextTexture << std::endl;
+            std::cout << "GameWindow: texture cached: " << (int) m_nextTexture << std::endl;
             m_nextTexture++;
         }
 

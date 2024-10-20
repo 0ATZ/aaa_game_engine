@@ -1,14 +1,15 @@
 #include "TileSet.h"
 #include <iostream>
 
-TileSet::TileSet(SDL_Renderer *renderer)
+TileSet::TileSet(GameWindow * window)
 {
     m_tileCount = 0U;
-    m_renderer = renderer;
-    (void) memset(m_textureCache, 0, sizeof(t_texture_cache));
+    m_window = window;
+    (void) memset(m_tileSet, 0, sizeof(m_tileSet));
 }
 
-TileSet::TileSet(SDL_Renderer *renderer, t_tileset tileSet)
+TileSet::TileSet(GameWindow * window, t_tileset tileSet) :
+    TileSet(window) // call base constructor
 {
     for (m_tileCount = 0U; m_tileCount < TILESET_SIZE; m_tileCount++)
     {
@@ -25,6 +26,43 @@ TileSet::TileSet(SDL_Renderer *renderer, t_tileset tileSet)
     std::cout << "Created tileset with " << m_tileCount << " tiles." << std::endl;
 }
 
+// return the tileID 
+t_index TileSet::addTile(t_tile *tilePixels)
+{
+    t_index L_retVal = 0xFFU; // return index 255 if failed to add
+    if (this->hasSpace())
+    {
+        Tile * L_newTile = new Tile(tilePixels);
+        if (L_newTile)
+        {
+            // createTexture gives the Tile sprite a textureID
+            (void) m_window->createTexture(L_newTile);
+
+            // use the current m_tileCount as the tileID 
+            m_tileSet[m_tileCount] = L_newTile;
+            L_retVal = m_tileCount;
+            m_tileCount++;
+        }
+        else
+        {
+            std::cout << "ERROR: cannot not allocate memory for new tile." << std::endl;
+        }
+    }
+    else
+    {
+        std::cout << "ERROR: tileset is full, cannot add new tile." << std::endl;
+    }
+    return L_retVal;
+}
+
+void TileSet::renderTile(t_index tileID, t_point point, t_scale scale)
+{
+    if (this->isValid(tileID))
+    {
+        m_window->renderSprite(m_tileSet[tileID], point, scale);
+    }
+}
+
 // returns true if there is an available space in the texture cache
 bool TileSet::hasSpace()
 {
@@ -35,51 +73,12 @@ bool TileSet::hasSpace()
     return false;
 }
 
-// returns the textureID 
-t_index TileSet::addTile(t_tile *tile)
+// returns true if a Tile sprite has been registered to the tileID
+bool TileSet::isValid(t_index tileID)
 {
-    t_index L_retVal = 0xFFU; // return the last texture ID if failed to add
-    if (this->hasSpace())
+    if (tileID < m_tileCount)
     {
-        SDL_Texture * L_texture = SDL_CreateTexture(m_renderer, SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STATIC, TILE_WIDTH, TILE_HEIGHT);
-
-        if (!L_texture)
-        {
-            SDL_Log("Failed to create texture: %s", SDL_GetError());
-        }
-        else
-        {
-            // Update the texture with the pixel data
-            SDL_UpdateTexture(L_texture, nullptr, tile, TILE_WIDTH * sizeof(t_pixel));
-            m_textureCache[m_tileCount] = L_texture;
-            L_retVal = m_tileCount;
-            std::cout << "Tile created: " << m_tileCount << std::endl;
-            m_tileCount++;
-        }
+        return true;
     }
-    else
-    {
-        std::cout << "ERROR: could not allocate texture." << std::endl;
-    }
-
-    return L_retVal;
-}
-
-SDL_Texture *TileSet::getTexture(t_index textureID)
-{
-    SDL_Texture* L_retVal = nullptr;
-    if (textureID < m_tileCount)
-    {
-        L_retVal = m_textureCache[textureID];
-    }
-    return L_retVal;
-}
-
-void TileSet::renderTile(t_index textureID, t_point point, t_scale scale)
-{
-    if (textureID < m_tileCount)
-    {
-        SDL_Rect destRect = { point.x, point.y, TILE_WIDTH*scale, TILE_HEIGHT*scale };
-        SDL_RenderCopy(m_renderer, m_textureCache[textureID], nullptr, &destRect);
-    }
+    return false;
 }

@@ -1,30 +1,30 @@
-#ifndef SPRITESHEET_H
-#define SPRITESHEET_H
+#ifndef TILESET_H
+#define TILESET_H
 
 #include "BaseTypes.h"
 #include "GameTypes.h"
-#include "SDL2/SDL.h"
-
+#include "GameWindow.h"
+#include "Tile.h"
 
 // TODO: implement delete tile? 
 class TileSet
 {
     public:
-        TileSet(SDL_Renderer *renderer);
-        TileSet(SDL_Renderer *renderer, t_tileset tileSet);
+        TileSet(GameWindow * window);
+        TileSet(GameWindow * window, t_tileset tileSet);
+
+        t_index addTile(t_tile *tilePixels);
+        void renderTile(t_index tileID, t_point point, t_scale scale);
 
         bool hasSpace();
-        t_index addTile(t_tile *tile);
-        SDL_Texture * getTexture(t_index textureID);
-        void renderTile(t_index textureID, t_point point, t_scale scale);
-        
-    private:
-        static const T_UINT16 TEXTURE_CACHE_SIZE = TILESET_SIZE;
-        typedef SDL_Texture* t_texture_cache[TEXTURE_CACHE_SIZE];
+        bool isValid(t_index tileID);
 
-        T_UINT16 m_tileCount;  // number of tiles in tileset
-        SDL_Renderer * m_renderer; // SDL uses renderer to create the textures
-        t_texture_cache m_textureCache;  // store pointers to SDL textures for each tile
+    private:
+
+        T_UINT16 m_tileCount;  // number of tiles added to the tileset
+        GameWindow * m_window; // Game window used to create the textures
+        Tile * m_tileSet[TILESET_SIZE]; // pointers 
+
 };
 
 

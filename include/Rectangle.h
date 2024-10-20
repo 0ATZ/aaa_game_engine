@@ -3,6 +3,7 @@
 
 #include "GameWindow.h"
 #include "GameObject.h"
+#include "Tile.h"
 
 class Rectangle: public GameObject
 {

@@ -16,7 +16,7 @@ Rectangle::Rectangle(GameWindow * window, int pixelWidth, int pixelHeight)
         blue_square[i] = 0x001FU;
     }
     
-    m_defaultSprite = new Sprite(&blue_square);
+    m_defaultSprite = new Tile(&blue_square);
     (void) window->createTexture(m_defaultSprite);
 }
 
