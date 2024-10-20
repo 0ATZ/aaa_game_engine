@@ -41,9 +41,9 @@ typedef t_tile* t_tileset[TILESET_SIZE];
 // tilemap represents the pixels to be rendered on the screen  
 // each tile in the tilemap is represented by an index (8-bit unsigned integer)
 // tilemap represents a (TILE_SIZE x TILEMAP_WIDTH x TILEMAP_HEIGHT) pixel square
-const T_UINT16 TILEMAP_WIDTH = 16U;
-const T_UINT16 TILEMAP_HEIGHT = 16U;
-const T_UINT16 TILEMAP_SIZE = TILEMAP_WIDTH * TILEMAP_HEIGHT;
-typedef t_index t_tilemap[TILEMAP_SIZE];
+const T_UINT16 MAX_TILEMAP_WIDTH = 64U;
+const T_UINT16 MAX_TILEMAP_HEIGHT = 64U;
+const T_UINT16 MAX_TILEMAP_SIZE = MAX_TILEMAP_WIDTH * MAX_TILEMAP_HEIGHT;
+typedef t_index t_tilemap[MAX_TILEMAP_SIZE];
 
 #endif

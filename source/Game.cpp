@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Game.h"
 #include "Rectangle.h"
-#include "sprites/TestMap.h"
+#include "sprite/TestMap.h"
 
 Game::Game()
 {
@@ -21,13 +21,31 @@ bool Game::init()
     }
     
     t_tile black_square = {0};
-    t_tile green_square = {0};
+    t_tile white_square = {0};
+    t_tile baby_blue_square = {0};
+    t_tile baby_orange_square = {0};
     for (int i = 0; i < TILE_SIZE; i++)
-        green_square[i] = 0x07E0U;
+    {
+        white_square[i] = 0xFFFFU;
+        baby_blue_square[i] = 0x8ebdU;
+        baby_orange_square[i] = 0xedcfU;
+    }
     m_tileSet = new TileSet(window);
-    m_tileSet->addTile(&black_square);
-    m_tileSet->addTile(&green_square);
-    m_tileMap = new TileMap(m_tileSet, TEST_MAP_16x16);
+    m_tileSet->addTile(&black_square);       // 0
+    m_tileSet->addTile(&white_square);       // 1
+    m_tileSet->addTile(&baby_blue_square);   // 2
+    m_tileSet->addTile(&baby_orange_square); // 3
+
+    T_UINT16 tilemap_rows = 32U;
+    T_UINT16 tilemap_cols = 32U;
+    t_tilemap checker_map = {0};
+    for (int i = 0; i < (tilemap_rows * tilemap_cols); i++)
+    {
+        // ... idk trial and error
+        checker_map[i] = ((i % 4) + (i / tilemap_cols)) % 4;
+    }
+
+    m_tileMap = new TileMap(m_tileSet, checker_map, tilemap_rows, tilemap_cols);
 
     registerObject(m_tileMap);
 
