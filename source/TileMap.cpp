@@ -1,9 +1,14 @@
 #include "TileMap.h"
+#include <cstring>
 
-TileMap::TileMap(T_UINT8 * tileMap, T_UINT16 width, T_UINT16 height, T_UINT16 tileSize)
+TileMap::TileMap(TileSet * tileSet, t_tilemap tileMap)
 {
-    m_tileMap = tileMap;
-    m_width = width;
-    m_height = height;
-    m_tileSize = tileSize;
+    m_tileSet = tileSet;
+    (void) memcpy(m_tileMap, tileMap, sizeof(t_tilemap));
+}
+
+void TileMap::render()
+{
+    t_point point = {32,32};
+    m_tileSet->renderTile(m_tileMap[0], point, SCALE_DOUBLE);
 }

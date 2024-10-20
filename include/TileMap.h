@@ -1,16 +1,16 @@
 #include "BaseTypes.h"
+#include "GameTypes.h"
 #include "GameObject.h"
+#include "TileSet.h"
 
 class TileMap : public GameObject
 {
     public:
-        TileMap(T_UINT8 * tileMap, T_UINT16 width, T_UINT16 height, T_UINT16 tileSize);
-        //void TileMap::render();
+        TileMap(TileSet * tileSet, t_tilemap tileMap);
+        void render();
 
     private:
-        T_UINT16 m_width;
-        T_UINT16 m_height;
-        T_UINT16 m_tileSize;
-        T_UINT8 * m_tileMap;
+        TileSet * m_tileSet;
+        t_tilemap m_tileMap;
         
 };

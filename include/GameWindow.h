@@ -3,10 +3,10 @@
 
 #include "BaseTypes.h"
 #include "SDL2/SDL.h"
-#include "GameObject.h"
 #include "TileSet.h"
+#include "Sprite.h"
 
-class GameWindow : public GameObject
+class GameWindow
 {
     public:
         GameWindow();
@@ -16,9 +16,16 @@ class GameWindow : public GameObject
         void destroy();
         void clear();
         bool isRunning();
-        T_UINT16 createTexture(T_UINT16 * pixels, T_UINT16 width, T_UINT16 height);
-        void renderSprite(T_UINT16 textureID, T_UINT16 x, T_UINT16 y, T_UINT16 width, T_UINT16 height);
-        void renderScaledSprite(T_UINT16 textureID, T_UINT16 x, T_UINT16 y, T_UINT16 width, T_UINT16 height, T_UINT16 scale);
+        
+        t_index createTexture(t_pixel * pixels, T_UINT16 width, T_UINT16 height);
+        t_index createTexture(t_tile * tilePixels);
+        t_index createTexture(Sprite * sprite);
+
+        void renderTexture(t_index textureID, t_point point, T_UINT16 width, T_UINT16 height, t_scale scale);
+        void renderSprite(Sprite * sprite, t_point point, t_scale scale);
+
+        bool textureExists(t_index textureID);
+
         SDL_Renderer * getSDLRenderer();
         T_UINT16 getPlayerKeys();
 
@@ -31,7 +38,7 @@ class GameWindow : public GameObject
 
         static const T_UINT16 MAX_TEXTURES = 32U;
         SDL_Texture * m_textureCache[MAX_TEXTURES];
-        T_UINT16 m_nextTexture;
+        t_index m_nextTexture;
 
         TileSet * m_tileSet;
         SDL_Window * window;

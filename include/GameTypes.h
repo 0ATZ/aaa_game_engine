@@ -7,12 +7,20 @@
 // point describes an (x,y) coordinate in a 2D plane
 typedef struct s_point
 {
-    T_UINT16 x;
-    T_UINT16 y;
+    T_INT16 x;
+    T_INT16 y;
 } t_point;
 
 // 16-bit pixels (RGB565)
 typedef T_UINT16 t_pixel;
+
+typedef enum e_scale 
+{
+    SCALE_ORIGINAL = 1U,
+    SCALE_DOUBLE   = 2U,
+    SCALE_TRIPLE   = 3U,
+    SCALE_QUADRA   = 4U,
+} t_scale;
 
 // tile is a 16X16 square of pixels
 const T_UINT16 TILE_WIDTH  = 16U;

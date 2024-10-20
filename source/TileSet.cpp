@@ -74,3 +74,12 @@ SDL_Texture *TileSet::getTexture(t_index textureID)
     }
     return L_retVal;
 }
+
+void TileSet::renderTile(t_index textureID, t_point point, t_scale scale)
+{
+    if (textureID < m_tileCount)
+    {
+        SDL_Rect destRect = { point.x, point.y, TILE_WIDTH*scale, TILE_HEIGHT*scale };
+        SDL_RenderCopy(m_renderer, m_textureCache[textureID], nullptr, &destRect);
+    }
+}

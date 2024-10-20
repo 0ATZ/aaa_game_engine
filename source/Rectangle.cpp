@@ -4,21 +4,20 @@
 
 Rectangle::Rectangle(GameWindow * window, int pixelWidth, int pixelHeight)
 {
-    m_xPos = 0;
-    m_yPos = 0;
+    m_position = {0,0};
     m_window = window;
     m_pixelWidth = pixelWidth;
     m_pixelHeight = pixelHeight;
 
-    // temp hard code a blue square
+    // hard code a 16x16 blue square
     t_tile blue_square;
     for (int i = 0; i < TILE_SIZE; i++)
     {
         blue_square[i] = 0x001FU;
     }
     
-    T_UINT16 textureID = m_window->createTexture(blue_square, 16, 16);
-    m_defaultSprite = new Sprite(blue_square, 16, 16, textureID);
+    m_defaultSprite = new Sprite(&blue_square);
+    (void) window->createTexture(m_defaultSprite);
 }
 
 bool Rectangle::init()
@@ -33,22 +32,22 @@ void Rectangle::update()
     if (pKeys & GameWindow::UP)
     {
         // std::cout << "up" << std::endl;
-        m_yPos = (m_yPos - speed);
+        m_position.y = (m_position.y - speed);
     }
     if (pKeys & GameWindow::DOWN)
     {
         // std::cout << "down" << std::endl;
-        m_yPos = (m_yPos + speed);
+        m_position.y = (m_position.y + speed);
     }
     if (pKeys & GameWindow::LEFT)
     {
         // std::cout << "left" << std::endl;
-        m_xPos = (m_xPos - speed);
+        m_position.x = (m_position.x - speed);
     }
     if (pKeys & GameWindow::RIGHT)
     {
         // std::cout << "right" << std::endl;
-        m_xPos = (m_xPos + speed);
+        m_position.x = (m_position.x + speed);
     }
 }
 
@@ -56,36 +55,32 @@ void Rectangle::render()
 {
     if (m_window != nullptr)
     {
-        m_window->renderScaledSprite(
-            m_defaultSprite->getTextureID(), /* cached texture ID */
-            m_xPos, m_yPos, /* position of the top left corner */
-            m_defaultSprite->getWidth(),     /* width of the sprite */
-            m_defaultSprite->getHeight(),     /* height of the sprite */
-            4U
+        t_point point = m_position;
+        m_window->renderSprite(
+            m_defaultSprite, /* cached texture ID */
+            point,  /* position of the top left corner */
+            SCALE_QUADRA /* scale multiplier */
         );
 
-        m_window->renderScaledSprite(
-            m_defaultSprite->getTextureID(), /* cached texture ID */
-            m_xPos + 80U, m_yPos, /* position of the top left corner */
-            m_defaultSprite->getWidth(),     /* width of the sprite */
-            m_defaultSprite->getHeight(),     /* height of the sprite */
-            3U
+        point.x = m_position.x + 80U;
+        m_window->renderSprite(
+            m_defaultSprite, /* cached texture ID */
+            point,  /* position of the top left corner */
+            SCALE_TRIPLE /* scale multiplier */
         );
 
-        m_window->renderScaledSprite(
-            m_defaultSprite->getTextureID(), /* cached texture ID */
-            m_xPos + 144U, m_yPos, /* position of the top left corner */
-            m_defaultSprite->getWidth(),     /* width of the sprite */
-            m_defaultSprite->getHeight(),     /* height of the sprite */
-            2U
+        point.x = m_position.x + 144U;
+        m_window->renderSprite(
+            m_defaultSprite, /* cached texture ID */
+            point,  /* position of the top left corner */
+            SCALE_DOUBLE /* scale multiplier */
         );
 
-        m_window->renderScaledSprite(
-            m_defaultSprite->getTextureID(), /* cached texture ID */
-            m_xPos + 192U, m_yPos, /* position of the top left corner */
-            m_defaultSprite->getWidth(),     /* width of the sprite */
-            m_defaultSprite->getHeight(),     /* height of the sprite */
-            1U
+        point.x = m_position.x + 192U;
+        m_window->renderSprite(
+            m_defaultSprite, /* cached texture ID */
+            point,  /* position of the top left corner */
+            SCALE_ORIGINAL /* scale multiplier */
         );
     }
 }

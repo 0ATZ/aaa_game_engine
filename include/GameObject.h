@@ -12,9 +12,8 @@ class GameObject
         virtual void destroy() = 0;
         
     protected:
-        int m_xPos;
-        int m_yPos;
-        int m_pixelHeight;
+        t_point m_position;
+        int m_pixelHeight;  // TODO: how to calc collisions
         int m_pixelWidth;
         Sprite * m_defaultSprite;
 };

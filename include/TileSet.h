@@ -16,6 +16,7 @@ class TileSet
         bool hasSpace();
         t_index addTile(t_tile *tile);
         SDL_Texture * getTexture(t_index textureID);
+        void renderTile(t_index textureID, t_point point, t_scale scale);
         
     private:
         static const T_UINT16 TEXTURE_CACHE_SIZE = TILESET_SIZE;

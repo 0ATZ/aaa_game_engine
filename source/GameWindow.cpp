@@ -6,6 +6,7 @@ GameWindow::GameWindow()
 {
     m_running = false;
     m_pKeys = 0U;
+    m_nextTexture = 0U;
     
     // initialize SDL video
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -26,10 +27,6 @@ GameWindow::GameWindow()
         SDL_DestroyWindow(window);
         SDL_Quit();
     }
-
-    m_tileSet = new TileSet(renderer);
-    m_tileSet->addTile(&TILE_BLACK);
-    m_tileSet->addTile(&TILE_GREEN);
 }
 
 bool GameWindow::init()
@@ -166,9 +163,9 @@ bool GameWindow::isRunning()
     return m_running;
 }
 
-T_UINT16 GameWindow::createTexture(T_UINT16 *pixels, T_UINT16 width, T_UINT16 height)
+t_index GameWindow::createTexture(t_pixel *pixels, T_UINT16 width, T_UINT16 height)
 {
-    T_UINT16 L_retVal = 0xFFFFU;
+    t_index L_retVal = 0xFFU;
     if (m_nextTexture < MAX_TEXTURES)
     {
         // TODO: check the width and height against max texture size values
@@ -200,30 +197,51 @@ T_UINT16 GameWindow::createTexture(T_UINT16 *pixels, T_UINT16 width, T_UINT16 he
     return L_retVal;
 }
 
-void GameWindow::renderSprite(T_UINT16 textureID, T_UINT16 x, T_UINT16 y, T_UINT16 width, T_UINT16 height)
+t_index GameWindow::createTexture(t_tile *tilePixels)
 {
-    if ((textureID < MAX_TEXTURES) && (m_textureCache[textureID]))
+    return this->createTexture((t_pixel*) tilePixels, TILE_WIDTH, TILE_HEIGHT);
+}
+
+t_index GameWindow::createTexture(Sprite *sprite)
+{
+    t_index textureID = this->createTexture(
+        sprite->getSpritePixels(),
+        sprite->getWidth(),
+        sprite->getHeight()
+    );
+
+    sprite->setTextureID(textureID);
+    return textureID;
+}
+
+// scale can be 1-4 inclusive
+void GameWindow::renderTexture(t_index textureID, t_point point, T_UINT16 width, T_UINT16 height, t_scale scale)
+{
+    if (this->textureExists(textureID))
     {
-        SDL_Rect destRect = { x, y, width, height };
+        SDL_Rect destRect = { point.x, point.y, width*scale, height*scale };
         SDL_RenderCopy(renderer, m_textureCache[textureID], nullptr, &destRect);
-    }
-    else
-    {
-        //std::cout << "ERROR: Texture out of bounds." << std::endl;
     }
 }
 
-
-// scale can be 1-4 inclusive
-void GameWindow::renderScaledSprite(T_UINT16 textureID, T_UINT16 x, T_UINT16 y, T_UINT16 width, T_UINT16 height, T_UINT16 scale)
+void GameWindow::renderSprite(Sprite *sprite, t_point point, t_scale scale)
 {
-    if ((scale > 0 && scale < 5) && (textureID < MAX_TEXTURES) && (m_textureCache[textureID]))
+    // render the sprite 
+    // texture must be created beforehand using createTexture(Sprite *sprite)
+    this->renderTexture(
+        sprite->getTextureID(), 
+        point,
+        sprite->getWidth(),
+        sprite->getHeight(),
+        scale
+    );
+}
+
+bool GameWindow::textureExists(t_index textureID)
+{
+    if (textureID < m_nextTexture)
     {
-        SDL_Rect destRect = { x, y, width*scale, height*scale };
-        SDL_RenderCopy(renderer, m_textureCache[textureID], nullptr, &destRect);
+        return true;
     }
-    else
-    {
-        // std::cout << "ERROR: Texture out of bounds." << std::endl;
-    }
+    return false;
 }

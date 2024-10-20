@@ -21,13 +21,14 @@ bool Game::init()
     Rectangle * obj1 = new Rectangle(window, 100, 100);
     registerObject(obj1);
     
-    // Window render update gets called last
-    registerObject(window);
     return true;
 }
 
 void Game::update()
 {
+    // window should update first to get new window state such as user inputs
+    window->update();
+
     // Update game objects
     for (int i = 0; i < m_objectCount; i++)
     {
@@ -42,11 +43,8 @@ void Game::update()
 // TODO: dont need to check for null
 void Game::render()
 {
-    // Clear the window
-    if (window != nullptr)
-    {
-        window->clear();
-    }
+    // Clear the window before rendering new graphics
+    window->clear();
     
     // Render game objects
     for (int i = 0; i < m_objectCount; i++)
@@ -57,6 +55,9 @@ void Game::render()
             obj->render();
         }
     }
+
+    // Present the game window after all game objects have been rendered 
+    window->render();
 }
 
 void Game::destroy()
