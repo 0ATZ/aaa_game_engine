@@ -8,7 +8,7 @@
 class GameWindow
 {
     public:
-        GameWindow();
+        GameWindow(T_UINT16 width, T_UINT16 height);
         bool init();
         void update();
         void render();
@@ -43,5 +43,8 @@ class GameWindow
         SDL_Renderer * renderer;
         bool m_running;
         T_UINT16 m_pKeys;
+        T_UINT16 m_windowWidth;
+        T_UINT16 m_windowHeight;
+
 };
 #endif

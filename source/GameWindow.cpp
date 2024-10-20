@@ -1,11 +1,15 @@
 #include "GameWindow.h"
 #include <iostream>
 
-GameWindow::GameWindow() 
+// TODO: Put texture management into a texture manager class
+// TODO: Put event handler logic into an event handler class
+GameWindow::GameWindow(T_UINT16 width, T_UINT16 height) 
 {
     m_running = false;
     m_pKeys = 0U;
     m_nextTexture = 0U;
+    m_windowWidth = width;
+    m_windowHeight = height;
 
     // initialize SDL video
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -13,7 +17,7 @@ GameWindow::GameWindow()
     }
 
     // create the SDL window
-    window = SDL_CreateWindow("SDL2 Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("SDL2 Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, m_windowWidth, m_windowHeight, SDL_WINDOW_SHOWN);
     if (window == nullptr) {
         std::cerr << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl;
         SDL_Quit();
