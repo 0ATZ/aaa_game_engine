@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Game.h"
 #include "Rectangle.h"
-#include "Sprites/TestMap.h"
+#include "sprites/TestMap.h"
 
 Game::Game()
 {
