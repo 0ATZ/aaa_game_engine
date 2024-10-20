@@ -7,8 +7,8 @@
 // point describes an (x,y) coordinate in a 2D plane
 typedef struct s_point
 {
-    T_INT16 x;
-    T_INT16 y;
+    T_INT32 x;
+    T_INT32 y;
 } t_point;
 
 // 16-bit pixels (RGB565)
@@ -40,9 +40,10 @@ typedef t_tile* t_tileset[TILESET_SIZE];
 
 // tilemap represents the pixels to be rendered on the screen  
 // each tile in the tilemap is represented by an index (8-bit unsigned integer)
-// the tile index 
-// tilemap represents a (16 x 16 x 256) pixel square
-const T_UINT16 TILEMAP_SIZE = 256U;
+// tilemap represents a (TILE_SIZE x TILEMAP_WIDTH x TILEMAP_HEIGHT) pixel square
+const T_UINT16 TILEMAP_WIDTH = 16U;
+const T_UINT16 TILEMAP_HEIGHT = 16U;
+const T_UINT16 TILEMAP_SIZE = TILEMAP_WIDTH * TILEMAP_HEIGHT;
 typedef t_index t_tilemap[TILEMAP_SIZE];
 
 #endif

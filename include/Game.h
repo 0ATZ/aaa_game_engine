@@ -4,6 +4,8 @@
 #include <iostream>
 #include "GameObject.h"
 #include "GameWindow.h"
+#include "TileSet.h"
+#include "TileMap.h"
 
 class Game
 {
@@ -21,7 +23,8 @@ class Game
         void * m_objects[MAX_OBJECTS];
         int m_objectCount;
         GameWindow * window;
-        Uint32 lastFrameTime;
+        TileSet * m_tileSet;
+        TileMap * m_tileMap;
         bool running;
 };
 

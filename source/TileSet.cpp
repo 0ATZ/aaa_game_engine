@@ -63,6 +63,11 @@ void TileSet::renderTile(t_index tileID, t_point point, t_scale scale)
     }
 }
 
+T_UINT16 TileSet::getTileCount()
+{
+    return m_tileCount;
+}
+
 // returns true if there is an available space in the texture cache
 bool TileSet::hasSpace()
 {

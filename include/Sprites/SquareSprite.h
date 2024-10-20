@@ -10,7 +10,7 @@ const t_pixel RED   = 0xF800U;
 const t_pixel GREEN = 0x07E0U;
 const t_pixel BLUE  = 0x001FU;
 
-t_tile TILE_BLACK = {BLACK};
-t_tile TILE_GREEN = {GREEN};
+t_tile TILE_BLACK = {BLACK}; // I dont think this works right... probably only sets one byte at a time
+t_tile TILE_GREEN = {GREEN}; // I dont think this works right... probably only sets one byte at a time
 
 #endif

@@ -16,6 +16,7 @@ class TileSet
         t_index addTile(t_tile *tilePixels);
         void renderTile(t_index tileID, t_point point, t_scale scale);
 
+        T_UINT16 getTileCount();
         bool hasSpace();
         bool isValid(t_index tileID);
 
