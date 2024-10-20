@@ -1,5 +1,4 @@
 #include "GameWindow.h"
-#include "Sprites/SquareSprite.h"
 #include <iostream>
 
 GameWindow::GameWindow() 
