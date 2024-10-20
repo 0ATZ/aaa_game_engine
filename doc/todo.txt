@@ -2,4 +2,9 @@
 - create a player class
 - create an entity class which tracks position
 - create a player class which renders a square and can move around using the key presses
-
+===================
+- Implement viewport scrolling
+- Implement AnimatedSprite class
+- Load tilesets from binary file sprite sheets
+- create or find some tools:
+    - sprite design -> png
