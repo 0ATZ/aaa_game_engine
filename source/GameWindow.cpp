@@ -238,6 +238,19 @@ void GameWindow::renderSprite(Sprite *sprite, t_point point, t_scale scale)
     );
 }
 
+// scale the sprite using an (x, y) size instead of a scale factor
+void GameWindow::renderSprite(Sprite *sprite, t_point point, t_point size)
+{
+    // render the sprite 
+    // texture must be created beforehand using createTexture(Sprite *sprite)
+    t_index L_textureID = sprite->getTextureID();
+    if (this->textureExists(L_textureID))
+    {
+        SDL_Rect destRect = { point.x, point.y, size.x, size.y };
+        SDL_RenderCopy(renderer, m_textureCache[L_textureID], nullptr, &destRect);
+    }
+}
+
 bool GameWindow::textureExists(t_index textureID)
 {
     if (textureID < m_nextTexture)

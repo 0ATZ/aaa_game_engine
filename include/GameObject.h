@@ -13,8 +13,7 @@ class GameObject
         
     protected:
         t_point m_position;
-        int m_pixelHeight;  // TODO: how to calc collisions
-        int m_pixelWidth;
+        t_point m_sizePixels;  // TODO: how to calc collisions
         Sprite * m_defaultSprite;
 };
 #endif

@@ -22,6 +22,7 @@ class GameWindow
 
         void renderTexture(t_index textureID, t_point point, T_UINT16 width, T_UINT16 height, t_scale scale);
         void renderSprite(Sprite * sprite, t_point point, t_scale scale);
+        void renderSprite(Sprite *sprite, t_point point, t_point size);
 
         bool textureExists(t_index textureID);
 

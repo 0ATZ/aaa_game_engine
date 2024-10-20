@@ -51,7 +51,7 @@ bool Game::init()
 
     std::cout << "TileSet count: " << m_tileSet->getTileCount() << std::endl;
     
-    Rectangle * obj1 = new Rectangle(window, 100, 100);
+    Rectangle * obj1 = new Rectangle(window, 32, 32);
     registerObject(obj1);
     
     return true;

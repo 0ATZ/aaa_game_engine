@@ -6,8 +6,7 @@ Rectangle::Rectangle(GameWindow * window, int pixelWidth, int pixelHeight)
 {
     m_position = {0,0};
     m_window = window;
-    m_pixelWidth = pixelWidth;
-    m_pixelHeight = pixelHeight;
+    m_sizePixels = {pixelWidth, pixelHeight};
 
     // hard code a 16x16 blue square
     t_tile blue_square;
@@ -55,32 +54,10 @@ void Rectangle::render()
 {
     if (m_window != nullptr)
     {
-        t_point point = m_position;
         m_window->renderSprite(
             m_defaultSprite, /* cached texture ID */
-            point,  /* position of the top left corner */
-            SCALE_QUADRA /* scale multiplier */
-        );
-
-        point.x = m_position.x + 80U;
-        m_window->renderSprite(
-            m_defaultSprite, /* cached texture ID */
-            point,  /* position of the top left corner */
-            SCALE_TRIPLE /* scale multiplier */
-        );
-
-        point.x = m_position.x + 144U;
-        m_window->renderSprite(
-            m_defaultSprite, /* cached texture ID */
-            point,  /* position of the top left corner */
-            SCALE_DOUBLE /* scale multiplier */
-        );
-
-        point.x = m_position.x + 192U;
-        m_window->renderSprite(
-            m_defaultSprite, /* cached texture ID */
-            point,  /* position of the top left corner */
-            SCALE_ORIGINAL /* scale multiplier */
+            m_position,  /* position of the top left corner */
+            m_sizePixels /* render size pixel width x height */
         );
     }
 }
