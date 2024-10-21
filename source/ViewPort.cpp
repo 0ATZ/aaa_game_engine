@@ -1,13 +1,14 @@
 #include "ViewPort.h"
 #include <iostream>
 
-ViewPort::ViewPort(GameObject *player, T_UINT16 widthPixels, T_UINT16 heightPixels)
+ViewPort::ViewPort(PhysicsObject *player, T_UINT16 widthPixels, T_UINT16 heightPixels) :
+    PhysicsObject()
 {
     // store the player object
     m_player = player;
-    
+
     // initialize the viewport size
-    m_sizePixels = {
+    m_sizePx = {
         widthPixels, 
         heightPixels
     };
@@ -76,8 +77,8 @@ bool ViewPort::isCameraLocked()
 t_point ViewPort::maxPlayerPosition()
 {
     t_point L_point = {
-        m_position.x + (T_INT32)(0.8 * m_sizePixels.x),
-        m_position.y + (T_INT32)(0.8 * m_sizePixels.y)
+        m_position.x + (T_INT32)(0.8 * m_sizePx.x),
+        m_position.y + (T_INT32)(0.8 * m_sizePx.y)
     };
     return L_point;
 }
@@ -85,8 +86,8 @@ t_point ViewPort::maxPlayerPosition()
 t_point ViewPort::minPlayerPosition()
 {
     t_point L_point = {
-        m_position.x + (T_INT32)(0.2 * m_sizePixels.x),
-        m_position.y + (T_INT32)(0.2 * m_sizePixels.y)
+        m_position.x + (T_INT32)(0.2 * m_sizePx.x),
+        m_position.y + (T_INT32)(0.2 * m_sizePx.y)
     };
     return L_point;
 }

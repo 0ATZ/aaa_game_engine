@@ -1,7 +1,8 @@
 #include "TileMap.h"
 #include <cstring>
 
-TileMap::TileMap(TileSet * tileSet, t_tilemap tileMap, T_UINT16 numRows, T_UINT16 numCols)
+TileMap::TileMap(TileSet * tileSet, t_tilemap tileMap, T_UINT16 numRows, T_UINT16 numCols) :
+    PhysicsObject()
 {
     m_position = {0,0};
     m_tileSet = tileSet;
@@ -28,7 +29,7 @@ TileMap::TileMap(TileSet * tileSet, t_tilemap tileMap, T_UINT16 numRows, T_UINT1
     }
 
     // calculate the width and height of the entire map
-    m_sizePixels = {
+    m_sizePx = {
         m_numCols * TILE_WIDTH * m_scale,
         m_numRows * TILE_WIDTH * m_scale
     };

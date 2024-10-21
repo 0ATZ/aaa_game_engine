@@ -1,9 +1,9 @@
 #include "BaseTypes.h"
 #include "GameTypes.h"
-#include "GameObject.h"
+#include "PhysicsObject.h"
 #include "TileSet.h"
 
-class TileMap : public GameObject
+class TileMap : public PhysicsObject
 {
     public:
         TileMap(TileSet * tileSet, t_tilemap tileMap, T_UINT16 numRows, T_UINT16 numCols);

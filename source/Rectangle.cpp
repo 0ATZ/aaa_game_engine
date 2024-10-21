@@ -2,7 +2,11 @@
 #include <iostream>
 
 
-Rectangle::Rectangle(GameWindow * window, int pixelWidth, int pixelHeight)
+// TODO: make this Rectangle constructor better. For now, init with zero
+//   I think need a sprite manager and only keep track of a void ptr here
+//   that way, do not need game window, only x,y position
+Rectangle::Rectangle(GameWindow * window, int pixelWidth, int pixelHeight) :
+    PhysicsObject(0,0,0,0) 
 {
     t_point windowSize = window->getSize();
     m_position = {
@@ -10,7 +14,7 @@ Rectangle::Rectangle(GameWindow * window, int pixelWidth, int pixelHeight)
         (windowSize.y/2) - (pixelHeight/2)
     };
     m_window = window;
-    m_sizePixels = {pixelWidth, pixelHeight};
+    m_sizePx = {pixelWidth, pixelHeight};
 
     std::cout << "Player Position: " << m_position.x << ", " << m_position.y << std::endl;
 
@@ -63,7 +67,7 @@ void Rectangle::render()
         m_window->renderSprite(
             m_defaultSprite, /* cached texture ID */
             m_position,  /* position of the top left corner */
-            m_sizePixels /* render size pixel width x height */
+            m_sizePx /* render size pixel width x height */
         );
     }
 }

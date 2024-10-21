@@ -2,10 +2,10 @@
 #define RECTANGLE_H
 
 #include "GameWindow.h"
-#include "GameObject.h"
+#include "PhysicsObject.h"
 #include "Tile.h"
 
-class Rectangle: public GameObject
+class Rectangle: public PhysicsObject
 {
     public:
         Rectangle(GameWindow * window, int pixelWidth, int pixelHeight);
