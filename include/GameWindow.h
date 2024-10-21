@@ -19,6 +19,7 @@ class GameWindow
         t_index createTexture(t_pixel * pixels, T_UINT16 width, T_UINT16 height);
         t_index createTexture(t_tile * tilePixels);
         t_index createTexture(Sprite * sprite);
+        t_point getSize();
 
         void renderTexture(t_index textureID, t_point point, T_UINT16 width, T_UINT16 height, t_scale scale);
         void renderSprite(Sprite * sprite, t_point point, t_scale scale);

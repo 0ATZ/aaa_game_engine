@@ -1,7 +1,11 @@
 #include <iostream>
 #include "Game.h"
 #include "Rectangle.h"
+#include "ViewPort.h"
 #include "sprite/TestMap.h"
+
+t_point g_player_pos;
+t_point g_camera_pos;
 
 Game::Game()
 {
@@ -51,8 +55,9 @@ bool Game::init()
 
     std::cout << "TileSet count: " << m_tileSet->getTileCount() << std::endl;
     
-    Rectangle * obj1 = new Rectangle(window, 32, 32);
-    registerObject(obj1);
+    // use the rectangle as the player object!
+    m_player = new Rectangle(window, 32, 32);
+    m_viewPort = new ViewPort(m_player, 800, 640);
     
     return true;
 }
@@ -62,13 +67,33 @@ void Game::update()
     // window should update first to get new window state such as user inputs
     window->update();
 
-    // Update game objects
+    // Update the player
+    m_player->update();
+    m_viewPort->update();
+    t_point cameraVector = m_viewPort->invertPosition();
+    bool cameraLocked = ((ViewPort*)m_viewPort)->isCameraLocked();
+
+    t_point pp = m_player->getCenterPosition();
+    t_point vp = m_viewPort->getCenterPosition();
+    t_point tm = m_tileMap->getPosition();
+
+    // std::cout << "Camera x : " << vp.x << ", " << vp.y << std::endl;
+    // std::cout << "Player x : " << pp.x << ", " << pp.y << std::endl;
+    // std::cout << "Camera Vec : " << cameraVector.x << ", " << cameraVector.y << std::endl;
+    // std::cout << "TileMap    : " << tm.x << ", " << tm.y << std::endl;
+    
+
+    // Update all other game objects
     for (int i = 0; i < m_objectCount; i++)
     {
         GameObject * obj = reinterpret_cast<GameObject*>(m_objects[i]);
         if (obj != nullptr)
         {
             obj->update();
+            if (!cameraLocked)
+            {
+                // obj->movePosition(cameraVector);
+            }
         }
     }
 }
@@ -78,6 +103,8 @@ void Game::render()
     // Clear the window before rendering new graphics
     window->clear();
     
+    m_viewPort->render();
+
     // Render game objects
     for (int i = 0; i < m_objectCount; i++)
     {
@@ -87,6 +114,9 @@ void Game::render()
             obj->render();
         }
     }
+
+    // render the player last
+    m_player->render();
 
     // Present the game window after all game objects have been rendered 
     window->render();

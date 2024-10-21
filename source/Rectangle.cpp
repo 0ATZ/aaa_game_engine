@@ -4,9 +4,15 @@
 
 Rectangle::Rectangle(GameWindow * window, int pixelWidth, int pixelHeight)
 {
-    m_position = {0,0};
+    t_point windowSize = window->getSize();
+    m_position = {
+        (windowSize.x/2) - (pixelWidth/2),
+        (windowSize.y/2) - (pixelHeight/2)
+    };
     m_window = window;
     m_sizePixels = {pixelWidth, pixelHeight};
+
+    std::cout << "Player Position: " << m_position.x << ", " << m_position.y << std::endl;
 
     // hard code a 16x16 blue square
     t_tile blue_square;

@@ -1,0 +1,38 @@
+camera_pos = (x,y)
+camera_width = (w, h)
+viewable range:
+x_range = (x, x + w)
+y_range = (y, y + h)
+
+
+min_player_x = x + (0.2w)
+max_player_x = x + (0.8w)
+min_player_y = y + (0.2w)
+max_player_y = y + (0.8w)
+
+
+# camera_locked (move with the player)
+# camera_unlocked (stay at same point)
+
+def isCameraLocked():
+	locked = True
+	# right side, adjust camera x+
+	if player.x >= camera.x + (0.8w):
+		locked = False
+	# left side, adjust camera x-
+	elif player.x <= camera.x + (0.2w):
+		locked = False
+	# bottom side, adjust camera y+ (screen down)
+	elif player.y >= camera.y + (0.8h):
+		locked = False
+	# top side, adjust camera y- (screen up)
+	elif player.y <= camera.y + (0.2h):
+		locked = False
+	return locked
+
+
+def update_camera();
+	if isCameraLocked() == False:
+		# follow the player
+		camera.x += (player.speed.x * delta_time)
+		camera.y += (player.speed.y * delta_time)

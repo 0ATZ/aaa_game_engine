@@ -215,6 +215,15 @@ t_index GameWindow::createTexture(Sprite *sprite)
     return textureID;
 }
 
+t_point GameWindow::getSize()
+{
+    t_point L_size = {
+        m_windowWidth,
+        m_windowHeight
+    };
+    return L_size;
+}
+
 // scale can be 1-4 inclusive
 void GameWindow::renderTexture(t_index textureID, t_point point, T_UINT16 width, T_UINT16 height, t_scale scale)
 {

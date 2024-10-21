@@ -1,22 +1,22 @@
 #include "GameTypes.h"
 #include "GameObject.h"
-#include "GameWindow.h"
 
-class ViewPort : GameObject
+class ViewPort : public GameObject
 {
     public:
-        ViewPort(GameWindow * window, GameObject * player, GameObject * map);
+        ViewPort(GameObject * player, T_UINT16 widthPixels, T_UINT16 heightPixels);
         bool init();
         void update();
         void render();
         void destroy();
+        
+        bool isCameraLocked();
+        void centerToPlayer();
 
     private:
-        t_point * m_windowSize;
-        t_point * m_playerSize;
-        t_point * m_mapSize;
-        t_point * m_mapPosition;
-        t_point * m_playerPosition;
-        T_UINT16 m_pKeys;
-  
+        GameObject * m_player;  
+        t_point maxPlayerPosition();
+        t_point minPlayerPosition();
+        
+        bool m_followPlayer;
 };

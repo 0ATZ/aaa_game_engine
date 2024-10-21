@@ -27,6 +27,12 @@ TileMap::TileMap(TileSet * tileSet, t_tilemap tileMap, T_UINT16 numRows, T_UINT1
         m_numCols = numCols;
     }
 
+    // calculate the width and height of the entire map
+    m_sizePixels = {
+        m_numCols * TILE_WIDTH * m_scale,
+        m_numRows * TILE_WIDTH * m_scale
+    };
+
     // calculate the total number of tiles in this map
     m_numTiles = m_numRows * m_numCols;
 

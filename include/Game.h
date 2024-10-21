@@ -20,7 +20,9 @@ class Game
         
     private:
         static const unsigned int MAX_OBJECTS = 64U;
-        void * m_objects[MAX_OBJECTS];
+        GameObject * m_objects[MAX_OBJECTS];
+        GameObject * m_player;
+        GameObject * m_viewPort;
         int m_objectCount;
         GameWindow * window;
         TileSet * m_tileSet;
