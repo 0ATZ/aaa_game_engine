@@ -1,10 +1,18 @@
-- create a key listener class and print out key presses
-- create a player class
-- create an entity class which tracks position
-- create a player class which renders a square and can move around using the key presses
+X create a key listener class and print out key presses
+X create a player class
+X create an entity class which tracks position
+X create a player class which renders a square and can move around using the key presses
 ===================
-- Implement viewport scrolling
+X Implement viewport scrolling
 - Implement AnimatedSprite class
-- Load tilesets from binary file sprite sheets
 - create or find some tools:
     - sprite design -> png
+- Load tilesets from binary file sprite sheets
+    - create binary loader function
+    - use binary loader in TileMap, TileSet, Tile, Sprite
+    - verify file sizes?
+        fseek(f, 0, SEEK_END); // seek to end of file
+        size = ftell(f); // get current file pointer
+        fseek(f, 0, SEEK_SET); // seek back to beginning of file
+        // proceed with allocating memory and reading the file
+    
