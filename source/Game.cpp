@@ -3,6 +3,7 @@
 #include "Rectangle.h"
 #include "ViewPort.h"
 #include "sprite/TestMap.h"
+#include "Vector2.h"
 
 t_point g_player_pos;
 t_point g_camera_pos;
@@ -57,6 +58,8 @@ bool Game::init()
     
     // use the rectangle as the player object!
     m_player = new Rectangle(window, 32, 32);
+    registerObject(m_player);
+
     m_viewPort = new ViewPort((PhysicsObject*)m_player, 800, 640);
     
     return true;
@@ -68,14 +71,14 @@ void Game::update()
     window->update();
 
     // Update the player
-    m_player->update();
+    // m_player->update();
     m_viewPort->update();
-    t_point cameraVector = ((PhysicsObject*) m_viewPort)->invertPosition();
+    t_vector cameraVector = Vector2::invert(m_viewPort->getPositionAsVector());
     bool cameraLocked = ((ViewPort*)m_viewPort)->isCameraLocked();
 
-    t_point pp = ((PhysicsObject*) m_player)->getCenterPosition();
-    t_point vp = ((PhysicsObject*) m_viewPort)->getCenterPosition();
-    t_point tm = ((PhysicsObject*) m_tileMap)->getPosition();
+    // t_point pp = ((PhysicsObject*) m_player)->getCenterPosition();
+    // t_point vp = ((PhysicsObject*) m_viewPort)->getCenterPosition();
+    // t_point tm = ((PhysicsObject*) m_tileMap)->getPosition();
 
     // std::cout << "Camera x : " << vp.x << ", " << vp.y << std::endl;
     // std::cout << "Player x : " << pp.x << ", " << pp.y << std::endl;
@@ -92,7 +95,7 @@ void Game::update()
             obj->update();
             if (!cameraLocked)
             {
-                // obj->movePosition(cameraVector);
+                obj->movePosition(cameraVector);
             }
         }
     }
@@ -116,7 +119,7 @@ void Game::render()
     }
 
     // render the player last
-    m_player->render();
+    // m_player->render();
 
     // Present the game window after all game objects have been rendered 
     window->render();

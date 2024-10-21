@@ -4,8 +4,9 @@
 #include "BaseTypes.h"
 #include "SDL2/SDL.h"
 #include "Sprite.h"
+#include "GameObject.h"
 
-class GameWindow
+class GameWindow : GameObject
 {
     public:
         GameWindow(T_UINT16 width, T_UINT16 height);
@@ -23,7 +24,7 @@ class GameWindow
 
         void renderTexture(t_index textureID, t_point point, T_UINT16 width, T_UINT16 height, t_scale scale);
         void renderSprite(Sprite * sprite, t_point point, t_scale scale);
-        void renderSprite(Sprite *sprite, t_point point, t_point size);
+        void renderSprite(Sprite *sprite, t_point point, t_vector size);
 
         bool textureExists(t_index textureID);
 

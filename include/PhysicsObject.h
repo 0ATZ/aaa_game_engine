@@ -15,18 +15,11 @@ class PhysicsObject : public GameObject
         void update();
         void render();
         void destroy();
-
-        void setCenterPosition(t_point position);
-        void movePosition(t_point vector);
-        t_point getCenterPosition();
-        t_point getSizePixels();
-        t_point invertPosition();
-
+    
+    // TODO: perform physics calculations to move position
+    // TODO: calculate collisions
     protected:
-        t_point m_sizePx;  // TODO: how to calc collisions
-        t_point m_direction;
-        T_UINT16 m_speedPx;
-        Sprite * m_defaultSprite;
+        t_vector m_velocityPx;
 };
 
 #endif

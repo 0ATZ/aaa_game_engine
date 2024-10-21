@@ -10,6 +10,13 @@ typedef struct s_point
     T_INT32 y;
 } t_point;
 
+typedef struct s_vector
+{
+    T_INT32 x;
+    T_INT32 y;
+} t_vector;
+
+
 // 16-bit pixels (RGB565)
 typedef T_UINT16 t_pixel;
 

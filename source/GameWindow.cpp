@@ -247,8 +247,8 @@ void GameWindow::renderSprite(Sprite *sprite, t_point point, t_scale scale)
     );
 }
 
-// scale the sprite using an (x, y) size instead of a scale factor
-void GameWindow::renderSprite(Sprite *sprite, t_point point, t_point size)
+// scale the sprite using an (x, y) vector size instead of a scale factor
+void GameWindow::renderSprite(Sprite *sprite, t_point point, t_vector size)
 {
     // render the sprite 
     // texture must be created beforehand using createTexture(Sprite *sprite)

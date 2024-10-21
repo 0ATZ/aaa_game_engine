@@ -41,8 +41,8 @@ void ViewPort::update()
 void ViewPort::centerToPlayer()
 {
     // set the viewport position to the player position
-    this->setCenterPosition(
-        m_player->getCenterPosition()
+    this->setCenter(
+        m_player->getCenter()
     );
 }
 

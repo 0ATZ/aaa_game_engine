@@ -1,12 +1,7 @@
 #include "Rectangle.h"
 #include <iostream>
 
-
-// TODO: make this Rectangle constructor better. For now, init with zero
-//   I think need a sprite manager and only keep track of a void ptr here
-//   that way, do not need game window, only x,y position
-Rectangle::Rectangle(GameWindow * window, int pixelWidth, int pixelHeight) :
-    PhysicsObject(0,0,0,0) 
+Rectangle::Rectangle(GameWindow * window, int pixelWidth, int pixelHeight)
 {
     t_point windowSize = window->getSize();
     m_position = {
