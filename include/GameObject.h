@@ -19,9 +19,9 @@ class GameObject
             delete m_defaultSprite; 
         };
 
-        virtual bool init()   = 0;
-        virtual void update() = 0;
-        virtual void render() = 0;
+        virtual bool init()    = 0;
+        virtual void update()  = 0;
+        virtual void render()  = 0;
         virtual void destroy() = 0;
     
         void setPosition(t_point position)
@@ -64,6 +64,14 @@ class GameObject
         t_vector getSizePixels() 
         {
             return m_sizePx;
+        }
+
+        void setDefaultSprite(Sprite * sprite)
+        {
+            if (sprite != nullptr)
+            {
+                m_defaultSprite = sprite;
+            }
         }
 
     protected:

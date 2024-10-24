@@ -74,22 +74,26 @@ bool ViewPort::isCameraLocked()
     return locked;
 }
 
+bool ViewPort::isObjectVisible(GameObject *obj)
+{
+    // not visible
+    return false;
+}
+
 t_point ViewPort::maxPlayerPosition()
 {
-    t_point L_point = {
-        m_position.x + (T_INT32)(0.8 * m_sizePx.x),
-        m_position.y + (T_INT32)(0.8 * m_sizePx.y)
-    };
-    return L_point;
+    return Vector2::add(
+        m_position, 
+        Vector2::scale(m_sizePx, 0.8)
+    );
 }
 
 t_point ViewPort::minPlayerPosition()
 {
-    t_point L_point = {
-        m_position.x + (T_INT32)(0.2 * m_sizePx.x),
-        m_position.y + (T_INT32)(0.2 * m_sizePx.y)
-    };
-    return L_point;
+    return Vector2::add(
+        m_position, 
+        Vector2::scale(m_sizePx, 0.2)
+    );
 }
 
 void ViewPort::render()

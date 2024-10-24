@@ -11,6 +11,8 @@ class PhysicsObject : public GameObject
         PhysicsObject();
         PhysicsObject(T_INT32 x, T_INT32 y, T_UINT16 widthPx, T_UINT16 heightPx);
 
+        bool intersects(GameObject *obj);
+
         bool init();
         void update();
         void render();

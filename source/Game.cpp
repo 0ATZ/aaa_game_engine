@@ -15,6 +15,7 @@ Game::Game()
     m_objectCount = 0;
     m_tileSet = nullptr;
     m_tileMap = nullptr;
+    m_intersect = false;
 }
 
 bool Game::init()
@@ -56,6 +57,13 @@ bool Game::init()
 
     std::cout << "TileSet count: " << m_tileSet->getTileCount() << std::endl;
     
+    m_redSquare = new Tile("./assets/sprites/red_16x16.bin");
+    window->createTexture(m_redSquare);
+    m_greenSquare = new Tile("./assets/sprites/green_16x16.bin");
+    window->createTexture(m_greenSquare);
+
+    m_testSquare = new PhysicsObject(128, 128, 64, 64);
+
     // use the rectangle as the player object!
     m_player = new Rectangle(window, 32, 32);
     registerObject(m_player);
@@ -93,11 +101,20 @@ void Game::update()
         if (obj != nullptr)
         {
             obj->update();
-            if (!cameraLocked)
-            {
-                obj->movePosition(cameraVector);
-            }
+            // if (!cameraLocked)
+            // {
+            //     obj->movePosition(cameraVector);
+            // }
         }
+    }
+
+    if (((PhysicsObject*)m_player)->intersects((PhysicsObject*)m_testSquare))
+    {
+        m_intersect = true;
+    }
+    else
+    {
+        m_intersect = false;
     }
 }
 
@@ -118,6 +135,11 @@ void Game::render()
         }
     }
 
+    if (m_intersect)
+        window->renderSprite(m_redSquare, {128, 128}, {64, 64});
+    else
+        window->renderSprite(m_greenSquare, {128, 128}, {64, 64});
+    
     // render the player last
     // m_player->render();
 

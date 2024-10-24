@@ -16,7 +16,6 @@ typedef struct s_vector
     T_INT32 y;
 } t_vector;
 
-
 // 16-bit pixels (RGB565)
 typedef T_UINT16 t_pixel;
 

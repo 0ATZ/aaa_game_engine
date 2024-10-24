@@ -12,12 +12,13 @@ class ViewPort : public PhysicsObject
         void destroy();
         
         bool isCameraLocked();
+        bool isObjectVisible(GameObject *obj);
         void centerToPlayer();
 
     private:
         PhysicsObject * m_player;  
         t_point maxPlayerPosition();
         t_point minPlayerPosition();
-        
+
         bool m_followPlayer;
 };

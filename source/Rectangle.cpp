@@ -24,28 +24,44 @@ bool Rectangle::init()
 
 void Rectangle::update()
 {
-    const int speed = 2;
-    uint16_t pKeys = m_window->getPlayerKeys();
+    const T_FLOAT32 movement_speed = 2.0;
+    T_UINT16 pKeys = m_window->getPlayerKeys();
+    t_vector movement = { 0, 0 }; 
     if (pKeys & GameWindow::UP)
     {
         // std::cout << "up" << std::endl;
-        m_position.y = (m_position.y - speed);
+        --movement.y;
     }
     if (pKeys & GameWindow::DOWN)
     {
         // std::cout << "down" << std::endl;
-        m_position.y = (m_position.y + speed);
+        ++movement.y;
     }
     if (pKeys & GameWindow::LEFT)
     {
         // std::cout << "left" << std::endl;
-        m_position.x = (m_position.x - speed);
+        --movement.x;
     }
     if (pKeys & GameWindow::RIGHT)
     {
         // std::cout << "right" << std::endl;
-        m_position.x = (m_position.x + speed);
+        ++movement.x;
     }
+
+    // normalize and scale the vector,
+    movement = Vector2::scale(
+        Vector2::normalize(movement),
+        movement_speed
+    );
+    
+    // std::cout << "movement x: " << movement.x << std::endl;
+
+    // transform the position 
+    m_position = Vector2::add(
+        m_position,
+        movement
+    );
+
 }
 
 void Rectangle::render()

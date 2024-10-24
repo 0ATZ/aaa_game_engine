@@ -76,6 +76,7 @@ namespace BufferIO
         fclose(fp);
 
         T_UINT16 bytesRead = (objectsRead * objectSize);
+        printf("read bytes: %d\n", bytesRead);
         return bytesRead;
     }
 
