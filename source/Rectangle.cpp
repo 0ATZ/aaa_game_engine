@@ -12,15 +12,8 @@ Rectangle::Rectangle(GameWindow * window, int pixelWidth, int pixelHeight)
     m_sizePx = {pixelWidth, pixelHeight};
 
     std::cout << "Player Position: " << m_position.x << ", " << m_position.y << std::endl;
-
-    // hard code a 16x16 blue square
-    t_tile blue_square;
-    for (int i = 0; i < TILE_SIZE; i++)
-    {
-        blue_square[i] = 0x001FU;
-    }
     
-    m_defaultSprite = new Tile(&blue_square);
+    m_defaultSprite = new Tile("./assets/sprites/green_16x16.bin");
     (void) window->createTexture(m_defaultSprite);
 }
 
