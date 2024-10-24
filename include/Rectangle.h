@@ -9,6 +9,7 @@ class Rectangle: public PhysicsObject
 {
     public:
         Rectangle(GameWindow * window, int pixelWidth, int pixelHeight);
+        
         bool init();
         void update();
         void render();

@@ -24,4 +24,3 @@ class PhysicsObject : public GameObject
 
 #endif
 
-t_point getPosition();

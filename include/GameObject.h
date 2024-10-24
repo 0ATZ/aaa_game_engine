@@ -9,6 +9,16 @@ class GameObject
 {
 
     public:
+        GameObject() {
+            m_position = { 0LL, 0LL };
+            m_sizePx = { 0LL, 0LL };
+            m_defaultSprite = nullptr;
+        };
+
+        ~GameObject() { 
+            delete m_defaultSprite; 
+        };
+
         virtual bool init()   = 0;
         virtual void update() = 0;
         virtual void render() = 0;

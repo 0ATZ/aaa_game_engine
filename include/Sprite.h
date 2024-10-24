@@ -7,7 +7,9 @@
 class Sprite
 {
     public:
+        Sprite(const char *const filename, T_UINT16 width, T_UINT16 height);
         Sprite(t_pixel *spritePixels, T_UINT16 width, T_UINT16 height);
+        ~Sprite();
 
         T_UINT16 *getSpritePixels();
         T_UINT16 getNumPixels();
