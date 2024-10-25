@@ -12,11 +12,11 @@ class GameObject
         GameObject() {
             m_position = { 0LL, 0LL };
             m_sizePx = { 0LL, 0LL };
-            m_defaultSprite = nullptr;
+            m_sprite = nullptr;
         };
 
         ~GameObject() { 
-            delete m_defaultSprite; 
+            delete m_sprite; 
         };
 
         virtual bool init()    = 0;
@@ -70,13 +70,14 @@ class GameObject
         {
             if (sprite != nullptr)
             {
-                m_defaultSprite = sprite;
+                m_sprite = sprite;
             }
         }
 
     protected:
         t_point m_position;
         t_vector m_sizePx;
-        Sprite * m_defaultSprite;
+        Sprite * m_sprite;
+        Sprite * m_currentSprite;
 };
 #endif

@@ -13,8 +13,8 @@ Rectangle::Rectangle(GameWindow * window, int pixelWidth, int pixelHeight)
 
     std::cout << "Player Position: " << m_position.x << ", " << m_position.y << std::endl;
     
-    m_defaultSprite = new Tile("./assets/sprites/green_16x16.bin");
-    (void) window->createTexture(m_defaultSprite);
+    m_sprite = new Tile("./assets/sprites/green_16x16.bin");
+    (void) window->createTexture(m_sprite);
 }
 
 bool Rectangle::init()
@@ -69,7 +69,7 @@ void Rectangle::render()
     if (m_window != nullptr)
     {
         m_window->renderSprite(
-            m_defaultSprite, /* cached texture ID */
+            m_sprite, /* cached texture ID */
             m_position,  /* position of the top left corner */
             m_sizePx /* render size pixel width x height */
         );

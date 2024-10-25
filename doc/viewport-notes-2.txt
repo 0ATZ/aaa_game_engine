@@ -1,0 +1,24 @@
+Game
+  m_window = GameWindow()
+  
+  obj1 = GameObject()
+  obj2 = GameObject()
+  m_player = Rectangle()
+
+  for obj in registeredObjects:
+     m_window->createTexture((GameObject *) obj)  // need to implement this function
+
+  registerObject(obj1)
+  registerObject(obj2)
+  registerObject(player)
+  registerObject(viewport)
+
+update
+  for obj in registeredObjects
+     obj->update()
+
+render
+  for obj in registeredObjects
+     if viewport->isObjectVisible()
+       t_point renderPosition = Vector2::subtract(objectPosition, cameraPosition);
+       window->render(obj, renderPosition) // need to implement this

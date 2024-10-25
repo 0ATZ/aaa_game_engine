@@ -6,7 +6,7 @@ PhysicsObject::PhysicsObject()
     m_position = {0L, 0L};
     m_sizePx = {0L, 0L};  // TODO: how to calc collisions
     m_velocityPx = {0L, 0L};
-    m_defaultSprite = nullptr;
+    m_sprite = nullptr;
 }
 
 PhysicsObject::PhysicsObject(T_INT32 x, T_INT32 y, T_UINT16 widthPx, T_UINT16 heightPx)
@@ -14,7 +14,7 @@ PhysicsObject::PhysicsObject(T_INT32 x, T_INT32 y, T_UINT16 widthPx, T_UINT16 he
     m_position = { x, y };
     m_sizePx = { widthPx, heightPx };
     m_velocityPx = {0L, 0L};
-    m_defaultSprite = nullptr;
+    m_sprite = nullptr;
 }
 
 
