@@ -14,14 +14,14 @@ class Sprite
         T_UINT16 *getSpritePixels();
         T_UINT16 getNumPixels();
 
-        void setTextureID(t_index textureID);
-        t_index getTextureID();
+        void setTexture(void * texture);
+        void * getTexture();
         T_UINT16 getWidth();
         T_UINT16 getHeight();
 
     private:
         T_UINT16 * m_spritePixels;
-        t_index m_textureID;
+        void * m_texture;  // for SDL implementation, this is SDL_Texture
         T_UINT16 m_height;
         T_UINT16 m_width;
 };

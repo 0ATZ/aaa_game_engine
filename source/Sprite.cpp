@@ -13,7 +13,7 @@ Sprite::Sprite(const char * const filename, T_UINT16 width, T_UINT16 height)
     // initialize variables
     m_width = width;
     m_height = height;
-    m_textureID = 0x00U;
+    m_texture = nullptr;
 }
 
 Sprite::Sprite(t_pixel *spritePixels, T_UINT16 width, T_UINT16 height)
@@ -27,7 +27,7 @@ Sprite::Sprite(t_pixel *spritePixels, T_UINT16 width, T_UINT16 height)
     // initialize variables
     m_width = width;
     m_height = height;
-    m_textureID = 0x00U;
+    m_texture = nullptr;
 }
 
 Sprite::~Sprite()
@@ -45,14 +45,14 @@ T_UINT16 Sprite::getNumPixels()
     return (m_height * m_width);
 }
 
-void Sprite::setTextureID(t_index textureID)
+void Sprite::setTexture(void * texture)
 {
-    m_textureID = textureID;
+    m_texture = texture;
 }
 
-t_index Sprite::getTextureID()
+void * Sprite::getTexture()
 {
-    return m_textureID;
+    return m_texture;
 }
 
 T_UINT16 Sprite::getWidth()

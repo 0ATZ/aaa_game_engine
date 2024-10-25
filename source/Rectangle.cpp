@@ -3,7 +3,7 @@
 
 Rectangle::Rectangle(GameWindow * window, int pixelWidth, int pixelHeight)
 {
-    t_point windowSize = window->getSize();
+    t_vector windowSize = window->getSize();
     m_position = {
         (windowSize.x/2) - (pixelWidth/2),
         (windowSize.y/2) - (pixelHeight/2)

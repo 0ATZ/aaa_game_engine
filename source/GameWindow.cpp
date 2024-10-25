@@ -7,17 +7,15 @@ GameWindow::GameWindow(T_UINT16 width, T_UINT16 height)
 {
     m_running = false;
     m_pKeys = 0U;
-    m_nextTexture = 0U;
-    m_windowWidth = width;
-    m_windowHeight = height;
-
+    m_sizePx = {width, height};
+    
     // initialize SDL video
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
     }
 
     // create the SDL window
-    window = SDL_CreateWindow("SDL2 Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, m_windowWidth, m_windowHeight, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("SDL2 Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
     if (window == nullptr) {
         std::cerr << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl;
         SDL_Quit();
@@ -166,31 +164,20 @@ bool GameWindow::isRunning()
     return m_running;
 }
 
-t_index GameWindow::createTexture(t_pixel *pixels, T_UINT16 width, T_UINT16 height)
+void * GameWindow::createTexture(t_pixel *pixels, T_UINT16 width, T_UINT16 height)
 {
-    t_index L_retVal = 0xFFU;
-    if (m_nextTexture < MAX_TEXTURES)
+    void * L_retVal = nullptr;
+    SDL_Texture * L_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STATIC, width, height);
+
+    if (!L_texture)
     {
-        SDL_Texture * L_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STATIC, width, height);
-
-        if (!L_texture)
-        {
-            SDL_Log("Failed to create texture: %s", SDL_GetError());
-        }
-        else
-        {
-            // Update the texture with the pixel data
-            SDL_UpdateTexture(L_texture, nullptr, pixels, width * sizeof(T_UINT16));
-            m_textureCache[m_nextTexture] = L_texture;
-            L_retVal = m_nextTexture;
-            std::cout << "GameWindow: texture cached: " << (int) m_nextTexture << std::endl;
-            m_nextTexture++;
-        }
-
+        SDL_Log("Failed to create texture: %s", SDL_GetError());
     }
     else
     {
-        std::cout << "ERROR: could not allocate texture." << std::endl;
+        // Update the texture with the pixel data
+        SDL_UpdateTexture(L_texture, nullptr, pixels, width * sizeof(T_UINT16));
+        L_retVal = L_texture;
     }
 
     // return the index for the cached texture
@@ -198,53 +185,35 @@ t_index GameWindow::createTexture(t_pixel *pixels, T_UINT16 width, T_UINT16 heig
     return L_retVal;
 }
 
-t_index GameWindow::createTexture(t_tile *tilePixels)
+void * GameWindow::createTexture(t_tile *tilePixels)
 {
     return this->createTexture((t_pixel*) tilePixels, TILE_WIDTH, TILE_HEIGHT);
 }
 
-t_index GameWindow::createTexture(Sprite *sprite)
+void * GameWindow::createTexture(Sprite *sprite)
 {
-    t_index textureID = this->createTexture(
+    void * L_texture = this->createTexture(
         sprite->getSpritePixels(),
         sprite->getWidth(),
         sprite->getHeight()
     );
 
-    sprite->setTextureID(textureID);
-    return textureID;
+    sprite->setTexture(L_texture);
+    return L_texture;
 }
 
-t_point GameWindow::getSize()
+t_vector GameWindow::getSize()
 {
-    t_point L_size = {
-        m_windowWidth,
-        m_windowHeight
-    };
-    return L_size;
+    return m_sizePx;
 }
 
-// scale can be 1-4 inclusive
-void GameWindow::renderTexture(t_index textureID, t_point point, T_UINT16 width, T_UINT16 height, t_scale scale)
+void GameWindow::renderTexture(void * texture, t_point point, t_vector size)
 {
-    if (this->textureExists(textureID))
+    if (texture != nullptr)
     {
-        SDL_Rect destRect = { point.x, point.y, width*scale, height*scale };
-        SDL_RenderCopy(renderer, m_textureCache[textureID], nullptr, &destRect);
+        SDL_Rect destRect = { point.x, point.y, size.x, size.y };
+        SDL_RenderCopy(renderer, (SDL_Texture *) texture, nullptr, &destRect);
     }
-}
-
-void GameWindow::renderSprite(Sprite *sprite, t_point point, t_scale scale)
-{
-    // render the sprite 
-    // texture must be created beforehand using createTexture(Sprite *sprite)
-    this->renderTexture(
-        sprite->getTextureID(), 
-        point,
-        sprite->getWidth(),
-        sprite->getHeight(),
-        scale
-    );
 }
 
 // scale the sprite using an (x, y) vector size instead of a scale factor
@@ -252,19 +221,11 @@ void GameWindow::renderSprite(Sprite *sprite, t_point point, t_vector size)
 {
     // render the sprite 
     // texture must be created beforehand using createTexture(Sprite *sprite)
-    t_index L_textureID = sprite->getTextureID();
-    if (this->textureExists(L_textureID))
+    SDL_Texture * L_texture = (SDL_Texture*) sprite->getTexture();
+    if (L_texture != nullptr)
     {
         SDL_Rect destRect = { point.x, point.y, size.x, size.y };
-        SDL_RenderCopy(renderer, m_textureCache[L_textureID], nullptr, &destRect);
+        SDL_RenderCopy(renderer, L_texture, nullptr, &destRect);
     }
 }
 
-bool GameWindow::textureExists(t_index textureID)
-{
-    if (textureID < m_nextTexture)
-    {
-        return true;
-    }
-    return false;
-}

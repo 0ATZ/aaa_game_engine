@@ -59,7 +59,8 @@ void TileSet::renderTile(t_index tileID, t_point point, t_scale scale)
 {
     if (this->isValid(tileID))
     {
-        m_window->renderSprite(m_tileSet[tileID], point, scale);
+        // TODO: temporary hardcode fix due to game window changes
+        m_window->renderSprite(m_tileSet[tileID], point, {32,32});
     }
 }
 

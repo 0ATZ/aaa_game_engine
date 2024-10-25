@@ -6,7 +6,7 @@
 #include "Sprite.h"
 #include "GameObject.h"
 
-class GameWindow : GameObject
+class GameWindow : public GameObject
 {
     public:
         GameWindow(T_UINT16 width, T_UINT16 height);
@@ -17,16 +17,13 @@ class GameWindow : GameObject
         void clear();
         bool isRunning();
         
-        t_index createTexture(t_pixel * pixels, T_UINT16 width, T_UINT16 height);
-        t_index createTexture(t_tile * tilePixels);
-        t_index createTexture(Sprite * sprite);
-        t_point getSize();
+        void * createTexture(t_pixel * pixels, T_UINT16 width, T_UINT16 height);
+        void * createTexture(t_tile * tilePixels);
+        void * createTexture(Sprite * sprite);
+        t_vector getSize();
 
-        void renderTexture(t_index textureID, t_point point, T_UINT16 width, T_UINT16 height, t_scale scale);
-        void renderSprite(Sprite * sprite, t_point point, t_scale scale);
+        void renderTexture(void *texture, t_point point, t_vector size);
         void renderSprite(Sprite *sprite, t_point point, t_vector size);
-
-        bool textureExists(t_index textureID);
 
         SDL_Renderer * getSDLRenderer();
         T_UINT16 getPlayerKeys();
@@ -38,16 +35,14 @@ class GameWindow : GameObject
         
     private:
 
-        static const T_UINT16 MAX_TEXTURES = 32U;
-        SDL_Texture * m_textureCache[MAX_TEXTURES];
-        t_index m_nextTexture;
+        // TODO: keep texture limit for memory constraints? 
+        //   maybe want to just keep track of bytes consumed?
+        // static const T_UINT16 MAX_TEXTURES = 32U;
+        // t_index m_nextTexture;
 
         SDL_Window * window;
         SDL_Renderer * renderer;
         bool m_running;
         T_UINT16 m_pKeys;
-        T_UINT16 m_windowWidth;
-        T_UINT16 m_windowHeight;
-
 };
 #endif
