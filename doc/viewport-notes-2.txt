@@ -1,3 +1,8 @@
+GameWindow keeps track of textureIDs
+TileSets
+
+
+
 Game
   m_window = GameWindow()
   
@@ -22,3 +27,36 @@ render
      if viewport->isObjectVisible()
        t_point renderPosition = Vector2::subtract(objectPosition, cameraPosition);
        window->render(obj, renderPosition) // need to implement this
+
+
+ViewPort * view_port = nullptr;
+
+GameWindow::initialize(t_vector size)
+{
+    view_port = ViewPort(size); // change constructor to not need player object
+}
+
+GameWindow::centerViewport(t_point center)
+{
+    view_port->setCenter(center);
+}
+
+bool GameWindow::viewportRender(Sprite * sprite, t_point position, t_vector size)
+{
+   bool L_rendered = false;
+   if (view_port->isObjectVisible(obj)) 
+   {
+	t_point render_pos = Vector2::subtract(position, view_port->getPosition());
+	renderSprite(sprite, render_pos, size);
+        L_rendered = true;
+   }
+   return L_rendered;
+}
+
+
+Need to update viewport object.. 
+should sprite be a gameobject to help detect visibility? 
+or should there be a base class GameRect that does all the Rectangle calcs
+In each game object->render() function, call GameWindow::viewportRender()
+
+
