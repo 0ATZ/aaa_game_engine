@@ -6,9 +6,8 @@
 
 namespace Vector2
 {
-    t_point add(t_point p, t_vector v);
-
-    t_point subtract(t_point p, t_vector v);
+    
+    t_vector multiply(t_vector v1, t_vector v2);
 
     t_vector add(t_vector v1, t_vector v2);
     

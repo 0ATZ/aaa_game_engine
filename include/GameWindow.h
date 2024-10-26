@@ -22,10 +22,12 @@ namespace GameWindow
     void * create_texture(Sprite * sprite);
     void render_texture(void *texture, t_point point, t_vector size);
     void render_sprite(Sprite *sprite, t_point point, t_vector size);
+    void render_sprite_viewport(Sprite * sprite, t_point position, t_vector size);
 
     bool is_running();
     T_UINT16 get_player_keys();
     t_vector get_window_size();
+    void center_viewport(t_point center);
 
     const T_UINT16 UP    = 0x01U; // 0001
     const T_UINT16 DOWN  = 0x02U; // 0010

@@ -21,7 +21,6 @@ class Game
         static const unsigned int MAX_OBJECTS = 64U;
         GameObject * m_objects[MAX_OBJECTS];
         GameObject * m_player;
-        GameObject * m_viewPort;
         int m_objectCount;
         TileSet * m_tileSet;
         TileMap * m_tileMap;

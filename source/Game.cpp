@@ -67,7 +67,6 @@ bool Game::init()
     m_player = new Rectangle(32, 32);
     registerObject(m_player);
 
-    m_viewPort = new ViewPort((PhysicsObject*)m_player, 800, 640);
     return true;
 }
 
@@ -76,22 +75,6 @@ void Game::update()
     // window should update first to get new window state such as user inputs
     GameWindow::process_events();
     
-    // Update the player
-    // m_player->update();
-    m_viewPort->update();
-    t_vector cameraVector = Vector2::invert(m_viewPort->getPositionAsVector());
-    bool cameraLocked = ((ViewPort*)m_viewPort)->isCameraLocked();
-
-    // t_point pp = ((PhysicsObject*) m_player)->getCenterPosition();
-    // t_point vp = ((PhysicsObject*) m_viewPort)->getCenterPosition();
-    // t_point tm = ((PhysicsObject*) m_tileMap)->getPosition();
-
-    // std::cout << "Camera x : " << vp.x << ", " << vp.y << std::endl;
-    // std::cout << "Player x : " << pp.x << ", " << pp.y << std::endl;
-    // std::cout << "Camera Vec : " << cameraVector.x << ", " << cameraVector.y << std::endl;
-    // std::cout << "TileMap    : " << tm.x << ", " << tm.y << std::endl;
-    
-
     // Update all other game objects
     for (int i = 0; i < m_objectCount; i++)
     {
@@ -99,14 +82,10 @@ void Game::update()
         if (obj != nullptr)
         {
             obj->update();
-            // if (!cameraLocked)
-            // {
-            //     obj->movePosition(cameraVector);
-            // }
         }
     }
 
-    if (((PhysicsObject*)m_player)->intersects((PhysicsObject*)m_testSquare))
+    if (m_player->intersects(m_testSquare))
     {
         m_intersect = true;
     }
@@ -114,6 +93,9 @@ void Game::update()
     {
         m_intersect = false;
     }
+
+    GameWindow::center_viewport(m_player->getCenter());
+
 }
 
 void Game::render()
@@ -121,12 +103,10 @@ void Game::render()
     // Clear the window before rendering new graphics
     GameWindow::clear_window();
     
-    m_viewPort->render();
-
     // Render game objects
     for (int i = 0; i < m_objectCount; i++)
     {
-        GameObject * obj = reinterpret_cast<GameObject*>(m_objects[i]);
+        GameObject * obj = m_objects[i];
         if (obj != nullptr)
         {
             obj->render();
@@ -134,12 +114,9 @@ void Game::render()
     }
 
     if (m_intersect)
-        GameWindow::render_sprite(m_redSquare, {128, 128}, {64, 64});
+        GameWindow::render_sprite_viewport(m_redSquare, {128, 128}, {64, 64});
     else
-        GameWindow::render_sprite(m_greenSquare, {128, 128}, {64, 64});
-    
-    // render the player last
-    // m_player->render();
+        GameWindow::render_sprite_viewport(m_greenSquare, {128, 128}, {64, 64});
 
     // Present the game window after all game objects have been rendered 
     GameWindow::present_window();

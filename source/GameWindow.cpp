@@ -1,5 +1,6 @@
 #include "GameWindow.h"
 #include <iostream>
+#include "ViewPort.h"
 
 namespace GameWindow
 {
@@ -13,6 +14,7 @@ namespace GameWindow
     bool game_running;
     T_UINT16 player_keys;
     t_vector window_size;
+    ViewPort * view_port;
 
     bool initialize(t_vector size)
     {
@@ -45,6 +47,9 @@ namespace GameWindow
             SDL_Quit();
             L_initSuccess = false;
         }
+        
+        // create the viewport to help render objects at the correct position
+        view_port = new ViewPort(window_size);
 
         // if the init succeeded, game is now running
         game_running = L_initSuccess;
@@ -142,6 +147,12 @@ namespace GameWindow
             }
         }
     }
+
+    void center_viewport(t_point center)
+    {
+        view_port->setCenter(center);
+        t_point playerPos = view_port->getPosition();
+    }
     
     void clear_window()
     {
@@ -186,29 +197,57 @@ namespace GameWindow
     }
     void *create_texture(Sprite *sprite)
     {
-        void * L_texture = create_texture(
-            sprite->getSpritePixels(),
-            sprite->getWidth(),
-            sprite->getHeight()
-        );
+        void * L_texture = nullptr;
+        if (sprite)
+        {
+            L_texture = create_texture(
+                sprite->getSpritePixels(),
+                sprite->getWidth(),
+                sprite->getHeight()
+            );
 
-        sprite->setTexture(L_texture);
+            sprite->setTexture(L_texture);
+        }
+        else
+        {
+            printf("tired to create texture from null sprite ptr\n");
+        }
         return L_texture;
     }
 
     void render_texture(void *texture, t_point point, t_vector size)
     {
-        if (texture != nullptr)
+        if (texture)
         {
             SDL_Rect destRect = { point.x, point.y, size.x, size.y };
             SDL_RenderCopy(sdl_renderer, (SDL_Texture *) texture, nullptr, &destRect);
+        }
+        else
+        {
+            printf("tried to render texture from null ptr\n");
         }
     }
 
     void render_sprite(Sprite *sprite, t_point point, t_vector size)
     {
-        SDL_Texture * L_texture = (SDL_Texture*) sprite->getTexture();
-        render_texture(L_texture, point, size);
+        if (sprite)
+        {
+            SDL_Texture * L_texture = (SDL_Texture*) sprite->getTexture();
+            render_texture(L_texture, point, size);
+        }
+        else
+        {
+            printf("tried to render sprite from null ptr\n");
+        }
+    }
+
+    void render_sprite_viewport(Sprite * sprite, t_point position, t_vector size)
+    {
+        if (view_port->intersects(position, size)) 
+        {
+            t_point render_pos = Vector2::subtract(position, view_port->getPosition());
+            render_sprite(sprite, render_pos, size);
+        }
     }
 
     bool is_running()

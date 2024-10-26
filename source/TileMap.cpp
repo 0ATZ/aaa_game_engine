@@ -1,8 +1,8 @@
 #include "TileMap.h"
 #include <cstring>
+#include <GameWindow.h>
 
-TileMap::TileMap(TileSet * tileSet, t_tilemap tileMap, T_UINT16 numRows, T_UINT16 numCols) :
-    PhysicsObject()
+TileMap::TileMap(TileSet * tileSet, t_tilemap tileMap, T_UINT16 numRows, T_UINT16 numCols)
 {
     m_position = {0,0};
     m_tileSet = tileSet;
@@ -28,11 +28,10 @@ TileMap::TileMap(TileSet * tileSet, t_tilemap tileMap, T_UINT16 numRows, T_UINT1
         m_numCols = numCols;
     }
 
+    m_tileSizePx = Vector2::scale({TILE_WIDTH, TILE_HEIGHT}, m_scale); 
+
     // calculate the width and height of the entire map
-    m_sizePx = {
-        m_numCols * TILE_WIDTH * m_scale,
-        m_numRows * TILE_WIDTH * m_scale
-    };
+    m_sizePx = Vector2::multiply({m_numRows, m_numCols}, m_tileSizePx);
 
     // calculate the total number of tiles in this map
     m_numTiles = m_numRows * m_numCols;
@@ -52,15 +51,21 @@ void TileMap::render()
         // visit each column in each row
         for (T_UINT16 col = 0U; col < m_numCols; col++)
         {
-            // TODO: only render the tile if part of it is on screen
-            // render tiles in a grid
-            m_tileSet->renderTile(
-                this->getTileID(row, col),   // get the tileID from the tilemap
-                this->tilePosition(row, col), // get the (x, y) position for this tile
-                m_scale   // scale factor for the rendered sprite
-            );
+            t_index L_tileID = getTileID(row, col);
+            Tile * L_tile = m_tileSet->getTileFromID(L_tileID);
+            if (L_tile) 
+            {
+                GameWindow::render_sprite_viewport(
+                    L_tile, tilePosition(row, col), m_tileSizePx
+                );    
+            }
         }
     }
+}
+
+bool TileMap::init()
+{
+    return true;
 }
 
 t_index TileMap::getTileID(T_UINT16 row, T_UINT16 col)

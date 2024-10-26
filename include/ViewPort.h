@@ -5,20 +5,18 @@
 class ViewPort : public PhysicsObject
 {
     public:
-        ViewPort(PhysicsObject * player, T_UINT16 widthPixels, T_UINT16 heightPixels);
+        ViewPort(t_vector size);
         bool init();
         void update();
         void render();
         void destroy();
         
-        bool isCameraLocked();
-        bool isObjectVisible(GameObject *obj);
-        void centerToPlayer();
+        void trackPosition(t_point *position);
+        bool isTrackingPosition();
 
     private:
-        PhysicsObject * m_player;  
         t_point maxPlayerPosition();
         t_point minPlayerPosition();
 
-        bool m_followPlayer;
+        t_point * m_trackPosition;
 };

@@ -3,18 +3,15 @@
 
 #include "BaseTypes.h"
 
-// point describes an (x,y) coordinate in a 2D plane
-typedef struct s_point
-{
-    T_INT32 x;
-    T_INT32 y;
-} t_point;
 
 typedef struct s_vector
 {
     T_INT32 x;
     T_INT32 y;
 } t_vector;
+
+// point describes an (x,y) coordinate in a 2D plane
+typedef t_vector t_point; 
 
 // 16-bit pixels (RGB565)
 typedef T_UINT16 t_pixel;

@@ -66,7 +66,7 @@ void Rectangle::update()
 
 void Rectangle::render()
 {
-    GameWindow::render_sprite(m_sprite, m_position, m_sizePx);
+    GameWindow::render_sprite_viewport(m_sprite, m_position, m_sizePx);
 }
 
 void Rectangle::destroy()

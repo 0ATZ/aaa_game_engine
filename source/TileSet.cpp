@@ -55,13 +55,14 @@ t_index TileSet::addTile(t_tile *tilePixels)
     return L_retVal;
 }
 
-void TileSet::renderTile(t_index tileID, t_point point, t_scale scale)
+Tile * TileSet::getTileFromID(t_index tileID)
 {
-    if (this->isValid(tileID))
+    Tile * L_tile = nullptr;
+    if (isValid(tileID))
     {
-        t_vector size = {TILE_WIDTH * scale, TILE_HEIGHT * scale};
-        GameWindow::render_sprite(m_tileSet[tileID], point, size);
+        L_tile = m_tileSet[tileID];
     }
+    return L_tile;
 }
 
 T_UINT16 TileSet::getTileCount()
