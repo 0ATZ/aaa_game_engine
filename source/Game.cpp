@@ -1,4 +1,5 @@
 #include <iostream>
+#include "GameWindow.h"
 #include "Game.h"
 #include "Rectangle.h"
 #include "ViewPort.h"
@@ -10,7 +11,6 @@ t_point g_camera_pos;
 
 Game::Game()
 {
-    window = nullptr;
     running = true;
     m_objectCount = 0;
     m_tileSet = nullptr;
@@ -20,8 +20,8 @@ Game::Game()
 
 bool Game::init()
 {
-    window = new GameWindow(800, 640);
-    if (!window->init())
+    t_vector window_size = {800, 640};
+    if (!GameWindow::initialize(window_size))
     {
         return false;
     }
@@ -36,7 +36,7 @@ bool Game::init()
         baby_blue_square[i] = 0x8ebdU;
         baby_orange_square[i] = 0xedcfU;
     }
-    m_tileSet = new TileSet(window);
+    m_tileSet = new TileSet();
     m_tileSet->addTile(&black_square);       // 0
     m_tileSet->addTile(&white_square);       // 1
     m_tileSet->addTile(&baby_blue_square);   // 2
@@ -50,7 +50,6 @@ bool Game::init()
         // ... idk trial and error
         checker_map[i] = ((i % 4) + (i / tilemap_cols)) % 4;
     }
-
     m_tileMap = new TileMap(m_tileSet, checker_map, tilemap_rows, tilemap_cols);
 
     registerObject(m_tileMap);
@@ -58,26 +57,25 @@ bool Game::init()
     std::cout << "TileSet count: " << m_tileSet->getTileCount() << std::endl;
     
     m_redSquare = new Tile("./assets/sprites/red_16x16.bin");
-    window->createTexture(m_redSquare);
+    GameWindow::create_texture(m_redSquare);
     m_greenSquare = new Tile("./assets/sprites/green_16x16.bin");
-    window->createTexture(m_greenSquare);
+    GameWindow::create_texture(m_greenSquare);
 
     m_testSquare = new PhysicsObject(128, 128, 64, 64);
 
     // use the rectangle as the player object!
-    m_player = new Rectangle(window, 32, 32);
+    m_player = new Rectangle(32, 32);
     registerObject(m_player);
 
     m_viewPort = new ViewPort((PhysicsObject*)m_player, 800, 640);
-    
     return true;
 }
 
 void Game::update()
 {
     // window should update first to get new window state such as user inputs
-    window->update();
-
+    GameWindow::process_events();
+    
     // Update the player
     // m_player->update();
     m_viewPort->update();
@@ -121,7 +119,7 @@ void Game::update()
 void Game::render()
 {
     // Clear the window before rendering new graphics
-    window->clear();
+    GameWindow::clear_window();
     
     m_viewPort->render();
 
@@ -136,23 +134,20 @@ void Game::render()
     }
 
     if (m_intersect)
-        window->renderSprite(m_redSquare, {128, 128}, {64, 64});
+        GameWindow::render_sprite(m_redSquare, {128, 128}, {64, 64});
     else
-        window->renderSprite(m_greenSquare, {128, 128}, {64, 64});
+        GameWindow::render_sprite(m_greenSquare, {128, 128}, {64, 64});
     
     // render the player last
     // m_player->render();
 
     // Present the game window after all game objects have been rendered 
-    window->render();
+    GameWindow::present_window();
 }
 
 void Game::destroy()
 {
-    if (window != nullptr)
-    {
-        window->destroy();
-    }
+    GameWindow::destroy();
     
     for (int i = 0; i < m_objectCount; i++)
     {
@@ -177,11 +172,7 @@ bool Game::registerObject(GameObject * obj)
 
 bool Game::isRunning()
 {
-    if (window != nullptr)
-    {
-        return window->isRunning();
-    }
-    return false;
+    return GameWindow::is_running();
 }
 
 

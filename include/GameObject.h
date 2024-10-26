@@ -78,6 +78,5 @@ class GameObject
         t_point m_position;
         t_vector m_sizePx;
         Sprite * m_sprite;
-        Sprite * m_currentSprite;
 };
 #endif

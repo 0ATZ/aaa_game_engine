@@ -5,7 +5,7 @@
 #include "Game.h"
 
 /* Uncomment this line for unreasonably low performance! */
-// #define LOW_PERFORMANCE_MODE
+#define LOW_PERFORMANCE_MODE
 
 using namespace std;
 

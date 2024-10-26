@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include "GameObject.h"
-#include "GameWindow.h"
 #include "TileSet.h"
 #include "TileMap.h"
 
@@ -24,7 +23,6 @@ class Game
         GameObject * m_player;
         GameObject * m_viewPort;
         int m_objectCount;
-        GameWindow * window;
         TileSet * m_tileSet;
         TileMap * m_tileMap;
         bool running;
