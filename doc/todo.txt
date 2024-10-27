@@ -4,15 +4,20 @@ X create an entity class which tracks position
 X create a player class which renders a square and can move around using the key presses
 ===================
 X Implement viewport scrolling
-- Implement AnimatedSprite class
-- create or find some tools:
-    - sprite design -> png
-- Load tilesets from binary file sprite sheets
-    - create binary loader function
-    - use binary loader in TileMap, TileSet, Tile, Sprite
-    - verify file sizes?
+X Implement AnimatedSprite class
+X create or find some tools:
+    X sprite design -> png
+X Load tilesets from binary file sprite sheets
+    X create binary loader function
+    X use binary loader in TileMap, TileSet, Tile, Sprite
+    X verify file sizes?
         fseek(f, 0, SEEK_END); // seek to end of file
         size = ftell(f); // get current file pointer
         fseek(f, 0, SEEK_SET); // seek back to beginning of file
         // proceed with allocating memory and reading the file
-    
+===================
+- Implement Physics collisions
+- SDL VSYNC and Hardware Acceleration
+- TileMap from file
+- Sprite Tile creator
+- TileMap creator

@@ -67,6 +67,18 @@ namespace BufferIO
             return 0ULL;
         }
 
+
+        // verify the filesize is exact match
+        fseek(fp, 0, SEEK_END); // seek to end of file
+        size_t L_verified_length = ftell(fp); // get current file pointer
+        fseek(fp, 0, SEEK_SET); // seek back to beginning of file
+
+        if (L_verified_length != (objectSize * objectCount))
+        {
+            printf("file has incorrect length: %s\n");
+            return 0LL;
+        }
+
         T_UINT16 objectsRead = fread(buffer, objectSize, objectCount, fp);
         if (objectsRead == 0ULL)
         {
