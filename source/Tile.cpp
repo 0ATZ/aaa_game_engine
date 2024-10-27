@@ -5,3 +5,9 @@ Tile::Tile(t_tile *tilePixels) :
 {
     // do nothing, pass parameters to base constructor 
 }
+
+Tile::Tile(const char * const filename) :
+    Sprite(filename, TILE_WIDTH, TILE_HEIGHT)
+{
+    // do nothing, pass parameters to base constructor 
+}

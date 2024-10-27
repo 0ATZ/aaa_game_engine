@@ -1,15 +1,15 @@
 #include "TileSet.h"
+#include "GameWindow.h"
 #include <iostream>
 
-TileSet::TileSet(GameWindow * window)
+TileSet::TileSet()
 {
     m_tileCount = 0U;
-    m_window = window;
     (void) memset(m_tileSet, 0, sizeof(m_tileSet));
 }
 
-TileSet::TileSet(GameWindow * window, t_tileset tileSet) :
-    TileSet(window) // call base constructor
+TileSet::TileSet(t_tileset tileSet) :
+    TileSet() // call base constructor
 {
     for (m_tileCount = 0U; m_tileCount < TILESET_SIZE; m_tileCount++)
     {
@@ -36,7 +36,6 @@ t_index TileSet::addTile(t_tile *tilePixels)
         if (L_newTile)
         {
             // createTexture gives the Tile sprite a textureID
-            (void) m_window->createTexture(L_newTile);
 
             // use the current m_tileCount as the tileID 
             m_tileSet[m_tileCount] = L_newTile;
@@ -55,12 +54,19 @@ t_index TileSet::addTile(t_tile *tilePixels)
     return L_retVal;
 }
 
-void TileSet::renderTile(t_index tileID, t_point point, t_scale scale)
+Tile * TileSet::getTileFromID(t_index tileID)
 {
-    if (this->isValid(tileID))
+    Tile * L_tile = nullptr;
+    if (isValid(tileID))
     {
-        m_window->renderSprite(m_tileSet[tileID], point, scale);
+        L_tile = m_tileSet[tileID];
     }
+    return L_tile;
+}
+
+T_UINT16 TileSet::getTileCount()
+{
+    return m_tileCount;
 }
 
 // returns true if there is an available space in the texture cache

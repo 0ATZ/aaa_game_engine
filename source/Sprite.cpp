@@ -1,14 +1,53 @@
 #include "Sprite.h"
+#include "BufferIO.h"
+#include "GameWindow.h"
+#include <cstring>
+
+Sprite::Sprite(T_UINT16 width, T_UINT16 height)
+{
+    // initialize variables
+    m_spritePixels = nullptr;
+    m_texture = nullptr;
+    m_width = width;
+    m_height = height;
+}
+
+Sprite::Sprite(const char * const filename, T_UINT16 width, T_UINT16 height)
+{
+    // allocate memory for the sprite
+    m_spritePixels = new t_pixel[width * height];
+
+    // read sprite pixel data from a binary file
+    BufferIO::readRect_RGB565(filename, m_spritePixels, width, height);
+    
+    // initialize variables
+    m_width = width;
+    m_height = height;
+    
+    // create the texture which will be used for rendering
+    GameWindow::create_texture(this);
+}
 
 Sprite::Sprite(t_pixel *spritePixels, T_UINT16 width, T_UINT16 height)
 {
-    m_spritePixels = spritePixels;
-    m_height = height;
+    // allocate memory for the sprite
+    m_spritePixels = new t_pixel[width * height];
+    
+    // copy sprite pixels into the buffer
+    memcpy(m_spritePixels, spritePixels, (width * height * sizeof(t_pixel)));
+    
+    // initialize variables
     m_width = width;
-    m_textureID = 0x00U;
+    m_height = height;
+    GameWindow::create_texture(this);
 }
 
-T_UINT16 * Sprite::getSpritePixels()
+Sprite::~Sprite()
+{
+    delete[] m_spritePixels;
+}
+
+t_pixel * Sprite::getSpritePixels()
 {
     return m_spritePixels;
 }
@@ -18,14 +57,14 @@ T_UINT16 Sprite::getNumPixels()
     return (m_height * m_width);
 }
 
-void Sprite::setTextureID(t_index textureID)
+void Sprite::setTexture(void * texture)
 {
-    m_textureID = textureID;
+    m_texture = texture;
 }
 
-t_index Sprite::getTextureID()
+void * Sprite::getTexture()
 {
-    return m_textureID;
+    return m_texture;
 }
 
 T_UINT16 Sprite::getWidth()

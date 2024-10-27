@@ -1,0 +1,49 @@
+if y1 < y2 // obj1 is above
+  if x1 < x2 // obj1 is to the left
+    if abs(x1-x2) < w1 && abs(y1-y2) < h1
+	// intersection
+        return true
+    else 
+        // no intersection
+        return false
+  else // obj is to the left
+
+
+if (x1 < x2) && (abs(x1-x2) < w1): // possible to intersect
+
+# close
+dx = x2-x1
+dy = y2-y1
+if dx < 0: # obj is to the left of obj2
+  if dy > 0: # obj1 is above obj2
+    return (abs(x1-x2) <= w1) && (abs(y1-y2) <= h1)
+  elif dy < 0: # obj2 is above obj1
+    return (abs(x1-x2) <= w1) && (abs(y1-y2) <= h2)
+elif dx > 0: # obj1 is to the right of obj2
+  if dy > 0: # obj1 is above obj2
+    return (abs(x1-x2) <= w2) && (abs(y1-y2) <= h1)
+  elif dy < 0: # obj2 is above obj1
+    return (abs(x1-x2) <= w2) && (abs(y1-y2) <= h2)
+  else: # y values are equal
+    return true
+else:
+  return true
+
+10 checks and incorrect result
+
+
+
+dx = x2-x1
+dy = y2-y1
+if (dx < 0) && (abs(dx) <= w1) || # rect1 is to the left and x is close enough to collide
+   (dx > 0) && (dx <= w2) ||      # rect2 is to the left and x is close enough to collide
+   (dx == 0):                     # x positions are equal, close enough to collide
+  
+  if (dy > 0) && (dy <= h1) ||       # rect1 is above and y is close enough to collide
+     (dy < 0) && (abs(dy) <= h2) ||  # rect2 is above and y is close enough to collide
+     (dy == 0):                      # y positions are equal, close enough to collide
+    return true
+
+# either the x position or y positions are too far
+return false
+  

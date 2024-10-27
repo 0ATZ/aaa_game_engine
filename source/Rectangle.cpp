@@ -1,23 +1,21 @@
+#include "GameWindow.h"
 #include "Rectangle.h"
+#include "AnimatedSprite.h"
 #include <iostream>
 
-
-Rectangle::Rectangle(GameWindow * window, int pixelWidth, int pixelHeight)
+Rectangle::Rectangle(int pixelWidth, int pixelHeight)
 {
-    m_position = {0,0};
-    m_window = window;
-    m_pixelWidth = pixelWidth;
-    m_pixelHeight = pixelHeight;
+    t_vector windowSize = GameWindow::get_window_size();
+    m_position = {
+        (windowSize.x/2) - (pixelWidth/2),
+        (windowSize.y/2) - (pixelHeight/2)
+    };
+    m_sizePx = {pixelWidth, pixelHeight};
 
-    // hard code a 16x16 blue square
-    t_tile blue_square;
-    for (int i = 0; i < TILE_SIZE; i++)
-    {
-        blue_square[i] = 0x001FU;
-    }
+    std::cout << "Player Position: " << m_position.x << ", " << m_position.y << std::endl;
     
-    m_defaultSprite = new Tile(&blue_square);
-    (void) window->createTexture(m_defaultSprite);
+    m_sprite = new AnimatedSprite("assets/sprites/spritesheet_4_16x16.bin", 4, 16, 16, 1.0);
+    ((AnimatedSprite*)m_sprite)->start();
 }
 
 bool Rectangle::init()
@@ -25,64 +23,54 @@ bool Rectangle::init()
     return true;
 }
 
-void Rectangle::update()
+// TODO: call base class update for physics calcs 
+void Rectangle::update(T_UINT64 dtime)
 {
-    const int speed = 2;
-    uint16_t pKeys = m_window->getPlayerKeys();
+    const T_FLOAT32 movement_speed = 2.0;
+    T_UINT16 pKeys = GameWindow::get_player_keys();
+    t_vector movement = { 0, 0 }; 
     if (pKeys & GameWindow::UP)
     {
         // std::cout << "up" << std::endl;
-        m_position.y = (m_position.y - speed);
+        --movement.y;
     }
     if (pKeys & GameWindow::DOWN)
     {
         // std::cout << "down" << std::endl;
-        m_position.y = (m_position.y + speed);
+        ++movement.y;
     }
     if (pKeys & GameWindow::LEFT)
     {
         // std::cout << "left" << std::endl;
-        m_position.x = (m_position.x - speed);
+        --movement.x;
     }
     if (pKeys & GameWindow::RIGHT)
     {
         // std::cout << "right" << std::endl;
-        m_position.x = (m_position.x + speed);
+        ++movement.x;
     }
+
+    // normalize and scale the vector,
+    movement = Vector2::scale(
+        Vector2::normalize(movement),
+        movement_speed
+    );
+    
+    // std::cout << "movement x: " << movement.x << std::endl;
+
+    // transform the position 
+    m_position = Vector2::add(
+        m_position,
+        movement
+    );
+
+    ((AnimatedSprite*)m_sprite)->update(dtime);
+
 }
 
 void Rectangle::render()
 {
-    if (m_window != nullptr)
-    {
-        t_point point = m_position;
-        m_window->renderSprite(
-            m_defaultSprite, /* cached texture ID */
-            point,  /* position of the top left corner */
-            SCALE_QUADRA /* scale multiplier */
-        );
-
-        point.x = m_position.x + 80U;
-        m_window->renderSprite(
-            m_defaultSprite, /* cached texture ID */
-            point,  /* position of the top left corner */
-            SCALE_TRIPLE /* scale multiplier */
-        );
-
-        point.x = m_position.x + 144U;
-        m_window->renderSprite(
-            m_defaultSprite, /* cached texture ID */
-            point,  /* position of the top left corner */
-            SCALE_DOUBLE /* scale multiplier */
-        );
-
-        point.x = m_position.x + 192U;
-        m_window->renderSprite(
-            m_defaultSprite, /* cached texture ID */
-            point,  /* position of the top left corner */
-            SCALE_ORIGINAL /* scale multiplier */
-        );
-    }
+    GameWindow::render_sprite_viewport(m_sprite, m_position, m_sizePx);
 }
 
 void Rectangle::destroy()

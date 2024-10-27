@@ -3,11 +3,31 @@
 
 #include "BaseTypes.h"
 
-// 20x25 grid of 16X16 tiles
+
+T_UINT8 TEST_MAP_16x16[256] = {
+    0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 
+    0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 
+    0U, 1U, 1U, 0U, 0U, 1U, 1U, 0U, 0U, 0U, 1U, 0U, 0U, 1U, 1U, 1U, 
+    0U, 1U, 0U, 1U, 0U, 1U, 0U, 1U, 0U, 1U, 0U, 1U, 0U, 0U, 1U, 0U, 
+    0U, 1U, 1U, 1U, 0U, 1U, 1U, 0U, 0U, 1U, 1U, 1U, 0U, 0U, 1U, 0U, 
+    0U, 1U, 0U, 1U, 0U, 1U, 0U, 1U, 0U, 1U, 0U, 1U, 0U, 0U, 1U, 0U, 
+    0U, 1U, 1U, 0U, 0U, 1U, 0U, 1U, 0U, 1U, 0U, 1U, 0U, 0U, 1U, 0U, 
+    0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 
+    0U, 1U, 1U, 1U, 1U, 1U, 1U, 1U, 1U, 1U, 1U, 1U, 1U, 1U, 1U, 1U,
+    0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 
+    0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 
+    0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 
+    0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 
+    0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 
+    0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 
+    0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U,
+};
+
+// 25x20 grid of 16X16 tiles
 // T_UINT8 range [0..256]
 // T_UINT8 represents the index of the tile in the TILESET
 // 
-T_UINT8 TEST_MAP[500] = {
+T_UINT8 TEST_MAP_25x20[500] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

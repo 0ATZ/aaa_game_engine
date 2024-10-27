@@ -3,14 +3,15 @@
 
 #include <iostream>
 #include "GameObject.h"
-#include "GameWindow.h"
+#include "TileSet.h"
+#include "TileMap.h"
 
 class Game
 {
     public:
         Game();
         bool init();
-        void update();
+        void update(T_UINT64 dtime);
         void render();
         void destroy();
         bool registerObject(GameObject * obj);
@@ -18,11 +19,18 @@ class Game
         
     private:
         static const unsigned int MAX_OBJECTS = 64U;
-        void * m_objects[MAX_OBJECTS];
+        GameObject * m_objects[MAX_OBJECTS];
+        GameObject * m_player;
         int m_objectCount;
-        GameWindow * window;
-        Uint32 lastFrameTime;
+        TileSet * m_tileSet;
+        TileMap * m_tileMap;
         bool running;
+
+        // temp var for debug
+        Sprite * m_redSquare;
+        Sprite * m_greenSquare;
+        GameObject * m_testSquare;
+        bool m_intersect;
 };
 
 #endif // GAME_H

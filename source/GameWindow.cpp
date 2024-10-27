@@ -1,176 +1,186 @@
 #include "GameWindow.h"
-#include "Sprites/SquareSprite.h"
 #include <iostream>
+#include "ViewPort.h"
 
-GameWindow::GameWindow() 
+namespace GameWindow
 {
-    m_running = false;
-    m_pKeys = 0U;
-    m_nextTexture = 0U;
+    extern const T_UINT16 UP;
+    extern const T_UINT16 DOWN;
+    extern const T_UINT16 LEFT;
+    extern const T_UINT16 RIGHT;
 
-    // initialize SDL video
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
-    }
+    SDL_Window * sdl_window;
+    SDL_Renderer * sdl_renderer;
+    bool game_running;
+    T_UINT16 player_keys;
+    t_vector window_size;
+    ViewPort * view_port;
 
-    // create the SDL window
-    window = SDL_CreateWindow("SDL2 Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN);
-    if (window == nullptr) {
-        std::cerr << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl;
-        SDL_Quit();
+    bool initialize(t_vector size)
+    {
+        bool L_initSuccess = true;
+        game_running = false;
+
+        // initialize namespace variables 
+        player_keys = 0U;
+        window_size = size;
+   
+        // initialize SDL video
+        if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+            std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
+            L_initSuccess = false;
+        }
+
+        // create the SDL window
+        sdl_window = SDL_CreateWindow("SDL2 Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, size.x, size.y, SDL_WINDOW_SHOWN);
+        if (sdl_window == nullptr) {
+            std::cerr << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl;
+            SDL_Quit();
+            L_initSuccess = false;
+        }
+        
+        // create the SDL renderer 
+        sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
+        if (sdl_renderer == nullptr) {
+            std::cerr << "Renderer could not be created! SDL_Error: " << SDL_GetError() << std::endl;
+            SDL_DestroyWindow(sdl_window);
+            SDL_Quit();
+            L_initSuccess = false;
+        }
+        
+        // create the viewport to help render objects at the correct position
+        view_port = new ViewPort(window_size);
+
+        // if the init succeeded, game is now running
+        game_running = L_initSuccess;
+
+        return L_initSuccess;
     }
     
-    // create the SDL renderer 
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (renderer == nullptr) {
-        std::cerr << "Renderer could not be created! SDL_Error: " << SDL_GetError() << std::endl;
-        SDL_DestroyWindow(window);
-        SDL_Quit();
-    }
-}
-
-bool GameWindow::init()
-{    
-    m_running = true;
-    return true;
-}
-
-/* 
- * merge keypresses into a 16 bits: 
- * 0x01: W (up)
- * 0x02: S (down)
- * 0x04: A (left)
- * 0x08: D (right)
- * 0x10: jump
- * 0x20: shift
- */
-void GameWindow::update()
-{
-    SDL_Event event;
-    while (SDL_PollEvent(&event) != 0)
+    /* 
+     * merge keypresses into a 16 bits: 
+     * 0x01: W (up)
+     * 0x02: S (down)
+     * 0x04: A (left)
+     * 0x08: D (right)
+     * 0x10: jump
+     * 0x20: shift
+     */ 
+    void process_events()
     {
-        switch (event.type)
+        SDL_Event event;
+        while (SDL_PollEvent(&event) != 0)
         {
-            case SDL_QUIT: 
+            switch (event.type)
+            {
+                case SDL_QUIT: 
+                    
+                    // SDL window closed
+                    game_running = false;
+
+                case SDL_KEYDOWN:
+
+                    // keypress activates the corresponding bit
+                    switch (event.key.keysym.sym)
+                    {
+                        case SDLK_w:
+                            player_keys |= UP;
+                            break;
+                        case SDLK_s:
+                            player_keys |= DOWN;
+                            break;
+                        case SDLK_a:
+                            player_keys |= LEFT;
+                            break;
+                        case SDLK_d:
+                            player_keys |= RIGHT;
+                            break;
+                        default:
+                            // nothing
+                            break;
+                    }
+                case SDL_KEYUP:
+
+                    // keyrelease deactivates the corresponding bit
+                    switch (event.key.keysym.sym)
+                    {
+                        case SDLK_w:
+                            player_keys &= (~UP);
+                            break;
+                        case SDLK_s:
+                            player_keys &= (~DOWN);
+                            break;
+                        case SDLK_a:
+                            player_keys &= (~LEFT);
+                            break;
+                        case SDLK_d:
+                            player_keys &= (~RIGHT);
+                            break;
+                        default:
+                            // nothing
+                            break;
+                    }
+
+                case SDL_WINDOWEVENT_FOCUS_LOST:
+
+                    player_keys = 0U;
                 
-                // SDL window closed
-                m_running = false;
+                case SDL_WINDOWEVENT_FOCUS_GAINED:
 
-            case SDL_KEYDOWN:
-
-                // keypress activates the corresponding bit
-                switch (event.key.keysym.sym)
-                {
-                    case SDLK_w:
-                        m_pKeys |= UP;
-                        break;
-                    case SDLK_s:
-                        m_pKeys |= DOWN;
-                        break;
-                    case SDLK_a:
-                        m_pKeys |= LEFT;
-                        break;
-                    case SDLK_d:
-                        m_pKeys |= RIGHT;
-                        break;
-                    default:
-                        // nothing
-                        break;
-                }
-            case SDL_KEYUP:
-
-                // keyrelease deactivates the corresponding bit
-                switch (event.key.keysym.sym)
-                {
-                    case SDLK_w:
-                        m_pKeys &= (~UP);
-                        break;
-                    case SDLK_s:
-                        m_pKeys &= (~DOWN);
-                        break;
-                    case SDLK_a:
-                        m_pKeys &= (~LEFT);
-                        break;
-                    case SDLK_d:
-                        m_pKeys &= (~RIGHT);
-                        break;
-                    default:
-                        // nothing
-                        break;
-                }
-
-            case SDL_WINDOWEVENT_FOCUS_LOST:
-
-                m_pKeys = 0U;
-            
-            case SDL_WINDOWEVENT_FOCUS_GAINED:
-
-                const T_UINT8 * keyState = SDL_GetKeyboardState(nullptr);
-                if (keyState[SDL_SCANCODE_W])
-                {
-                    m_pKeys |= UP;
-                }
-                if (keyState[SDL_SCANCODE_S])
-                {
-                    m_pKeys |= DOWN;
-                }
-                if (keyState[SDL_SCANCODE_A])
-                {
-                    m_pKeys |= LEFT;
-                }
-                if (keyState[SDL_SCANCODE_D])
-                {
-                    m_pKeys |= RIGHT;
-                }
+                    const T_UINT8 * keyState = SDL_GetKeyboardState(nullptr);
+                    if (keyState[SDL_SCANCODE_W])
+                    {
+                        player_keys |= UP;
+                    }
+                    if (keyState[SDL_SCANCODE_S])
+                    {
+                        player_keys |= DOWN;
+                    }
+                    if (keyState[SDL_SCANCODE_A])
+                    {
+                        player_keys |= LEFT;
+                    }
+                    if (keyState[SDL_SCANCODE_D])
+                    {
+                        player_keys |= GameWindow::RIGHT;
+                    }
+            }
         }
     }
-}
 
-T_UINT16 GameWindow::getPlayerKeys()
-{
-    return m_pKeys;
-}
-
-void GameWindow::render()
-{
-    SDL_RenderPresent(renderer);
-}
-
-void GameWindow::destroy()
-{
-    if (renderer) {
-        SDL_DestroyRenderer(renderer);
-    }
-    if (window) {
-        SDL_DestroyWindow(window);
-    }
-    SDL_Quit();
-}
-
-void GameWindow::clear()
-{
-    SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF); // White background
-    SDL_RenderClear(renderer);
-}
-
-SDL_Renderer * GameWindow::getSDLRenderer()
-{
-    return renderer;
-}
-
-bool GameWindow::isRunning()
-{
-    return m_running;
-}
-
-t_index GameWindow::createTexture(t_pixel *pixels, T_UINT16 width, T_UINT16 height)
-{
-    t_index L_retVal = 0xFFU;
-    if (m_nextTexture < MAX_TEXTURES)
+    void center_viewport(t_point center)
     {
-        // TODO: check the width and height against max texture size values
-        //   maybe max texture is 16x16, 32x32, etc ... or the screen size
-        SDL_Texture * L_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STATIC, width, height);
+        view_port->setCenter(center);
+        t_point playerPos = view_port->getPosition();
+    }
+    
+    void clear_window()
+    {
+        SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x00, 0x00, 0x00); // Black background
+        SDL_RenderClear(sdl_renderer);
+    }
+    
+    void present_window()
+    {
+        SDL_RenderPresent(sdl_renderer);
+    }
+
+    void destroy()
+    {
+        if (sdl_renderer) 
+        {
+            SDL_DestroyRenderer(sdl_renderer);
+        }
+        if (sdl_window) 
+        {
+            SDL_DestroyWindow(sdl_window);
+        }
+        SDL_Quit();
+    }
+
+    void *create_texture(t_pixel *pixels, T_UINT16 width, T_UINT16 height)
+    {
+        SDL_Texture * L_texture = SDL_CreateTexture(sdl_renderer, SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STATIC, width, height);
 
         if (!L_texture)
         {
@@ -180,68 +190,78 @@ t_index GameWindow::createTexture(t_pixel *pixels, T_UINT16 width, T_UINT16 heig
         {
             // Update the texture with the pixel data
             SDL_UpdateTexture(L_texture, nullptr, pixels, width * sizeof(T_UINT16));
-            m_textureCache[m_nextTexture] = L_texture;
-            L_retVal = m_nextTexture;
-            std::cout << "GameWindow: texture cached: " << (int) m_nextTexture << std::endl;
-            m_nextTexture++;
         }
 
+        // return a pointer to the sdl texture
+        return L_texture;
     }
-    else
+    void *create_texture(Sprite *sprite)
     {
-        std::cout << "ERROR: could not allocate texture." << std::endl;
+        void * L_texture = nullptr;
+        if (sprite)
+        {
+            L_texture = create_texture(
+                sprite->getSpritePixels(),
+                sprite->getWidth(),
+                sprite->getHeight()
+            );
+
+            sprite->setTexture(L_texture);
+        }
+        else
+        {
+            printf("tired to create texture from null sprite ptr\n");
+        }
+        return L_texture;
     }
 
-    // return the index for the cached texture
-    // if the texture could not be allocated, then return an invalid index (0xFFFF)
-    return L_retVal;
-}
-
-t_index GameWindow::createTexture(t_tile *tilePixels)
-{
-    return this->createTexture((t_pixel*) tilePixels, TILE_WIDTH, TILE_HEIGHT);
-}
-
-t_index GameWindow::createTexture(Sprite *sprite)
-{
-    t_index textureID = this->createTexture(
-        sprite->getSpritePixels(),
-        sprite->getWidth(),
-        sprite->getHeight()
-    );
-
-    sprite->setTextureID(textureID);
-    return textureID;
-}
-
-// scale can be 1-4 inclusive
-void GameWindow::renderTexture(t_index textureID, t_point point, T_UINT16 width, T_UINT16 height, t_scale scale)
-{
-    if (this->textureExists(textureID))
+    void render_texture(void *texture, t_point point, t_vector size)
     {
-        SDL_Rect destRect = { point.x, point.y, width*scale, height*scale };
-        SDL_RenderCopy(renderer, m_textureCache[textureID], nullptr, &destRect);
+        if (texture)
+        {
+            SDL_Rect destRect = { point.x, point.y, size.x, size.y };
+            SDL_RenderCopy(sdl_renderer, (SDL_Texture *) texture, nullptr, &destRect);
+        }
+        else
+        {
+            printf("tried to render texture from null ptr\n");
+        }
     }
-}
 
-void GameWindow::renderSprite(Sprite *sprite, t_point point, t_scale scale)
-{
-    // render the sprite 
-    // texture must be created beforehand using createTexture(Sprite *sprite)
-    this->renderTexture(
-        sprite->getTextureID(), 
-        point,
-        sprite->getWidth(),
-        sprite->getHeight(),
-        scale
-    );
-}
-
-bool GameWindow::textureExists(t_index textureID)
-{
-    if (textureID < m_nextTexture)
+    void render_sprite(Sprite *sprite, t_point point, t_vector size)
     {
-        return true;
+        if (sprite)
+        {
+            SDL_Texture * L_texture = (SDL_Texture*) sprite->getTexture();
+            render_texture(L_texture, point, size);
+        }
+        else
+        {
+            printf("tried to render sprite from null ptr\n");
+        }
     }
-    return false;
+
+    void render_sprite_viewport(Sprite * sprite, t_point position, t_vector size)
+    {
+        if (view_port->intersects(position, size)) 
+        {
+            t_point render_pos = Vector2::subtract(position, view_port->getPosition());
+            render_sprite(sprite, render_pos, size);
+        }
+    }
+
+    bool is_running()
+    {
+        return game_running;
+    }
+
+    T_UINT16 get_player_keys()
+    {
+        return player_keys;
+    }
+
+    t_vector get_window_size()
+    {
+        return window_size;
+    }
 }

@@ -9,7 +9,7 @@ class Tile : public Sprite
 {
     public:
         Tile(t_tile *tilePixels);
-    
+        Tile(const char *const filename);
 };
 
 #endif

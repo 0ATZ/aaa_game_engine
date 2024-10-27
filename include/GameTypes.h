@@ -3,13 +3,15 @@
 
 #include "BaseTypes.h"
 
-// TODO: update code to use this instead of separate x and y variables
-// point describes an (x,y) coordinate in a 2D plane
-typedef struct s_point
+
+typedef struct s_vector
 {
-    T_INT16 x;
-    T_INT16 y;
-} t_point;
+    T_INT32 x;
+    T_INT32 y;
+} t_vector;
+
+// point describes an (x,y) coordinate in a 2D plane
+typedef t_vector t_point; 
 
 // 16-bit pixels (RGB565)
 typedef T_UINT16 t_pixel;
@@ -40,9 +42,10 @@ typedef t_tile* t_tileset[TILESET_SIZE];
 
 // tilemap represents the pixels to be rendered on the screen  
 // each tile in the tilemap is represented by an index (8-bit unsigned integer)
-// the tile index 
-// tilemap represents a (16 x 16 x 256) pixel square
-const T_UINT16 TILEMAP_SIZE = 256U;
-typedef t_index t_tilemap[TILEMAP_SIZE];
+// tilemap represents a (TILE_SIZE x TILEMAP_WIDTH x TILEMAP_HEIGHT) pixel square
+const T_UINT16 MAX_TILEMAP_WIDTH = 64U;
+const T_UINT16 MAX_TILEMAP_HEIGHT = 64U;
+const T_UINT16 MAX_TILEMAP_SIZE = MAX_TILEMAP_WIDTH * MAX_TILEMAP_HEIGHT;
+typedef t_index t_tilemap[MAX_TILEMAP_SIZE];
 
 #endif
