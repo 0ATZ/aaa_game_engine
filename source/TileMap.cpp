@@ -68,6 +68,11 @@ bool TileMap::init()
     return true;
 }
 
+void TileMap::update(T_UINT64 dtime)
+{
+    // do nothing
+}
+
 t_index TileMap::getTileID(T_UINT16 row, T_UINT16 col)
 {
     // get an entry from the tilemap at (row, col)

@@ -68,7 +68,7 @@ bool Game::init()
     return true;
 }
 
-void Game::update()
+void Game::update(T_UINT64 dtime)
 {
     // window should update first to get new window state such as user inputs
     GameWindow::process_events();
@@ -79,7 +79,7 @@ void Game::update()
         GameObject * obj = reinterpret_cast<GameObject*>(m_objects[i]);
         if (obj != nullptr)
         {
-            obj->update();
+            obj->update(dtime);
         }
     }
 

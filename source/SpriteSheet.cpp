@@ -14,7 +14,8 @@ SpriteSheet::SpriteSheet(const char *const filename, T_UINT16 numSprites,
     m_sprites = new Sprite*[numSprites];
 
     // allocate a temp buffer to read pixel data from the sprite sheet 
-    const size_t NUM_PIXELS = numSprites * spriteWidthPx * spriteHeightPx;
+    const size_t PIXELS_PER_SPRITE = spriteWidthPx * spriteHeightPx;
+    const size_t NUM_PIXELS = numSprites * PIXELS_PER_SPRITE;
     const size_t NUM_BYTES = NUM_PIXELS * sizeof(t_pixel); 
     t_pixel spriteSheetPixels[NUM_PIXELS] = {0};
     T_UINT16 bytes_read = BufferIO::readBuffer(
@@ -26,13 +27,16 @@ SpriteSheet::SpriteSheet(const char *const filename, T_UINT16 numSprites,
     {
         printf("incorrect number of bytes read from spritesheet\n");
     }
+    else
+    {
+        printf("spritesheet read %d bytes\n", bytes_read);
+    }
 
     // process the pixel buffer into separate sprite objects
-    const size_t BYTES_PER_SPRITE = (size_t)(spriteWidthPx * spriteHeightPx) * sizeof(t_pixel);
     for (T_UINT16 i = 0U; i < numSprites; i++)
     {
-        // create sprite object, which handles the texture creation
-        t_pixel * spritePixels = spriteSheetPixels + (BYTES_PER_SPRITE * i); 
+        // sprite object handles the texture creation
+        t_pixel * spritePixels = &(spriteSheetPixels[PIXELS_PER_SPRITE*i]); 
         m_sprites[i] = new Sprite(spritePixels, spriteWidthPx, spriteHeightPx);
     }
 }
@@ -54,7 +58,11 @@ Sprite *SpriteSheet::getSpriteByID(T_UINT16 spriteID)
     if (spriteID < m_numSprites)
     {
         L_sprite = m_sprites[spriteID];
-    } 
+    }
+    else
+    {
+        printf("spritesheet index out of range\n");
+    }
     return L_sprite;
 }
 

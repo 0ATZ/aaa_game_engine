@@ -11,7 +11,7 @@ class Game
     public:
         Game();
         bool init();
-        void update();
+        void update(T_UINT64 dtime);
         void render();
         void destroy();
         bool registerObject(GameObject * obj);

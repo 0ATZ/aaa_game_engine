@@ -10,7 +10,8 @@ class AnimatedSprite : public Sprite
 {
     public:
         AnimatedSprite(const char * const filename, T_UINT16 numSprites,
-            T_UINT16 spriteWidthPx, T_UINT16 spriteHeightPx, T_UINT16 frameDurationSec);
+            T_UINT16 spriteWidthPx, T_UINT16 spriteHeightPx, 
+            T_FLOAT64 frameDurationSec);
         ~AnimatedSprite();  // deallocate all sprites
     
         void update(T_UINT64 dtima);
@@ -24,9 +25,9 @@ class AnimatedSprite : public Sprite
 
     private:
         SpriteSheet * m_spriteSheet;
-        T_UINT16 m_currentSprite;
-        T_UINT64 m_frameDurationSec;
-        T_UINT64 m_frameCounter;
+        T_UINT16 m_currentFrameID;
+        T_FLOAT64 m_frameDurationSec;
+        T_FLOAT64 m_frameTimer;
         bool m_animate;
 
 };

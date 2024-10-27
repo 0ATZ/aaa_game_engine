@@ -12,7 +12,7 @@ class PhysicsObject : public GameObject
         PhysicsObject(T_INT32 x, T_INT32 y, T_UINT16 widthPx, T_UINT16 heightPx);
 
         bool init();
-        void update();
+        void update(T_UINT64 dtime);
         void render();
         void destroy();
     

@@ -9,7 +9,7 @@ class TileMap : public GameObject
         TileMap(TileSet * tileSet, t_tilemap tileMap, T_UINT16 numRows, T_UINT16 numCols);
         void render();
         bool init();
-        void update() {}; // TODO: maybe need to process camera position or something?
+        void update(T_UINT64 dtime);
         void destroy();
 
     private:

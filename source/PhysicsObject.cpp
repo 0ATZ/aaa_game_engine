@@ -22,7 +22,7 @@ bool PhysicsObject::init()
     return true;
 }
 
-void PhysicsObject::update()
+void PhysicsObject::update(T_UINT64 dtime)
 {
     // TODO: calc collisions
 }

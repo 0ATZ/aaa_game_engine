@@ -10,7 +10,7 @@ class Rectangle: public PhysicsObject
         Rectangle(int pixelWidth, int pixelHeight);
         
         bool init();
-        void update();
+        void update(T_UINT64 dtime);
         void render();
         void destroy();
     

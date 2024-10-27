@@ -35,10 +35,11 @@ int WinMain(int argc, char* args[]) {
     while (game.isRunning())
     {
         // perform the game update seperately to keep it consistent
-        if ((SDL_GetTicks64() - prevUpdate) >= UPDATE_DURATION_MS)
+        T_UINT64 dtime = (SDL_GetTicks64() - prevUpdate);
+        if (dtime >= UPDATE_DURATION_MS)
         {
             prevUpdate = SDL_GetTicks64();
-            game.update();
+            game.update(dtime);
         }
 
         // perform the screen render separately to adjust frame rate

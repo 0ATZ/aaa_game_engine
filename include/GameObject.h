@@ -20,7 +20,7 @@ class GameObject
         };
 
         virtual bool init()    = 0;
-        virtual void update()  = 0;
+        virtual void update(T_UINT64 dtime)  = 0;
         virtual void render()  = 0;
         virtual void destroy() = 0;
     

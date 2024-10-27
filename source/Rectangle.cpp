@@ -1,5 +1,6 @@
 #include "GameWindow.h"
 #include "Rectangle.h"
+#include "AnimatedSprite.h"
 #include <iostream>
 
 Rectangle::Rectangle(int pixelWidth, int pixelHeight)
@@ -13,7 +14,8 @@ Rectangle::Rectangle(int pixelWidth, int pixelHeight)
 
     std::cout << "Player Position: " << m_position.x << ", " << m_position.y << std::endl;
     
-    m_sprite = new Tile("./assets/sprites/green_16x16.bin");
+    m_sprite = new AnimatedSprite("assets/sprites/spritesheet_4_16x16.bin", 4, 16, 16, 1.0);
+    ((AnimatedSprite*)m_sprite)->start();
 }
 
 bool Rectangle::init()
@@ -21,7 +23,8 @@ bool Rectangle::init()
     return true;
 }
 
-void Rectangle::update()
+// TODO: call base class update for physics calcs 
+void Rectangle::update(T_UINT64 dtime)
 {
     const T_FLOAT32 movement_speed = 2.0;
     T_UINT16 pKeys = GameWindow::get_player_keys();
@@ -60,6 +63,8 @@ void Rectangle::update()
         m_position,
         movement
     );
+
+    ((AnimatedSprite*)m_sprite)->update(dtime);
 
 }
 
