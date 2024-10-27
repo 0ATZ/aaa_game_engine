@@ -96,25 +96,15 @@ class GameObject
         //                       w
         bool intersects(t_point position, t_vector sizePx)
         {
-            // Calculate 2 dimensional overlap
-            T_INT32 dx = position.x - m_position.x;
-            T_INT32 dy = position.y - m_position.y;
-
-            // check if x values are close enough to collide
-            if ((dx > 0) && (dx <= m_sizePx.x) ||      // this is to the left of obj, and x can collide
-                (dx < 0) && (abs(dx) <= sizePx.x) ||  // obj is to the left of this, and x can collide
-                (dx == 0))                             // x vals are the same
-            
-                // check if y values are close enough to collide
-                if ((dy > 0) && (dy <= m_sizePx.y) ||     // this is above obj, and y can collide
-                    (dy < 0) && (abs(dy) <= sizePx.x) || // obj is above this, and y can collide
-                    (dy == 0))                            // y vals are the same
-                    
-                    // both x and y are close enough to collide
-                    return true;
-
-            // either the x position or y positions are too far
-            return false;
+            // implement axis-aligned bounding box
+            if (m_position.x > (position.x + sizePx.x) || // right
+                (m_position.x + m_sizePx.x) < position.x || // left
+                (m_position.y + m_sizePx.y) < position.y || // above
+                m_position.y > (position.y + sizePx.y)) // below
+            {
+                return false;
+            }
+            return true;
         }
 
         bool intersects(GameObject * obj)
