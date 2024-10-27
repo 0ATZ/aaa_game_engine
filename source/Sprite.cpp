@@ -3,6 +3,15 @@
 #include "GameWindow.h"
 #include <cstring>
 
+Sprite::Sprite(T_UINT16 width, T_UINT16 height)
+{
+    // initialize variables
+    m_spritePixels = nullptr;
+    m_texture = nullptr;
+    m_width = width;
+    m_height = height;
+}
+
 Sprite::Sprite(const char * const filename, T_UINT16 width, T_UINT16 height)
 {
     // allocate memory for the sprite
