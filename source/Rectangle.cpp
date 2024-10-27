@@ -16,6 +16,10 @@ Rectangle::Rectangle(int pixelWidth, int pixelHeight)
     
     m_sprite = new AnimatedSprite("assets/sprites/spritesheet_4_16x16.bin", 4, 16, 16, 1.0);
     ((AnimatedSprite*)m_sprite)->start();
+
+    // set default movement speed
+    m_speedPx = 2UL;
+
 }
 
 bool Rectangle::init()
@@ -26,45 +30,34 @@ bool Rectangle::init()
 // TODO: call base class update for physics calcs 
 void Rectangle::update(T_UINT64 dtime)
 {
-    const T_FLOAT32 movement_speed = 2.0;
     T_UINT16 pKeys = GameWindow::get_player_keys();
-    t_vector movement = { 0, 0 }; 
+    m_direction = { 0, 0 }; 
     if (pKeys & GameWindow::UP)
     {
         // std::cout << "up" << std::endl;
-        --movement.y;
+        --m_direction.y;
     }
     if (pKeys & GameWindow::DOWN)
     {
         // std::cout << "down" << std::endl;
-        ++movement.y;
+        ++m_direction.y;
     }
     if (pKeys & GameWindow::LEFT)
     {
         // std::cout << "left" << std::endl;
-        --movement.x;
+        --m_direction.x;
     }
     if (pKeys & GameWindow::RIGHT)
     {
         // std::cout << "right" << std::endl;
-        ++movement.x;
+        ++m_direction.x;
     }
-
-    // normalize and scale the vector,
-    movement = Vector2::scale(
-        Vector2::normalize(movement),
-        movement_speed
-    );
     
-    // std::cout << "movement x: " << movement.x << std::endl;
-
-    // transform the position 
-    m_position = Vector2::add(
-        m_position,
-        movement
-    );
+    // std::cout << "direction x: " << direction.x << std::endl;
+    // std::cout << "direction y: " << direction.y << std::endl;
 
     ((AnimatedSprite*)m_sprite)->update(dtime);
+    PhysicsObject::update(dtime);
 
 }
 

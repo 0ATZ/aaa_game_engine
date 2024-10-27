@@ -15,11 +15,15 @@ class PhysicsObject : public GameObject
         void update(T_UINT64 dtime);
         void render();
         void destroy();
+
+        void resolveCollision();
     
     // TODO: perform physics calculations to move position
     // TODO: calculate collisions
     protected:
-        t_vector m_velocityPx;
+        T_UINT32 m_speedPx; // pixels per frame
+        t_vector m_direction;
+        
 };
 
 #endif
