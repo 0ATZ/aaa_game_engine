@@ -57,10 +57,8 @@ bool Game::init()
     std::cout << "TileSet count: " << m_tileSet->getTileCount() << std::endl;
     
     m_redSquare = new Tile("./assets/sprites/red_16x16.bin");
-    GameWindow::create_texture(m_redSquare);
     m_greenSquare = new Tile("./assets/sprites/green_16x16.bin");
-    GameWindow::create_texture(m_greenSquare);
-
+    
     m_testSquare = new PhysicsObject(128, 128, 64, 64);
 
     // use the rectangle as the player object!

@@ -14,7 +14,6 @@ Rectangle::Rectangle(int pixelWidth, int pixelHeight)
     std::cout << "Player Position: " << m_position.x << ", " << m_position.y << std::endl;
     
     m_sprite = new Tile("./assets/sprites/green_16x16.bin");
-    (void) GameWindow::create_texture(m_sprite);
 }
 
 bool Rectangle::init()

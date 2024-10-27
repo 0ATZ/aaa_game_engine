@@ -1,5 +1,6 @@
 #include "Sprite.h"
 #include "BufferIO.h"
+#include "GameWindow.h"
 #include <cstring>
 
 Sprite::Sprite(const char * const filename, T_UINT16 width, T_UINT16 height)
@@ -13,7 +14,9 @@ Sprite::Sprite(const char * const filename, T_UINT16 width, T_UINT16 height)
     // initialize variables
     m_width = width;
     m_height = height;
-    m_texture = nullptr;
+    
+    // create the texture which will be used for rendering
+    GameWindow::create_texture(this);
 }
 
 Sprite::Sprite(t_pixel *spritePixels, T_UINT16 width, T_UINT16 height)
@@ -27,7 +30,7 @@ Sprite::Sprite(t_pixel *spritePixels, T_UINT16 width, T_UINT16 height)
     // initialize variables
     m_width = width;
     m_height = height;
-    m_texture = nullptr;
+    GameWindow::create_texture(this);
 }
 
 Sprite::~Sprite()
@@ -35,7 +38,7 @@ Sprite::~Sprite()
     delete[] m_spritePixels;
 }
 
-T_UINT16 * Sprite::getSpritePixels()
+t_pixel * Sprite::getSpritePixels()
 {
     return m_spritePixels;
 }

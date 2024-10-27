@@ -36,7 +36,6 @@ t_index TileSet::addTile(t_tile *tilePixels)
         if (L_newTile)
         {
             // createTexture gives the Tile sprite a textureID
-            GameWindow::create_texture(L_newTile);
 
             // use the current m_tileCount as the tileID 
             m_tileSet[m_tileCount] = L_newTile;

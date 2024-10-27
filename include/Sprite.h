@@ -11,7 +11,7 @@ class Sprite
         Sprite(t_pixel *spritePixels, T_UINT16 width, T_UINT16 height);
         ~Sprite();
 
-        T_UINT16 *getSpritePixels();
+        t_pixel *getSpritePixels();
         T_UINT16 getNumPixels();
 
         void setTexture(void * texture);
@@ -20,7 +20,7 @@ class Sprite
         T_UINT16 getHeight();
 
     private:
-        T_UINT16 * m_spritePixels;
+        t_pixel * m_spritePixels;
         void * m_texture;  // for SDL implementation, this is SDL_Texture
         T_UINT16 m_height;
         T_UINT16 m_width;
