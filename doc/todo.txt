@@ -17,7 +17,9 @@ X Load tilesets from binary file sprite sheets
         // proceed with allocating memory and reading the file
 ===================
 - Implement Physics collisions
-- SDL VSYNC and Hardware Acceleration
+X SDL VSYNC and Hardware Acceleration
 - TileMap from file
 - Sprite Tile creator
 - TileMap creator
+- streamline build process, cmake files? 
+- performance counters (FPS, CPU/RAM/VRAM usage)
