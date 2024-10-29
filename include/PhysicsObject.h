@@ -16,7 +16,7 @@ class PhysicsObject : public GameObject
         void render();
         void destroy();
 
-        void resolveCollision();
+        void resolveCollision(GameObject * obj);
     
     // TODO: perform physics calculations to move position
     // TODO: calculate collisions

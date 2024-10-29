@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "GameObject.h"
+#include "PhysicsObject.h"
 #include "TileSet.h"
 #include "TileMap.h"
 
@@ -18,10 +19,10 @@ class Game
         bool isRunning();
         
     private:
-        static const unsigned int MAX_OBJECTS = 64U;
+        static const T_UINT16 MAX_OBJECTS = 64U;
         GameObject * m_objects[MAX_OBJECTS];
         GameObject * m_player;
-        int m_objectCount;
+        T_UINT16 m_objectCount;
         TileSet * m_tileSet;
         TileMap * m_tileMap;
         bool running;
@@ -31,6 +32,7 @@ class Game
         Sprite * m_greenSquare;
         GameObject * m_testSquare;
         bool m_intersect;
+
 };
 
 #endif // GAME_H

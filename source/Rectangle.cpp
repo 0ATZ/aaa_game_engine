@@ -14,7 +14,7 @@ Rectangle::Rectangle(int pixelWidth, int pixelHeight)
 
     std::cout << "Player Position: " << m_position.x << ", " << m_position.y << std::endl;
     
-    m_sprite = new AnimatedSprite("assets/sprites/grass_sprites.bin", 36, 16, 16, 1.0);
+    m_sprite = new AnimatedSprite("assets/sprites/numbers.bin", 36, 16, 16, 1.0);
     ((AnimatedSprite*)m_sprite)->start();
 
     // set default movement speed

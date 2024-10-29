@@ -2,7 +2,8 @@ CC=g++
 OBJS=$(ODIR)/Game.o $(ODIR)/GameWindow.o $(ODIR)/Rectangle.o \
 	$(ODIR)/Sprite.o $(ODIR)/TileSet.o $(ODIR)/TileMap.o $(ODIR)/Tile.o \
 	$(ODIR)/ViewPort.o $(ODIR)/PhysicsObject.o $(ODIR)/Vector2.o \
-	$(ODIR)/BufferIO.o $(ODIR)/SpriteSheet.o $(ODIR)/AnimatedSprite.o
+	$(ODIR)/BufferIO.o $(ODIR)/SpriteSheet.o $(ODIR)/AnimatedSprite.o \
+	$(ODIR)/TestBox.o
 # add this tag to CFLAGS to disable the cmd prompt -mwindows
 CFLAGS=-I. -I./include
 LIBS=-lSDL2 -L.

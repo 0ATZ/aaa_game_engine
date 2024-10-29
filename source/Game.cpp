@@ -5,6 +5,7 @@
 #include "ViewPort.h"
 #include "sprite/TestMap.h"
 #include "Vector2.h"
+#include "TestBox.h"
 
 t_point g_player_pos;
 t_point g_camera_pos;
@@ -12,7 +13,7 @@ t_point g_camera_pos;
 Game::Game()
 {
     running = true;
-    m_objectCount = 0;
+    m_objectCount = 0U;
     m_tileSet = nullptr;
     m_tileMap = nullptr;
     m_intersect = false;
@@ -26,6 +27,8 @@ bool Game::init()
         return false;
     }
     
+
+    // TODO: replace this logic with a spritesheet
     t_tile black_square = {0};
     t_tile white_square = {0};
     t_tile baby_blue_square = {0};
@@ -56,10 +59,12 @@ bool Game::init()
 
     std::cout << "TileSet count: " << m_tileSet->getTileCount() << std::endl;
     
-    m_redSquare = new Tile("./assets/sprites/red_16x16.bin");
-    m_greenSquare = new Tile("./assets/sprites/green_16x16.bin");
+    // m_redSquare = new Tile("./assets/sprites/red_16x16.bin");
+    // m_greenSquare = new Tile("./assets/sprites/green_16x16.bin");
     
-    m_testSquare = new PhysicsObject(128, 128, 64, 64);
+    registerObject(new TestBox({100,100}, 100U, 100U));
+    registerObject(new TestBox({500,500}, 75U, 50U));
+    registerObject(new TestBox({400,200}, 50U, 50U));
 
     // use the rectangle as the player object!
     m_player = new Rectangle(32, 32);
@@ -83,17 +88,19 @@ void Game::update(T_UINT64 dtime)
         }
     }
 
-    if (m_player->intersects(m_testSquare))
+    for (int i = 0; i < m_objectCount; i ++)
     {
-        m_intersect = true;
-    }
-    else
-    {
-        m_intersect = false;
+        for (int j = i + 1; j < m_objectCount; j++)
+        {
+            if (m_objects[i]->intersects(m_objects[j]))
+            {
+                // printf("intersect: %d, %d\n", i, j);
+                m_objects[i]->resolveCollision(m_objects[j]);
+            }
+        }
     }
 
     GameWindow::center_viewport(m_player->getCenter());
-
 }
 
 void Game::render()
@@ -111,10 +118,10 @@ void Game::render()
         }
     }
 
-    if (m_intersect)
-        GameWindow::render_sprite_viewport(m_redSquare, {128, 128}, {64, 64});
-    else
-        GameWindow::render_sprite_viewport(m_greenSquare, {128, 128}, {64, 64});
+    // if (m_intersect)
+    //     GameWindow::render_sprite_viewport(m_redSquare, {128, 128}, {64, 64});
+    // else
+    //     GameWindow::render_sprite_viewport(m_greenSquare, {128, 128}, {64, 64});
 
     // Present the game window after all game objects have been rendered 
     GameWindow::present_window();

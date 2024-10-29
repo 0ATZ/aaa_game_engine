@@ -11,6 +11,7 @@ class TileMap : public GameObject
         bool init();
         void update(T_UINT64 dtime);
         void destroy();
+        void resolveCollision(GameObject * obj);
 
     private:
         TileSet * m_tileSet;

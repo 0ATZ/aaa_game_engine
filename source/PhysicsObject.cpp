@@ -25,6 +25,7 @@ bool PhysicsObject::init()
     return true;
 }
 
+// TODO: implement acceleration, derived class can externally set the value 
 void PhysicsObject::update(T_UINT64 dtime)
 {
 
@@ -51,7 +52,13 @@ void PhysicsObject::destroy()
     delete this;
 }
 
-void PhysicsObject::resolveCollision()
+void PhysicsObject::resolveCollision(GameObject * obj)
 {
-
+    if (obj != nullptr)
+    {
+        // TODO: handle collision by moving non-static objects based on weight
+        //    heavier objects move less than lighter ones
+        //    how to handle movement when coliding? 
+        //    maybe try implement static wall first
+    }
 }

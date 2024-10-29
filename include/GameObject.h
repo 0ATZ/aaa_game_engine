@@ -4,6 +4,7 @@
 #include "GameTypes.h"
 #include "Sprite.h"
 #include "Vector2.h"
+#include <functional>
 
 class GameObject
 {
@@ -116,6 +117,10 @@ class GameObject
             }
             return L_retVal;
         }
+
+        // derived classes should decide how to handle collisions
+        virtual void resolveCollision(GameObject * obj) = 0;
+        
 
     protected:
         t_point m_position;

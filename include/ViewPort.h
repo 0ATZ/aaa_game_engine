@@ -13,6 +13,7 @@ class ViewPort : public PhysicsObject
         
         void trackPosition(t_point *position);
         bool isTrackingPosition();
+        void resolveCollision(GameObject * obj);
 
     private:
         t_point maxPlayerPosition();

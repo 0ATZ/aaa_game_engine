@@ -97,3 +97,8 @@ void TileMap::destroy()
 {
     delete this;
 }
+
+void TileMap::resolveCollision(GameObject *obj)
+{
+    // TODO: check for wall collisions?
+}

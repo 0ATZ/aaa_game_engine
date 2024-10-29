@@ -61,6 +61,12 @@ bool ViewPort::isTrackingPosition()
     return tracking;
 }
 
+void ViewPort::resolveCollision(GameObject *obj)
+{
+    // TODO: completely override the PhysicsObject resolveCollision
+    //    TileMap will act differently than other objects
+    //    maybe push objects around based on the type of tile..?
+}
 
 t_point ViewPort::maxPlayerPosition()
 {
