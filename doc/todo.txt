@@ -19,7 +19,8 @@ X Load tilesets from binary file sprite sheets
 - Implement Physics collisions
 X SDL VSYNC and Hardware Acceleration
 - TileMap from file
-- Sprite Tile creator
+X Sprite Tile creator
 - TileMap creator
 - streamline build process, cmake files? 
 - performance counters (FPS, CPU/RAM/VRAM usage)
+- 8bit sprite color palette? format sprites in indexed colors 
