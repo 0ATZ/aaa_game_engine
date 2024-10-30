@@ -98,6 +98,16 @@ T_UINT16 PhysicsObject::getWeight()
     return m_weight;
 }
 
+void PhysicsObject::setSpeed(T_UINT32 speedPx)
+{
+    m_speedPx = speedPx;
+}
+
+T_UINT32 PhysicsObject::getSpeed()
+{
+    return m_speedPx;
+}
+
 bool PhysicsObject::isSolid()
 {
     return m_solid;

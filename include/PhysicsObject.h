@@ -23,6 +23,8 @@ class PhysicsObject : public GameObject
         
         void setWeight(T_UINT16 weight);
         T_UINT16 getWeight();
+        void setSpeed(T_UINT32 speedPx);
+        T_UINT32 getSpeed();
         bool isSolid();
         
         static const T_UINT16 WEIGHT_STATIC = 0xFFFFU;
