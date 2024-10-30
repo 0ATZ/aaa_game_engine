@@ -10,10 +10,18 @@ TestBox::TestBox(t_point position, T_UINT16 width, T_UINT16 height)
     m_position = position;
     m_sizePx = {width, height};
     m_activated = false;
+    m_static = false;
     m_direction = {1, 0};
     m_speedPx = 1;
     m_timer = 0U;
 }
+
+TestBox::TestBox(t_point position, T_UINT16 width, T_UINT16 height, bool isStatic) : 
+    TestBox(position, width, height)
+{
+    m_static = isStatic;
+}
+
 
 void TestBox::update(T_UINT64 dtime)
 {

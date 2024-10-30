@@ -7,6 +7,7 @@ TileMap::TileMap(TileSet * tileSet, t_tilemap tileMap, T_UINT16 numRows, T_UINT1
     m_position = {0,0};
     m_tileSet = tileSet;
     m_scale = SCALE_DOUBLE;
+    m_solid = false;
     
     // limit number of rows to MAX_TILEMAP_HEIGHT
     if (numRows > MAX_TILEMAP_HEIGHT)

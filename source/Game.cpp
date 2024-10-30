@@ -61,7 +61,9 @@ bool Game::init()
     
     // m_redSquare = new Tile("./assets/sprites/red_16x16.bin");
     // m_greenSquare = new Tile("./assets/sprites/green_16x16.bin");
+
     
+    registerObject(new TestBox({100,300}, 100U, 10U, true));
     registerObject(new TestBox({100,100}, 100U, 100U));
     registerObject(new TestBox({500,500}, 75U, 50U));
     registerObject(new TestBox({400,200}, 50U, 50U));
@@ -88,11 +90,12 @@ void Game::update(T_UINT64 dtime)
         }
     }
 
+    // detect and resolve each game object pair for collision
     for (int i = 0; i < m_objectCount; i ++)
     {
-        for (int j = i + 1; j < m_objectCount; j++)
+        for (int j = 0; j < m_objectCount; j++)
         {
-            if (m_objects[i]->intersects(m_objects[j]))
+            if (i != j && m_objects[i]->intersects(m_objects[j]))
             {
                 // printf("intersect: %d, %d\n", i, j);
                 m_objects[i]->resolveCollision(m_objects[j]);

@@ -9,6 +9,7 @@ class TestBox : public PhysicsObject
 {
     public:
         TestBox(t_point position, T_UINT16 width, T_UINT16 height);
+        TestBox(t_point position, T_UINT16 width, T_UINT16 height, bool isStatic);
 
         void update(T_UINT64 dtime);
         void render();

@@ -17,12 +17,14 @@ class PhysicsObject : public GameObject
         void destroy();
 
         void resolveCollision(GameObject * obj);
+        void setStatic(bool isStatic);
     
     // TODO: perform physics calculations to move position
     // TODO: calculate collisions
     protected:
         T_UINT32 m_speedPx; // pixels per frame
         t_vector m_direction;
+        bool m_static; 
         
 };
 

@@ -14,6 +14,7 @@ class GameObject
             m_position = { 0LL, 0LL };
             m_sizePx = { 0LL, 0LL };
             m_sprite = nullptr;
+            m_solid = false;
         };
 
         ~GameObject() { 
@@ -111,11 +112,16 @@ class GameObject
         bool intersects(GameObject * obj)
         {
             bool L_retVal = false;
-            if (obj)
+            if (obj && obj->isSolid() && m_solid)
             {
                 L_retVal = intersects(obj->getPosition(), obj->getSizePixels());
             }
             return L_retVal;
+        }
+        
+        bool isSolid()
+        {
+            return m_solid;
         }
 
         // derived classes should decide how to handle collisions
@@ -126,5 +132,6 @@ class GameObject
         t_point m_position;
         t_vector m_sizePx;
         Sprite * m_sprite;
+        bool m_solid;
 };
 #endif

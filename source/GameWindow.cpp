@@ -243,7 +243,7 @@ namespace GameWindow
 
     void render_sprite_viewport(Sprite * sprite, t_point position, t_vector size)
     {
-        if (view_port->intersects(position, size)) 
+        if (((GameObject*)view_port)->intersects(position, size)) 
         {
             t_point render_pos = Vector2::subtract(position, view_port->getPosition());
             render_sprite(sprite, render_pos, size);

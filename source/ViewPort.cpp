@@ -4,6 +4,9 @@
 ViewPort::ViewPort(t_vector size) :
     PhysicsObject()
 {
+    // viewport does not cause physics collisions
+    m_solid = false;
+
     // initialize the viewport size
     m_sizePx = size;
 
