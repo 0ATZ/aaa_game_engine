@@ -72,6 +72,8 @@ bool Game::init()
     m_player = new Rectangle(32, 32);
     registerObject(m_player);
 
+    registerObject(new TestBox({100,400}, 50U, 50U));
+    
     return true;
 }
 
