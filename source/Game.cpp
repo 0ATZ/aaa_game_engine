@@ -63,10 +63,14 @@ bool Game::init()
     // m_greenSquare = new Tile("./assets/sprites/green_16x16.bin");
 
     
-    registerObject(new TestBox({100,300}, 100U, 10U, PhysicsObject::WEIGHT_STATIC));
-    registerObject(new TestBox({100,100}, 100U, 100U));
-    registerObject(new TestBox({500,500}, 75U, 50U));
-    registerObject(new TestBox({400,200}, 50U, 50U, 12));
+    registerObject(new TestBox({100,300}, 100U, 20U, PhysicsObject::WEIGHT_STATIC)); // cannot be moved by anything
+    registerObject(new TestBox({100,100}, 100U, 100U));   // default lighter than player
+    registerObject(new TestBox({500,500}, 75U, 50U));     // default lighter than player
+    registerObject(new TestBox({400,200}, 50U, 50U, 12)); // slightly too heavy to move
+    
+    TestBox * stationary_box = new TestBox({400, 300}, 50U, 50U);
+    stationary_box->setSpeed(0U);
+    registerObject(stationary_box);
 
     // use the rectangle as the player object!
     m_player = new Rectangle(32, 32);
