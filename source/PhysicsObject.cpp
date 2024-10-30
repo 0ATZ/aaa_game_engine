@@ -9,19 +9,19 @@ PhysicsObject::PhysicsObject()
     m_direction = {0L, 0L};
     m_speedPx = 0UL;
     m_sprite = nullptr;
-    m_static = false;
     m_solid = true;
+    m_weight = 0U;
 }
 
-PhysicsObject::PhysicsObject(T_INT32 x, T_INT32 y, T_UINT16 widthPx, T_UINT16 heightPx)
+PhysicsObject::PhysicsObject(T_INT32 x, T_INT32 y, T_UINT16 widthPx, T_UINT16 heightPx, T_UINT16 weight)
 {
     m_position = { x, y };
     m_sizePx = { widthPx, heightPx };
     m_direction = {0L, 0L};
     m_speedPx = 0UL;
     m_sprite = nullptr;
-    m_static = false;
     m_solid = true;
+    m_weight = weight;
 }
 
 bool PhysicsObject::init()
@@ -32,7 +32,7 @@ bool PhysicsObject::init()
 // TODO: implement acceleration, derived class can externally set the value 
 void PhysicsObject::update(T_UINT64 dtime)
 {
-    if (!m_static)
+    if (m_weight < WEIGHT_STATIC)
     {
         // normalize the direction vector
         m_direction = Vector2::normalize(m_direction);
@@ -58,75 +58,47 @@ void PhysicsObject::destroy()
     delete this;
 }
 
-void PhysicsObject::resolveCollision(GameObject *obj)
+bool PhysicsObject::detectCollision(PhysicsObject *obj)
+{
+    bool collision = false;
+    if ( obj != nullptr)
+    {
+        if (m_solid && obj->isSolid())
+        {
+            collision = GameObject::intersects(obj->getPosition(), obj->getSizePixels());
+        }
+    }
+    return collision;
+}
+
+void PhysicsObject::resolveCollision(PhysicsObject * obj)
 {
     if (obj != nullptr)
     {
-        // TODO: handle collision by moving non-static objects based on weight
-        //    heavier objects move less than lighter ones
-        //    how to handle movement when coliding? 
-        //    maybe try implement static wall first
-        if (!m_static)
+        if (m_weight <= obj->getWeight())
         {
-            t_point objPos = obj->getPosition();
-            t_vector objSize = obj->getSizePixels();
-            T_INT32 x_overlap = 0LL;
-            T_INT32 y_overlap = 0LL;
-            
-            if (m_position.x <= objPos.x)
-            {
-                // this is to the left of obj
-                x_overlap = (m_position.x + m_sizePx.x) - objPos.x;
-            }
-            else
-            {
-                // obj is to the left of this
-                x_overlap = (objPos.x + objSize.x) - m_position.x;
-            }
-
-            if (m_position.y <= objPos.y)
-            {
-                // this is above obj
-                y_overlap = (m_position.y + m_sizePx.y) - objPos.y;
-            }
-            else
-            {
-                // obj is above this
-                y_overlap = (objPos.y + objSize.y) - m_position.y;
-            }
-
-            if (x_overlap > 0 && y_overlap > 0)
-            {
-                if (x_overlap <= y_overlap)
-                {
-                    // resolve in the x direction
-                    if (m_position.x <= objPos.x)
-                    {
-                        m_position.x -= x_overlap;
-                    }
-                    else
-                    {
-                        m_position.x += x_overlap;
-                    }
-                }
-                else
-                {
-                    // resolve in the y direction
-                    if (m_position.y <= objPos.y)
-                    {
-                        m_position.y -= y_overlap;
-                    }
-                    else
-                    {
-                        m_position.y += y_overlap;
-                    }
-                }
-            }
+            // move this object if it is "lighter" than the other object
+            GameObject::resolve(obj->getPosition(), obj->getSizePixels());
+        }
+        else
+        {
+            // move the other object if this one is "heavier"
+            obj->resolve(m_position, m_sizePx);
         }
     }
 }
 
-void PhysicsObject::setStatic(bool isStatic)
+void PhysicsObject::setWeight(T_UINT16 weight)
 {
-    m_static = isStatic;
+    m_weight = weight;
+}
+
+T_UINT16 PhysicsObject::getWeight()
+{
+    return m_weight;
+}
+
+bool PhysicsObject::isSolid()
+{
+    return m_solid;
 }

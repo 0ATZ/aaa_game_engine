@@ -11,6 +11,7 @@ Rectangle::Rectangle(int pixelWidth, int pixelHeight)
         (windowSize.y/2) - (pixelHeight/2)
     };
     m_sizePx = {pixelWidth, pixelHeight};
+    m_weight = 11U;
 
     std::cout << "Player Position: " << m_position.x << ", " << m_position.y << std::endl;
     
@@ -69,4 +70,9 @@ void Rectangle::render()
 void Rectangle::destroy()
 {
     delete this;
+}
+
+void Rectangle::vResolveCollision(PhysicsObject *obj)
+{
+    PhysicsObject::resolveCollision(obj);
 }

@@ -13,6 +13,8 @@ class Rectangle: public PhysicsObject
         void update(T_UINT64 dtime);
         void render();
         void destroy();
+
+        void vResolveCollision(PhysicsObject * obj);
     
 };
 #endif

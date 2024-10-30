@@ -10,16 +10,17 @@ TestBox::TestBox(t_point position, T_UINT16 width, T_UINT16 height)
     m_position = position;
     m_sizePx = {width, height};
     m_activated = false;
-    m_static = false;
+    m_weight = 10;
+    m_solid = true;
     m_direction = {1, 0};
     m_speedPx = 1;
     m_timer = 0U;
 }
 
-TestBox::TestBox(t_point position, T_UINT16 width, T_UINT16 height, bool isStatic) : 
+TestBox::TestBox(t_point position, T_UINT16 width, T_UINT16 height, T_UINT16 weight) : 
     TestBox(position, width, height)
 {
-    m_static = isStatic;
+    m_weight = weight;
 }
 
 
@@ -59,7 +60,7 @@ void TestBox::render()
     GameWindow::render_sprite_viewport(m_sprite, m_position, m_sizePx);
 }
 
-void TestBox::resolveCollision(GameObject * obj)
+void TestBox::vResolveCollision(PhysicsObject * obj)
 {
     m_activated = true;
     PhysicsObject::resolveCollision(obj);

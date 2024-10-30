@@ -14,7 +14,6 @@ class GameObject
             m_position = { 0LL, 0LL };
             m_sizePx = { 0LL, 0LL };
             m_sprite = nullptr;
-            m_solid = false;
         };
 
         ~GameObject() { 
@@ -109,29 +108,71 @@ class GameObject
             return true;
         }
 
-        bool intersects(GameObject * obj)
+        void resolve(t_point position, t_vector sizePx)
         {
-            bool L_retVal = false;
-            if (obj && obj->isSolid() && m_solid)
+            T_INT32 x_overlap = 0LL;
+            T_INT32 y_overlap = 0LL;
+            
+            if (m_position.x <= position.x)
             {
-                L_retVal = intersects(obj->getPosition(), obj->getSizePixels());
+                // this is to the left of obj
+                x_overlap = (m_position.x + m_sizePx.x) - position.x;
             }
-            return L_retVal;
-        }
-        
-        bool isSolid()
-        {
-            return m_solid;
+            else
+            {
+                // obj is to the left of this
+                x_overlap = (position.x + sizePx.x) - m_position.x;
+            }
+
+            if (m_position.y <= position.y)
+            {
+                // this is above obj
+                y_overlap = (m_position.y + m_sizePx.y) - position.y;
+            }
+            else
+            {
+                // obj is above this
+                y_overlap = (position.y + sizePx.y) - m_position.y;
+            }
+
+            // move the position out of the intersection
+            // whichever direction requires the least movement
+            if (x_overlap > 0 && y_overlap > 0)
+            {
+                if (x_overlap <= y_overlap)
+                {
+                    // resolve in the x direction
+                    if (m_position.x <= position.x)
+                    {
+                        m_position.x -= x_overlap;
+                    }
+                    else
+                    {
+                        m_position.x += x_overlap;
+                    }
+                }
+                else
+                {
+                    // resolve in the y direction
+                    if (m_position.y <= position.y)
+                    {
+                        m_position.y -= y_overlap;
+                    }
+                    else
+                    {
+                        m_position.y += y_overlap;
+                    }
+                }
+            }
         }
 
         // derived classes should decide how to handle collisions
-        virtual void resolveCollision(GameObject * obj) = 0;
+        // virtual void resolveCollision(GameObject * obj) = 0;
         
 
     protected:
         t_point m_position;
         t_vector m_sizePx;
         Sprite * m_sprite;
-        bool m_solid;
 };
 #endif
