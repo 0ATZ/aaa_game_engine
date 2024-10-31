@@ -11,7 +11,10 @@ ViewPort::ViewPort(t_vector size) :
     m_sizePx = size;
 
     // manually lock the camera
-    m_trackPosition = nullptr;
+    m_playerPosition = {0LL, 0LL};
+
+    // viewport positions the player center screen 
+    m_viewportMode = VIEW_FOLLOW_PLAYER_CENTER;
 
     std::cout << "Viewport Position: " << m_position.x << ", " << m_position.y << std::endl;
 }
@@ -21,47 +24,51 @@ bool ViewPort::init()
     return true;
 }
 
-void ViewPort::update()
+void ViewPort::update(T_UINT64 dtime)
 {
-    // if camera is not locked, follow the player
-    if (m_trackPosition != nullptr)
+    if (m_viewportMode == VIEW_FOLLOW_PLAYER_CENTER)
     {
-        // TODO: make the camera follow player movement, not just jump to center
-        this->setCenter(*m_trackPosition);
-        // std::cout << "camera unlocked!" << std::endl;
+        // put the player in the center of the viewport
+        setCenter(m_playerPosition);
+    }
+    else if (m_viewportMode == VIEW_FOLLOW_PLAYER_DYNAMIC)
+    {
+        // only move the camera if the player is close to the edge of the ViewPort
+        t_vector offset_from_max = Vector2::subtract(m_playerPosition, maxPlayerPosition());
+        t_vector offset_from_min = Vector2::subtract(m_playerPosition, minPlayerPosition());
+
+        // player is too far right, adjust camera x+
+        if (offset_from_max.x > 0LL)
+            m_position.x += offset_from_max.x;
+        // player is too far left, adjust camera x-
+        else if (offset_from_min.x < 0LL)
+            m_position.x += offset_from_min.x;
+        
+        // player is too far down, adjust camera y+
+        if (offset_from_max.y > 0LL)
+            m_position.y += offset_from_max.y;
+        // player is too far up, adjust camera y-
+        else if (offset_from_min.y < 0LL)
+            m_position.y += offset_from_min.y;
+    }
+    else if (m_viewportMode == VIEW_LOCKED_IN_PLACE)
+    {
+        // do nothing, viewport position static
+    }
+    else
+    {
+        printf("WARN: unimplemented camera state\n");
     }
 }
 
-void ViewPort::trackPosition(t_point * position)
+void ViewPort::setPlayerPosition(t_point playerPosition)
 {
-    m_trackPosition = position;
+    m_playerPosition = playerPosition;
 }
 
-bool ViewPort::isTrackingPosition()
+void ViewPort::setMode(t_viewport_mode mode)
 {
-    bool tracking = false;
-
-    if (m_trackPosition == nullptr)
-    {
-        tracking = true;
-    }
-    // else 
-    // {
-    //     // only move the camera if the player is close to the edge of the ViewPort
-    //     // t_point playerPosition = m_player->getPosition();
-    //     t_point max = this->maxPlayerPosition();
-    //     t_point min = this->minPlayerPosition();
-
-    //     if (playerPosition.x >= max.x     // # right side, adjust camera x+
-    //         || playerPosition.x <= min.x  // # left side, adjust camera x-
-    //         || playerPosition.y >= max.y  // # bottom side, adjust camera y+ (screen down)
-    //         || playerPosition.y <= min.y) // # top side, adjust camera y- (screen up)
-    //     {
-    //         // camera should follow the player around
-    //         locked = false; 
-    //     }
-    // }
-    return tracking;
+    m_viewportMode = mode;
 }
 
 void ViewPort::vResolveCollision(PhysicsObject *obj)
@@ -73,7 +80,7 @@ t_point ViewPort::maxPlayerPosition()
 {
     return Vector2::add(
         m_position, 
-        Vector2::scale(m_sizePx, 0.8)
+        Vector2::scale(m_sizePx, 1.0 - 0.3)
     );
 }
 
@@ -81,7 +88,7 @@ t_point ViewPort::minPlayerPosition()
 {
     return Vector2::add(
         m_position, 
-        Vector2::scale(m_sizePx, 0.2)
+        Vector2::scale(m_sizePx, 0.3)
     );
 }
 

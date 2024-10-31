@@ -26,6 +26,7 @@ bool Game::init()
     {
         return false;
     }
+    GameWindow::set_viewport_mode(VIEW_FOLLOW_PLAYER_DYNAMIC);
     
 
     // TODO: replace this logic with a spritesheet
@@ -115,7 +116,7 @@ void Game::update(T_UINT64 dtime)
         }
     }
 
-    GameWindow::center_viewport(m_player->getCenter());
+    GameWindow::update_viewport(dtime, m_player->getCenter());
 }
 
 void Game::render()
@@ -132,11 +133,6 @@ void Game::render()
             obj->render();
         }
     }
-
-    // if (m_intersect)
-    //     GameWindow::render_sprite_viewport(m_redSquare, {128, 128}, {64, 64});
-    // else
-    //     GameWindow::render_sprite_viewport(m_greenSquare, {128, 128}, {64, 64});
 
     // Present the game window after all game objects have been rendered 
     GameWindow::present_window();

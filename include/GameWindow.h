@@ -28,7 +28,10 @@ namespace GameWindow
     T_UINT16 get_player_keys();
     t_vector get_window_size();
     void center_viewport(t_point center);
+    void update_viewport(T_UINT64 dtime, t_point player_position);
+    void set_viewport_mode(t_viewport_mode mode);
 
+    // player key codes
     const T_UINT16 UP    = 0x01U; // 0001
     const T_UINT16 DOWN  = 0x02U; // 0010
     const T_UINT16 LEFT  = 0x04U; // 0100

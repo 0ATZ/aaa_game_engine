@@ -161,6 +161,17 @@ namespace GameWindow
     {
         view_port->setCenter(center);
     }
+
+    void update_viewport(T_UINT64 dtime, t_point player_position)
+    {
+        view_port->setPlayerPosition(player_position);
+        view_port->update(dtime);
+    }
+
+    void set_viewport_mode(t_viewport_mode mode)
+    {
+        view_port->setMode(mode);
+    }
     
     void clear_window()
     {

@@ -3,6 +3,12 @@
 
 #include "BaseTypes.h"
 
+typedef enum e_viewport_mode
+{
+    VIEW_LOCKED_IN_PLACE = 0,
+    VIEW_FOLLOW_PLAYER_CENTER = 1,
+    VIEW_FOLLOW_PLAYER_DYNAMIC = 2,
+} t_viewport_mode;
 
 typedef struct s_vector
 {
