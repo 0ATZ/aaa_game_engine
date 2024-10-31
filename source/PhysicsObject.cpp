@@ -5,7 +5,7 @@
 PhysicsObject::PhysicsObject()
 {
     m_position = {0L, 0L};
-    m_sizePx = {0L, 0L};  // TODO: how to calc collisions
+    m_sizePx = {0L, 0L};
     m_direction = {0L, 0L};
     m_speedPx = 0UL;
     m_sprite = nullptr;
@@ -37,7 +37,7 @@ void PhysicsObject::update(T_UINT64 dtime)
         // normalize the direction vector
         m_direction = Vector2::normalize(m_direction);
         
-        // TODO: calc collisions
+        // move the position
         m_position = Vector2::add(
             m_position, 
             Vector2::scale(
@@ -50,7 +50,7 @@ void PhysicsObject::update(T_UINT64 dtime)
 
 void PhysicsObject::render()
 {
-    // TODO: render the sprite? 
+    // do nothing, derived class should handle render 
 }
 
 void PhysicsObject::destroy()

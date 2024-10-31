@@ -28,7 +28,6 @@ bool Rectangle::init()
     return true;
 }
 
-// TODO: call base class update for physics calcs 
 void Rectangle::update(T_UINT64 dtime)
 {
     T_UINT16 pKeys = GameWindow::get_player_keys();
