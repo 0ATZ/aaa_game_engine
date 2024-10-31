@@ -9,7 +9,7 @@
 
 using namespace std;
 
-int WinMain(int argc, char* args[]) {
+int WinMain(void) {
     
     
     Game game;
@@ -18,8 +18,8 @@ int WinMain(int argc, char* args[]) {
     }
     
     const T_UINT64 FRAME_DURATION_60FPS = 1000 / 60; // Frame duration for 60 FPS
-    const T_UINT64 FRAME_DURATION_120FPS = 1000 / 120; // Frame duration for 120 FPS
-    const T_UINT64 FRAME_DURATION_140FPS = 1000 / 140; // Frame duration for 140 FPS
+    // const T_UINT64 FRAME_DURATION_120FPS = 1000 / 120; // Frame duration for 120 FPS
+    // const T_UINT64 FRAME_DURATION_140FPS = 1000 / 140; // Frame duration for 140 FPS
 
     // This variable controls the speed that the game world updates
     const T_UINT64 UPDATE_DURATION_MS = FRAME_DURATION_60FPS;

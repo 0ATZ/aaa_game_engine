@@ -75,7 +75,7 @@ namespace BufferIO
 
         if (L_verified_length != (objectSize * objectCount))
         {
-            printf("file has incorrect length: %s\n");
+            printf("file has incorrect length: %s\n", filename);
             return 0LL;
         }
 

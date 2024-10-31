@@ -77,6 +77,7 @@ namespace GameWindow
                     
                     // SDL window closed
                     game_running = false;
+                    break;
 
                 case SDL_KEYDOWN:
 
@@ -99,6 +100,9 @@ namespace GameWindow
                             // nothing
                             break;
                     }
+
+                    break;
+
                 case SDL_KEYUP:
 
                     // keyrelease deactivates the corresponding bit
@@ -121,9 +125,12 @@ namespace GameWindow
                             break;
                     }
 
+                    break;
+
                 case SDL_WINDOWEVENT_FOCUS_LOST:
 
                     player_keys = 0U;
+                    break;
                 
                 case SDL_WINDOWEVENT_FOCUS_GAINED:
 
@@ -144,6 +151,8 @@ namespace GameWindow
                     {
                         player_keys |= GameWindow::RIGHT;
                     }
+                    
+                    break;
             }
         }
     }
@@ -151,7 +160,6 @@ namespace GameWindow
     void center_viewport(t_point center)
     {
         view_port->setCenter(center);
-        t_point playerPos = view_port->getPosition();
     }
     
     void clear_window()

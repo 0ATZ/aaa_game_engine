@@ -16,7 +16,7 @@ class GameObject
             m_sprite = nullptr;
         };
 
-        ~GameObject() { 
+        virtual ~GameObject() { 
             delete m_sprite; 
         };
 
