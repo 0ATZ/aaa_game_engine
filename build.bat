@@ -8,7 +8,7 @@
 @REM )
 
 echo Building the project... 
-make
+make -j4
 if %errorlevel% neq 0 (
     echo Failed to build the project!
     exit /b
