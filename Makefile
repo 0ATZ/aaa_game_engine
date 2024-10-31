@@ -1,36 +1,38 @@
+
+INCLUDE_DIR=./include
+SOURCE_DIR=./source
+ODIR=./obj
+
+INCLUDE=-I$(INCLUDE_DIR)
 CC=g++
+LIBS=-lSDL2 -L.
+# add this tag to CFLAGS to disable the cmd prompt -mwindows
+CFLAGS=-Wall -Wextra -Wno-unused-parameter
+
 OBJS=$(ODIR)/Game.o $(ODIR)/GameWindow.o $(ODIR)/Rectangle.o \
 	$(ODIR)/Sprite.o $(ODIR)/TileSet.o $(ODIR)/TileMap.o $(ODIR)/Tile.o \
 	$(ODIR)/ViewPort.o $(ODIR)/PhysicsObject.o $(ODIR)/Vector2.o \
 	$(ODIR)/BufferIO.o $(ODIR)/SpriteSheet.o $(ODIR)/AnimatedSprite.o \
 	$(ODIR)/TestBox.o
-# add this tag to CFLAGS to disable the cmd prompt -mwindows
-CFLAGS=-I. -I./include
-LIBS=-lSDL2 -L.
-ODIR=obj
-INCLUDE_DIR=include
-SOURCE_DIR=source
 
+DEPS=$(OBJS:.o=.d)
 
 main: $(OBJS)
-	$(CC) -o main.exe $(SOURCE_DIR)/main.cpp $(OBJS) $(CFLAGS) $(LIBS)
+	$(CC) $(CFLAGS) -o main.exe $(SOURCE_DIR)/main.cpp $^ $(INCLUDE) $(LIBS) 
 
-$(ODIR)/Game.o: $(SOURCE_DIR)/Game.cpp $(INCLUDE_DIR)/Game.h $(INCLUDE_DIR)/Rectangle.h $(INCLUDE_DIR)/GameWindow.h $(INCLUDE_DIR)/GameObject.h
-	$(CC) -c -o $@ $< $(CFLAGS)
+# $(ODIR)/%.d: $(SOURCE_DIR)/%.cpp
+# 	$(CXX) $(CXXFLAGS)  -M $< > $@ $(INCLUDE)
 
-$(ODIR)/Rectangle.o: $(SOURCE_DIR)/Rectangle.cpp $(INCLUDE_DIR)/Rectangle.h $(INCLUDE_DIR)/GameWindow.h $(INCLUDE_DIR)/GameObject.h
-	$(CC) -c -o $@ $< $(CFLAGS)
-	
-$(ODIR)/GameWindow.o: $(SOURCE_DIR)/GameWindow.cpp $(INCLUDE_DIR)/GameWindow.h $(INCLUDE_DIR)/GameObject.h
-	$(CC) -c -o $@ $< $(CFLAGS)
+$(ODIR)/%.o: $(SOURCE_DIR)/%.cpp
+	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@ $(INCLUDE)
 
-$(ODIR)/%.o: $(SOURCE_DIR)/%.cpp $(INCLUDE_DIR)/%.h
-	$(CC) -c -o $@ $< $(CFLAGS)
+# Include the dependency files
+# $(info Including dependencies: $(DEPS))
+-include $(DEPS)
 
 .PHONY: clean
 
 clean:
-	rm -f obj/*.o
+	rm -f $(ODIR)/*.d
+	rm -f $(ODIR)/*.o
 	rm -f main.exe
-#	del /q /f $(ODIR)\*.o
-#	del /q /f main.exe
