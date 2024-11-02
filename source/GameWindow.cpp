@@ -165,45 +165,63 @@ namespace GameWindow
                     }
                     break;
                 }
-                case SDL_WINDOWEVENT_FOCUS_LOST:
-                {
-                    // release key states when focus lost
-                    player_keys = 0U;
-                    break;
-                }
-                case SDL_WINDOWEVENT_FOCUS_GAINED:
-                {
-
-                    // recover relevant keyboard states when focus gained
-                    const T_UINT8 * keyState = SDL_GetKeyboardState(nullptr);
-                    if (keyState[SDL_SCANCODE_W])
+                case SDL_WINDOWEVENT:
+                {   
+                    switch (event.window.event)
                     {
-                        player_keys |= UP;
+                        case SDL_WINDOWEVENT_FOCUS_LOST:
+                        {
+                            // keyboard focus lost, deactivate keys
+                            player_keys &= (~KBD_MASK);
+                            break;
+                        }
+                        case SDL_WINDOWEVENT_LEAVE:
+                        {
+                            // mouse focus lost, deactivate mouse buttons
+                            player_keys &= (~MOUSE_MASK);
+                            break;
+                        }
+                        case SDL_WINDOWEVENT_FOCUS_GAINED:
+                        {
+                            // recover relevant keyboard states when focus gained
+                            const T_UINT8 * keyState = SDL_GetKeyboardState(nullptr);
+                            if (keyState[SDL_SCANCODE_W])
+                            {
+                                player_keys |= UP;
+                            }
+                            if (keyState[SDL_SCANCODE_S])
+                            {
+                                player_keys |= DOWN;
+                            }
+                            if (keyState[SDL_SCANCODE_A])
+                            {
+                                player_keys |= LEFT;
+                            }
+                            if (keyState[SDL_SCANCODE_D])
+                            {
+                                player_keys |= RIGHT;
+                            }
+                            break;
+                        }
+                        case SDL_WINDOWEVENT_ENTER:
+                        {
+                            // recover the mouse cursor position and button states
+                            const T_UINT32 mouseState = SDL_GetMouseState(&(mouse_position.x), &(mouse_position.y));
+                            if (mouseState & SDL_BUTTON_LMASK)
+                            {
+                                player_keys |= MOUSE1;
+                            }
+                            if (mouseState & SDL_BUTTON_RMASK)
+                            {
+                                player_keys |= MOUSE2;
+                            }
+                            break;
+                        }
+                        default:
+                        {
+                            break;
+                        }
                     }
-                    if (keyState[SDL_SCANCODE_S])
-                    {
-                        player_keys |= DOWN;
-                    }
-                    if (keyState[SDL_SCANCODE_A])
-                    {
-                        player_keys |= LEFT;
-                    }
-                    if (keyState[SDL_SCANCODE_D])
-                    {
-                        player_keys |= RIGHT;
-                    }                  
-                    
-                    // recover the mouse cursor position and button states
-                    const T_UINT32 mouseState = SDL_GetMouseState(&(mouse_position.x), &(mouse_position.y));
-                    if (mouseState & SDL_BUTTON_LMASK)
-                    {
-                        player_keys |= MOUSE1;
-                    }
-                    if (mouseState & SDL_BUTTON_RMASK)
-                    {
-                        player_keys |= MOUSE2;
-                    }
-                    break;
                 }
                 default:
                 {

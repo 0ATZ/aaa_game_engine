@@ -40,6 +40,8 @@ namespace GameWindow
     const T_UINT16 RIGHT  = 0x08U; // 0000 1000
     const T_UINT16 MOUSE1 = 0x10U; // 0001 0000
     const T_UINT16 MOUSE2 = 0x20U; // 0010 0000
+    const T_UINT16 KBD_MASK = 0x15;   // 0000 1111
+    const T_UINT16 MOUSE_MASK = 0x30; // 0011 0000
 
 }
 
