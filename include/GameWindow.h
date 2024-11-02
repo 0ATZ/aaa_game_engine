@@ -32,10 +32,12 @@ namespace GameWindow
     void set_viewport_mode(t_viewport_mode mode);
 
     // player key codes
-    const T_UINT16 UP    = 0x01U; // 0001
-    const T_UINT16 DOWN  = 0x02U; // 0010
-    const T_UINT16 LEFT  = 0x04U; // 0100
-    const T_UINT16 RIGHT = 0x08U; // 1000
+    const T_UINT16 UP     = 0x01U; // 0000 0001
+    const T_UINT16 DOWN   = 0x02U; // 0000 0010
+    const T_UINT16 LEFT   = 0x04U; // 0000 0100
+    const T_UINT16 RIGHT  = 0x08U; // 0000 1000
+    const T_UINT16 MOUSE1 = 0x10U; // 0001 0000
+    const T_UINT16 MOUSE2 = 0x20U; // 0010 0000
 
 }
 

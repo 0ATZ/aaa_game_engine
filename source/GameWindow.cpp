@@ -13,6 +13,7 @@ namespace GameWindow
     SDL_Renderer * sdl_renderer;
     bool game_running;
     T_UINT16 player_keys;
+    t_point mouse_position;
     t_vector window_size;
     ViewPort * view_port;
 
@@ -20,6 +21,7 @@ namespace GameWindow
     {
         bool L_initSuccess = true;
         game_running = false;
+        mouse_position = {0, 0};
 
         // initialize namespace variables 
         player_keys = 0U;
@@ -63,8 +65,8 @@ namespace GameWindow
      * 0x02: S (down)
      * 0x04: A (left)
      * 0x08: D (right)
-     * 0x10: jump
-     * 0x20: shift
+     * 0x10: M1 (left mouse button)
+     * 0x20: M2 (right mouse button)
      */ 
     void process_events()
     {
@@ -74,13 +76,13 @@ namespace GameWindow
             switch (event.type)
             {
                 case SDL_QUIT: 
-                    
+                {  
                     // SDL window closed
                     game_running = false;
                     break;
-
+                }
                 case SDL_KEYDOWN:
-
+                {
                     // keypress activates the corresponding bit
                     switch (event.key.keysym.sym)
                     {
@@ -102,9 +104,9 @@ namespace GameWindow
                     }
 
                     break;
-
+                }
                 case SDL_KEYUP:
-
+                {
                     // keyrelease deactivates the corresponding bit
                     switch (event.key.keysym.sym)
                     {
@@ -126,14 +128,50 @@ namespace GameWindow
                     }
 
                     break;
-
+                }
+                case SDL_MOUSEMOTION:
+                {
+                    // process mouse cursor movement
+                    mouse_position.x = event.motion.x;
+                    mouse_position.y = event.motion.y;
+                    break;
+                }
+                case SDL_MOUSEBUTTONDOWN:
+                {
+                    printf("mouse pos: %d, %d\n", event.motion.x, event.motion.y);
+                    // process mouse button press
+                    if (event.button.button == SDL_BUTTON_LEFT)
+                    {
+                        player_keys |= MOUSE1;
+                    }
+                    else if (event.button.button == SDL_BUTTON_RIGHT)
+                    {
+                        player_keys |= MOUSE2;
+                    }
+                    break;                
+                }
+                case SDL_MOUSEBUTTONUP:
+                {
+                    // process mouse button release
+                    if (event.button.button == SDL_BUTTON_LEFT)
+                    {
+                        player_keys &= (~MOUSE1);
+                    }
+                    else if (event.button.button == SDL_BUTTON_RIGHT)
+                    {
+                        player_keys &= (~MOUSE2);
+                    }
+                    break;
+                }
                 case SDL_WINDOWEVENT_FOCUS_LOST:
-
+                {
+                    // release key states when focus lost
                     player_keys = 0U;
                     break;
-                
+                }
                 case SDL_WINDOWEVENT_FOCUS_GAINED:
-
+                {
+                    // recover relevant keyboard states when focus gained
                     const T_UINT8 * keyState = SDL_GetKeyboardState(nullptr);
                     if (keyState[SDL_SCANCODE_W])
                     {
@@ -149,10 +187,25 @@ namespace GameWindow
                     }
                     if (keyState[SDL_SCANCODE_D])
                     {
-                        player_keys |= GameWindow::RIGHT;
-                    }
+                        player_keys |= RIGHT;
+                    }                  
                     
+                    // recover the mouse cursor position and button states
+                    const T_UINT32 mouseState = SDL_GetMouseState(&(mouse_position.x), &(mouse_position.y));
+                    if (mouseState & SDL_BUTTON_LMASK)
+                    {
+                        player_keys |= MOUSE1;
+                    }
+                    if (mouseState & SDL_BUTTON_RMASK)
+                    {
+                        player_keys |= MOUSE2;
+                    }
                     break;
+                }
+                default:
+                {
+                    break;
+                }
             }
         }
     }
