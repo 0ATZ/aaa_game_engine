@@ -6,6 +6,7 @@
 #include "sprite/TestMap.h"
 #include "Vector2.h"
 #include "TestBox.h"
+#include "Cursor.h"
 
 t_point g_player_pos;
 t_point g_camera_pos;
@@ -76,6 +77,7 @@ bool Game::init()
     // use the rectangle as the player object!
     m_player = new Rectangle(32, 32);
     registerObject(m_player);
+    registerObject(new Cursor());
 
     registerObject(new TestBox({100,400}, 50U, 50U));
     

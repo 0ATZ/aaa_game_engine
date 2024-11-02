@@ -20,12 +20,19 @@ X Implement Physics collisions
 X SDL VSYNC and Hardware Acceleration
 - TileMap from file
 X Sprite Tile creator
+- mouse movement and clicks
+- mouse delay
 - TileMap creator
-- dynamic viewport
+X dynamic viewport
 X streamline build process, cmake files? 
 - performance counters (FPS, CPU/RAM/VRAM usage)
-- 8bit sprite color palette? format sprites in indexed colors 
+- 8bit sprite color palette? format sprites in indexed colors
 ==================
+- handle sprite transparency
+    - generate a sprite with transparency
+    - https://wiki.libsdl.org/SDL2/SDL_CreateRGBSurfaceWithFormatFrom
+    - https://wiki.libsdl.org/SDL2/SDL_SetColorKey
+    - https://wiki.libsdl.org/SDL2/SDL_CreateTextureFromSurface
 - Windows process priority
 - Game menus
 - player and enemies

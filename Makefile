@@ -13,21 +13,17 @@ OBJS=$(ODIR)/Game.o $(ODIR)/GameWindow.o $(ODIR)/Rectangle.o \
 	$(ODIR)/Sprite.o $(ODIR)/TileSet.o $(ODIR)/TileMap.o $(ODIR)/Tile.o \
 	$(ODIR)/ViewPort.o $(ODIR)/PhysicsObject.o $(ODIR)/Vector2.o \
 	$(ODIR)/BufferIO.o $(ODIR)/SpriteSheet.o $(ODIR)/AnimatedSprite.o \
-	$(ODIR)/TestBox.o
+	$(ODIR)/TestBox.o $(ODIR)/Cursor.o
 
 DEPS=$(OBJS:.o=.d)
 
 main: $(OBJS)
 	$(CC) $(CFLAGS) -o main.exe $(SOURCE_DIR)/main.cpp $^ $(INCLUDE) $(LIBS) 
 
-# $(ODIR)/%.d: $(SOURCE_DIR)/%.cpp
-# 	$(CXX) $(CXXFLAGS)  -M $< > $@ $(INCLUDE)
-
 $(ODIR)/%.o: $(SOURCE_DIR)/%.cpp
 	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@ $(INCLUDE)
 
 # Include the dependency files
-# $(info Including dependencies: $(DEPS))
 -include $(DEPS)
 
 .PHONY: clean
