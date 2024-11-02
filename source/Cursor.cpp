@@ -1,6 +1,8 @@
 #include "Cursor.h"
 #include "AnimatedSprite.h"
 #include "GameWindow.h"
+#include "Vector2.h"
+#include <stdio.h>
 
 Cursor::Cursor()
 {
@@ -14,18 +16,35 @@ Cursor::Cursor()
 
 void Cursor::update(T_UINT64 dtime)
 {
-    m_timer += dtime; 
-    if (m_timer > 2000ULL)
+    m_timer += dtime;
+    
+    // offset the mouse position by the position of the camera
+    // to get the "ingame" position of the cursor object
+    t_point cursorPosition = Vector2::add(
+        GameWindow::get_mouse_position(), 
+        GameWindow::get_viewport_position()
+    );
+    setPosition(cursorPosition);
+    
+    // get the key states from GameWindow
+    T_UINT16 playerKeys = GameWindow::get_player_keys();
+    if (playerKeys & GameWindow::MOUSE1)
     {
-        m_timer = 0ULL;
-        ((AnimatedSprite*)m_sprite)->advanceFrame();
-    } 
+        // set the sprite to the "clicked" cursor
+        ((AnimatedSprite*)m_sprite)->setCurrentFrame(3);
+    }
+    else
+    {
+        // set the sprite to the "not clicked" cursor
+        ((AnimatedSprite*)m_sprite)->setCurrentFrame(2);
+    }
 }
 
 void Cursor::render()
 {
     // Adjust the position and size of cursor for hitbox
-    GameWindow::render_sprite_viewport(m_sprite, m_position, m_sizePx);
+    t_point cursorPosition = Vector2::subtract(m_position, Vector2::scale(m_sizePx, 0.5));
+    GameWindow::render_sprite_viewport(m_sprite, cursorPosition, m_sizePx);
 }
 
 void Cursor::destroy()

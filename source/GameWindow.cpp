@@ -50,6 +50,9 @@ namespace GameWindow
             L_initSuccess = false;
         }
         
+        // hide the system cursor in favor of the the game cursor
+        SDL_ShowCursor(SDL_DISABLE);
+        
         // create the viewport to help render objects at the correct position
         view_port = new ViewPort(window_size);
 
@@ -138,7 +141,6 @@ namespace GameWindow
                 }
                 case SDL_MOUSEBUTTONDOWN:
                 {
-                    printf("mouse pos: %d, %d\n", event.motion.x, event.motion.y);
                     // process mouse button press
                     if (event.button.button == SDL_BUTTON_LEFT)
                     {
@@ -171,6 +173,7 @@ namespace GameWindow
                 }
                 case SDL_WINDOWEVENT_FOCUS_GAINED:
                 {
+
                     // recover relevant keyboard states when focus gained
                     const T_UINT8 * keyState = SDL_GetKeyboardState(nullptr);
                     if (keyState[SDL_SCANCODE_W])
@@ -357,5 +360,15 @@ namespace GameWindow
     t_vector get_window_size()
     {
         return window_size;
+    }
+
+    t_point get_mouse_position()
+    {
+        return mouse_position;
+    }
+
+    t_point get_viewport_position()
+    {
+        return view_port->getPosition();
     }
 }
