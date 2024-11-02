@@ -7,7 +7,7 @@ Cursor::Cursor()
     m_clicked = false;
     m_timer = 0ULL;
     m_position = {300, 300};
-    m_sizePx = {32, 32};
+    m_sizePx = {48, 48};
     m_solid = false;
     m_sprite = new AnimatedSprite("./assets/sprites/cursors.bin", 4, 16, 16, 1);
 }

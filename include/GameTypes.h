@@ -21,6 +21,7 @@ typedef t_vector t_point;
 
 // 16-bit pixels (RGB565)
 typedef T_UINT16 t_pixel;
+const T_UINT16 PXCOLOR_TRANSPARENT = 0xF81F; 
 
 typedef enum e_scale 
 {

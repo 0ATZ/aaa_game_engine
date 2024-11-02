@@ -219,18 +219,39 @@ namespace GameWindow
         void * L_texture = nullptr;
         if (sprite)
         {
-            L_texture = create_texture(
-                sprite->getSpritePixels(),
-                sprite->getWidth(),
-                sprite->getHeight()
+            // create an sdl surface to help with graphics transformations
+            SDL_Surface * L_surface = SDL_CreateRGBSurfaceWithFormatFrom(
+                sprite->getSpritePixels(), 
+                sprite->getWidth(), 
+                sprite->getHeight(), 
+                16, sprite->getWidth() * 2, 
+                SDL_PIXELFORMAT_RGB565
             );
 
-            sprite->setTexture(L_texture);
+            if (L_surface)
+            {
+                // set the color key for transparency
+                T_INT32 L_status = SDL_SetColorKey(L_surface, SDL_TRUE, PXCOLOR_TRANSPARENT);
+                if (L_status < 0)
+                {
+                    printf("failed to set transparency pixel\n");
+                }
+
+                // create a texture from the surface object
+                L_texture = SDL_CreateTextureFromSurface(sdl_renderer, L_surface);
+                
+                // assign this texture to the sprite 
+                sprite->setTexture(L_texture);
+                
+                // delete the surface object
+                SDL_FreeSurface(L_surface);
+            }
         }
         else
         {
-            printf("tired to create texture from null sprite ptr\n");
+            printf("failed to create SDL surface\n");
         }
+        
         return L_texture;
     }
 
