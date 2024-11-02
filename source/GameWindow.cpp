@@ -221,11 +221,12 @@ namespace GameWindow
         {
             // create an sdl surface to help with graphics transformations
             SDL_Surface * L_surface = SDL_CreateRGBSurfaceWithFormatFrom(
-                sprite->getSpritePixels(), 
-                sprite->getWidth(), 
-                sprite->getHeight(), 
-                16, sprite->getWidth() * 2, 
-                SDL_PIXELFORMAT_RGB565
+                sprite->getSpritePixels(), // pixel data buffer
+                sprite->getWidth(), // number of pixels per row
+                sprite->getHeight(), // number of pixels per column 
+                sizeof(t_pixel) * 8, // number of bits per pixel 
+                sprite->getWidth() * sizeof(t_pixel), // number of bytes per row
+                SDL_PIXELFORMAT_RGB565 // 5 bits red, 6 green, 5 blue
             );
 
             if (L_surface)
