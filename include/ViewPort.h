@@ -14,6 +14,7 @@ class ViewPort : public PhysicsObject
         void setPlayerPosition(t_point playerPosition);
         void setMode(t_viewport_mode mode);
         void vResolveCollision(PhysicsObject * obj);
+        void vOnClick();
 
     private:
         t_point maxPlayerPosition();

@@ -76,6 +76,11 @@ void ViewPort::vResolveCollision(PhysicsObject *obj)
     // do nothing
 }
 
+void ViewPort::vOnClick()
+{
+    // do nothing
+}
+
 t_point ViewPort::maxPlayerPosition()
 {
     return Vector2::add(

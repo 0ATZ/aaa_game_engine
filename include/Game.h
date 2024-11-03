@@ -22,6 +22,7 @@ class Game
         static const T_UINT16 MAX_OBJECTS = 64U;
         GameObject * m_objects[MAX_OBJECTS];
         GameObject * m_player;
+        GameObject * m_cursor;
         T_UINT16 m_objectCount;
         TileSet * m_tileSet;
         TileMap * m_tileMap;

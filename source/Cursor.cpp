@@ -10,12 +10,16 @@ Cursor::Cursor()
     m_timer = 0ULL;
     m_position = {300, 300};
     m_sizePx = {5, 5};
-    m_solid = false;
     m_sprite = nullptr;
 
     // GameWindow handles rendering of cursor 
     SpriteSheet sprites = SpriteSheet("./assets/sprites/cursors.bin", 3, 32, 32);
     GameWindow::create_custom_cursors(&sprites);
+}
+
+bool Cursor::init()
+{
+    return true;
 }
 
 void Cursor::update(T_UINT64 dtime)
@@ -32,6 +36,7 @@ void Cursor::update(T_UINT64 dtime)
     T_UINT16 playerKeys = GameWindow::get_player_keys();
     if (playerKeys & GameWindow::MOUSE1)
     {
+        m_clicked = true;
         if (m_timer < 50)
         {
             // set the cursor to the "clicked" state
@@ -50,9 +55,28 @@ void Cursor::update(T_UINT64 dtime)
         // set the cursor to the "unclicked" state
         GameWindow::set_cursor(0);
         m_timer = 0ULL;
+        m_clicked = false;
     }
 }
 
+bool Cursor::processClick(GameObject *obj)
+{
+    bool L_clicked = false;
+    if (m_clicked && obj)
+    {
+        L_clicked = intersects(obj->getPosition(), obj->getSizePixels());
+        if (L_clicked)
+        {
+            obj->vOnClick();
+        }
+    }
+    return L_clicked;
+}
+
+void Cursor::vOnClick()
+{
+    // do nothing
+}
 
 void Cursor::render()
 {
@@ -64,7 +88,7 @@ void Cursor::destroy()
     delete this;
 }
 
-void Cursor::vResolveCollision(PhysicsObject *obj)
+bool Cursor::isClicked()
 {
-    // TODO: resolve collision for clicks
+    return m_clicked;
 }

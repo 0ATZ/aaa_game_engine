@@ -75,3 +75,8 @@ void Rectangle::vResolveCollision(PhysicsObject *obj)
 {
     PhysicsObject::resolveCollision(obj);
 }
+
+void Rectangle::vOnClick()
+{
+    printf("clicked the player!\n");
+}

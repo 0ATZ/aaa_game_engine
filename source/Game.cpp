@@ -69,6 +69,7 @@ bool Game::init()
     registerObject(new TestBox({100,100}, 100U, 100U));   // default lighter than player
     registerObject(new TestBox({500,500}, 75U, 50U));     // default lighter than player
     registerObject(new TestBox({400,200}, 50U, 50U, 12)); // slightly too heavy to move
+    registerObject(new TestBox({100,400}, 50U, 50U));
     
     TestBox * stationary_box = new TestBox({400, 300}, 50U, 50U);
     stationary_box->setSpeed(0U);
@@ -77,9 +78,8 @@ bool Game::init()
     // use the rectangle as the player object!
     m_player = new Rectangle(32, 32);
     registerObject(m_player);
-    registerObject(new Cursor());
 
-    registerObject(new TestBox({100,400}, 50U, 50U));
+    m_cursor = new Cursor();
     
     return true;
 }
@@ -118,6 +118,18 @@ void Game::update(T_UINT64 dtime)
         }
     }
 
+    // detect and resolve click events
+    m_cursor->update(dtime);
+    if (((Cursor*) m_cursor)->isClicked())
+    {
+        for (int i = 0; i < m_objectCount; i++)
+        {
+            // call the onClick method if obj intersects with cursor 
+            ((Cursor*) m_cursor)->processClick(m_objects[i]);
+        }
+    }
+
+    // move the viewable area based on the player position 
     GameWindow::update_viewport(dtime, m_player->getCenter());
 }
 

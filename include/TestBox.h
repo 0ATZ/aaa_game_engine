@@ -14,6 +14,8 @@ class TestBox : public PhysicsObject
         void update(T_UINT64 dtime);
         void render();
         void vResolveCollision(PhysicsObject *obj);
+        void vOnClick();
+
 
     private:
         bool m_activated;

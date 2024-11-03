@@ -65,3 +65,9 @@ void TestBox::vResolveCollision(PhysicsObject * obj)
     m_activated = true;
     PhysicsObject::resolveCollision(obj);
 }
+
+void TestBox::vOnClick()
+{
+    // printf("clicked a test box!\n");
+    m_activated = true;
+}

@@ -15,6 +15,8 @@ class Rectangle: public PhysicsObject
         void destroy();
 
         void vResolveCollision(PhysicsObject * obj);
+        void vOnClick();
+
     
 };
 #endif

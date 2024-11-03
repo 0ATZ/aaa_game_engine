@@ -166,8 +166,8 @@ class GameObject
             }
         }
 
-        // derived classes should decide how to handle collisions
-        // virtual void resolveCollision(GameObject * obj) = 0;
+        // derived classes should decide how to handle cursor clicks
+        virtual void vOnClick() = 0;
         
 
     protected:

@@ -4,15 +4,18 @@
 #include "GameTypes.h"
 #include "PhysicsObject.h"
 
-class Cursor : public PhysicsObject
+class Cursor : public GameObject
 {
     public:
         Cursor();
         
+        bool init();
         void update(T_UINT64 dtime);
         void render();
         void destroy();
-        void vResolveCollision(PhysicsObject * obj);
+        bool isClicked();
+        bool processClick(GameObject * obj);
+        void vOnClick();
 
     private: 
         bool m_clicked;

@@ -97,3 +97,8 @@ void TileMap::destroy()
 {
     delete this;
 }
+
+void TileMap::vOnClick()
+{
+    // do nothing
+}
