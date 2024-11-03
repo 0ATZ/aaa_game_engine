@@ -1,6 +1,7 @@
 #include "GameWindow.h"
 #include <iostream>
 #include "ViewPort.h"
+#include "SpriteSheet.h"
 
 namespace GameWindow
 {
@@ -11,11 +12,16 @@ namespace GameWindow
 
     SDL_Window * sdl_window;
     SDL_Renderer * sdl_renderer;
+    SDL_Cursor ** sdl_cursors;
     bool game_running;
     T_UINT16 player_keys;
     t_point mouse_position;
     t_vector window_size;
     ViewPort * view_port;
+
+    SDL_Surface *create_surface(Sprite *sprite);
+    SDL_Cursor *create_cursor(Sprite * sprite, T_INT32 hotspot_x, T_INT32 hotspot_y);
+
 
     bool initialize(t_vector size)
     {
@@ -49,9 +55,14 @@ namespace GameWindow
             SDL_Quit();
             L_initSuccess = false;
         }
+
+        SpriteSheet * cursors = new SpriteSheet("assets/sprites/cursors.bin", 4, 16, 16);
+        SDL_SetCursor(
+            create_cursor(cursors->getSpriteByID(3), 7, 7)
+        );
         
         // hide the system cursor in favor of the the game cursor
-        SDL_ShowCursor(SDL_DISABLE);
+        // SDL_ShowCursor(SDL_DISABLE);
         
         // create the viewport to help render objects at the correct position
         view_port = new ViewPort(window_size);
@@ -134,13 +145,17 @@ namespace GameWindow
                 }
                 case SDL_MOUSEMOTION:
                 {
-                    // process mouse cursor movement
+                    // update mouse position
                     mouse_position.x = event.motion.x;
                     mouse_position.y = event.motion.y;
                     break;
                 }
                 case SDL_MOUSEBUTTONDOWN:
                 {
+                    // update mouse position
+                    mouse_position.x = event.button.x;
+                    mouse_position.y = event.button.y;
+
                     // process mouse button press
                     if (event.button.button == SDL_BUTTON_LEFT)
                     {
@@ -154,6 +169,10 @@ namespace GameWindow
                 }
                 case SDL_MOUSEBUTTONUP:
                 {
+                    // update mouse position
+                    mouse_position.x = event.button.x;
+                    mouse_position.y = event.button.y;
+                    
                     // process mouse button release
                     if (event.button.button == SDL_BUTTON_LEFT)
                     {
@@ -271,30 +290,13 @@ namespace GameWindow
         SDL_Quit();
     }
 
-    void *create_texture(t_pixel *pixels, T_UINT16 width, T_UINT16 height)
+    SDL_Surface *create_surface(Sprite *sprite)
     {
-        SDL_Texture * L_texture = SDL_CreateTexture(sdl_renderer, SDL_PIXELFORMAT_RGB565, SDL_TEXTUREACCESS_STATIC, width, height);
-
-        if (!L_texture)
-        {
-            SDL_Log("Failed to create texture: %s", SDL_GetError());
-        }
-        else
-        {
-            // Update the texture with the pixel data
-            SDL_UpdateTexture(L_texture, nullptr, pixels, width * sizeof(T_UINT16));
-        }
-
-        // return a pointer to the sdl texture
-        return L_texture;
-    }
-    void *create_texture(Sprite *sprite)
-    {
-        void * L_texture = nullptr;
+        SDL_Surface * L_surface = nullptr;
         if (sprite)
         {
             // create an sdl surface to help with graphics transformations
-            SDL_Surface * L_surface = SDL_CreateRGBSurfaceWithFormatFrom(
+            L_surface = SDL_CreateRGBSurfaceWithFormatFrom(
                 sprite->getSpritePixels(), // pixel data buffer
                 sprite->getWidth(), // number of pixels per row
                 sprite->getHeight(), // number of pixels per column 
@@ -311,7 +313,27 @@ namespace GameWindow
                 {
                     printf("failed to set transparency pixel\n");
                 }
+            }
+        }
+        return L_surface;
+    }
 
+    SDL_Cursor * create_cursor(Sprite * sprite, T_INT32 hotspot_x, T_INT32 hotspot_y)
+    {
+        SDL_Surface * L_surface = create_surface(sprite);
+        SDL_Cursor* customCursor = SDL_CreateColorCursor(L_surface, hotspot_x, hotspot_y);
+        SDL_FreeSurface(L_surface);
+        return customCursor;
+    }
+
+    void *create_texture(Sprite *sprite)
+    {
+        void * L_texture = nullptr;
+        if (sprite)
+        {
+            SDL_Surface * L_surface = create_surface(sprite);
+            if (L_surface)
+            {
                 // create a texture from the surface object
                 L_texture = SDL_CreateTextureFromSurface(sdl_renderer, L_surface);
                 
@@ -322,11 +344,6 @@ namespace GameWindow
                 SDL_FreeSurface(L_surface);
             }
         }
-        else
-        {
-            printf("failed to create SDL surface\n");
-        }
-        
         return L_texture;
     }
 
