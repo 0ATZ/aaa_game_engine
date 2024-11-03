@@ -77,7 +77,7 @@ bool Game::init()
     // use the rectangle as the player object!
     m_player = new Rectangle(32, 32);
     registerObject(m_player);
-    // registerObject(new Cursor());
+    registerObject(new Cursor());
 
     registerObject(new TestBox({100,400}, 50U, 50U));
     

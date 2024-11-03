@@ -5,7 +5,7 @@
 #include "SDL2/SDL.h"
 #include "Sprite.h"
 #include "GameObject.h"
-
+#include "SpriteSheet.h"
 
 
 namespace GameWindow
@@ -23,6 +23,9 @@ namespace GameWindow
     void render_texture(void *texture, t_point point, t_vector size);
     void render_sprite(Sprite *sprite, t_point point, t_vector size);
     void render_sprite_viewport(Sprite * sprite, t_point position, t_vector size);
+    void create_custom_cursors(SpriteSheet * sprites);
+    void set_cursor(T_UINT16 index);
+
 
     bool is_running();
     T_UINT16 get_player_keys();

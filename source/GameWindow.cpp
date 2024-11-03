@@ -55,11 +55,6 @@ namespace GameWindow
             SDL_Quit();
             L_initSuccess = false;
         }
-
-        SpriteSheet * cursors = new SpriteSheet("assets/sprites/cursors.bin", 4, 16, 16);
-        SDL_SetCursor(
-            create_cursor(cursors->getSpriteByID(3), 7, 7)
-        );
         
         // hide the system cursor in favor of the the game cursor
         // SDL_ShowCursor(SDL_DISABLE);
@@ -326,6 +321,24 @@ namespace GameWindow
         return customCursor;
     }
 
+    void create_custom_cursors(SpriteSheet * sprites)
+    {
+        // delete any preexisting custom cursors and reallocate
+        delete[] sdl_cursors;
+        delete sdl_cursors;
+        sdl_cursors = new SDL_Cursor*[sprites->getNumSprites()];
+        
+        // create a cursor for each cursor sprite in the spritesheet
+        for (T_UINT16 i = 0U; i < sprites->getNumSprites(); i++)
+        {
+            sdl_cursors[i] = create_cursor(
+                sprites->getSpriteByID(i), 
+                sprites->getSpriteWidthPx() / 2, 
+                sprites->getSpriteHeightPx() / 2
+            );
+        }
+    }
+
     void *create_texture(Sprite *sprite)
     {
         void * L_texture = nullptr;
@@ -379,6 +392,14 @@ namespace GameWindow
         {
             t_point render_pos = Vector2::subtract(position, view_port->getPosition());
             render_sprite(sprite, render_pos, size);
+        }
+    }
+
+    void set_cursor(T_UINT16 index)
+    {
+        if (index < sizeof(sdl_cursors))
+        {
+            SDL_SetCursor(sdl_cursors[index]);
         }
     }
 
