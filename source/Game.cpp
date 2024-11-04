@@ -31,15 +31,6 @@ bool Game::init()
     
     m_tileSet = new TileSet("./assets/sprites/grass_sprites.bin", 36, 16);
 
-    // T_UINT16 tilemap_rows = 32U;
-    // T_UINT16 tilemap_cols = 32U;
-    // t_tilemap map = {0};
-    // for (int i = 0; i < (tilemap_rows * tilemap_cols); i++)
-    // {
-    //     map[i] = 21U;
-    // }
-    // m_tileMap = ;
-
     registerObject(new TileMap("./assets/tilemaps/testmap.bin", m_tileSet, 32U, 32U));
     registerObject(new TestBox({100,300}, 100U, 20U, PhysicsObject::WEIGHT_STATIC)); // cannot be moved by anything
     registerObject(new TestBox({100,100}, 100U, 100U));   // default lighter than player

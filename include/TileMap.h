@@ -7,6 +7,7 @@ class TileMap : public GameObject
 {
     public:
         TileMap(const char *const filename, TileSet *tileSet, T_UINT16 numRows, T_UINT16 numCols);
+        ~TileMap();
         void render();
         bool init();
         void update(T_UINT64 dtime);

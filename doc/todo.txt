@@ -23,12 +23,10 @@ X mouse movement and clicks
 X mouse delay
 X cursor management
 X on click methods
-- TileMap from file
+X TileMap from file
 - TileMap editor
 X dynamic viewport
 X streamline build process, cmake files?
-- performance counters (FPS, CPU/RAM/VRAM usage)
-- 8bit sprite color palette? format sprites in indexed colors
 ==================
 X handle sprite transparency
     X generate a sprite with transparency
@@ -39,8 +37,16 @@ X handle sprite transparency
 - Game menus
 - player and enemies
 - health and damage
+- load sprites once and reuse data, maybe make a namespace DataLoader
+    - LoadTileMap
+    - LoadSprite
+    - LoadSpriteSheet
+- handle game object deletion and deregister from game
 ==================
+- 8bit sprite color palette? format sprites in indexed colors
 - physics engine research
 - sorting alg
 - recursive collision detection and resolution
 - Vector2 operator overload (* + -)
+- reorganize folder structure
+- performance counters (FPS, CPU/RAM/VRAM usage)

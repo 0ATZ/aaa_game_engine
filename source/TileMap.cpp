@@ -38,13 +38,14 @@ TileMap::TileMap(const char * const filename, TileSet * tileSet, T_UINT16 numRow
     // calculate the total number of tiles in this map
     m_numTiles = m_numRows * m_numCols;
 
-    // read the tilemap bytes from the file into a buffer
+    // allocate a new buffer for the tilemap
     m_tileMap = new T_UINT8[m_numTiles];
     if (m_tileMap == nullptr)
     {
         printf("failed to allocate tilemap buffer of length: %d\n", m_numTiles);
     }
 
+    // read the tilemap bytes from the file into the new buffer
     T_UINT16 bytes_read = BufferIO::readBuffer(
         filename, m_tileMap, m_numTiles, 1
     );
@@ -58,6 +59,11 @@ TileMap::TileMap(const char * const filename, TileSet * tileSet, T_UINT16 numRow
     {
         printf("tilemap read %d bytes\n", bytes_read);
     }
+}
+
+TileMap::~TileMap()
+{
+    delete[] m_tileMap;
 }
 
 void TileMap::render()
