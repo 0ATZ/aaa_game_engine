@@ -19,13 +19,16 @@ class TileMap : public GameObject
 
     protected:
         TileSet * m_tileSet;
-        T_UINT8 * m_tileMap;
         t_vector m_scaledTileSize;
+    
+        void setTileID(T_UINT16 row, T_UINT16 col, t_index tileID);
+
+    private:    
+        T_UINT8 * m_tileMap;
         T_UINT16 m_numRows;
         T_UINT16 m_numCols;
         T_UINT32 m_numTiles;
-    
-    private:    
+
         t_index getTileID(T_UINT16 row, T_UINT16 col);
         t_point tilePosition(T_UINT16 row, T_UINT16 col);
 };

@@ -96,6 +96,12 @@ void TileMap::update(T_UINT64 dtime)
     // do nothing
 }
 
+void TileMap::setTileID(T_UINT16 row, T_UINT16 col, t_index tileID)
+{
+    // set an entry from the tilemap at (row, col)
+    m_tileMap[(row * m_numCols) + col] = tileID;
+}
+
 t_index TileMap::getTileID(T_UINT16 row, T_UINT16 col)
 {
     // get an entry from the tilemap at (row, col)

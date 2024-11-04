@@ -48,5 +48,6 @@ t_vector MapEditor::getRowCol(t_point point)
 void MapEditor::vOnClick()
 {
     t_vector row_col = getRowCol(m_cursorPosition); 
-    printf("clicked (%d, %d)!\n", row_col.x, row_col.y);
+    TileMap::setTileID((T_UINT16) row_col.y, (T_UINT16) row_col.x, m_tileIndex);
+    // printf("clicked (%d, %d)!\n", row_col.x, row_col.y);
 }
