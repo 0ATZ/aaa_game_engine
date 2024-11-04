@@ -13,7 +13,7 @@ OBJS=$(ODIR)/Game.o $(ODIR)/GameWindow.o $(ODIR)/Rectangle.o \
 	$(ODIR)/Sprite.o $(ODIR)/TileSet.o $(ODIR)/TileMap.o \
 	$(ODIR)/ViewPort.o $(ODIR)/PhysicsObject.o $(ODIR)/Vector2.o \
 	$(ODIR)/BufferIO.o $(ODIR)/SpriteSheet.o $(ODIR)/AnimatedSprite.o \
-	$(ODIR)/TestBox.o $(ODIR)/Cursor.o
+	$(ODIR)/TestBox.o $(ODIR)/Cursor.o $(ODIR)/MapEditor.o
 
 DEPS=$(OBJS:.o=.d)
 

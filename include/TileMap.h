@@ -1,3 +1,6 @@
+#ifndef TILEMAP_H
+#define TILEMAP_H
+
 #include "BaseTypes.h"
 #include "GameTypes.h"
 #include "GameObject.h"
@@ -14,16 +17,17 @@ class TileMap : public GameObject
         void destroy();
         void vOnClick();
 
-    private:
+    protected:
         TileSet * m_tileSet;
         T_UINT8 * m_tileMap;
-
-        // t_vector m_scale; 
         t_vector m_scaledTileSize;
         T_UINT16 m_numRows;
         T_UINT16 m_numCols;
         T_UINT32 m_numTiles;
-        
+    
+    private:    
         t_index getTileID(T_UINT16 row, T_UINT16 col);
         t_point tilePosition(T_UINT16 row, T_UINT16 col);
 };
+
+#endif

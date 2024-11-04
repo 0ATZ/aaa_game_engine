@@ -7,6 +7,7 @@
 #include "Vector2.h"
 #include "TestBox.h"
 #include "Cursor.h"
+#include "MapEditor.h"
 
 t_point g_player_pos;
 t_point g_camera_pos;
@@ -31,7 +32,7 @@ bool Game::init()
     
     m_tileSet = new TileSet("./assets/sprites/grass_sprites.bin", 36, 16);
 
-    registerObject(new TileMap("./assets/tilemaps/testmap.bin", m_tileSet, 32U, 32U));
+    registerObject(new MapEditor("./assets/tilemaps/testmap.bin", m_tileSet, 32U, 32U));
     registerObject(new TestBox({100,300}, 100U, 20U, PhysicsObject::WEIGHT_STATIC)); // cannot be moved by anything
     registerObject(new TestBox({100,100}, 100U, 100U));   // default lighter than player
     registerObject(new TestBox({500,500}, 75U, 50U));     // default lighter than player

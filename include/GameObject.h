@@ -80,6 +80,16 @@ class GameObject
             return m_sprite;
         }
 
+        bool intersects(t_point position)
+        {
+            if (position.x >= m_position.x &&
+                position.x < m_position.x + m_sizePx.x &&
+                position.y >= m_position.y &&
+                position.y < m_position.y + m_sizePx.y)
+                return true;
+            return false;
+        }
+
         // position, width, and height define a 2D rectangular mesh, 
         // which represents the 2D space occupied by this object
         // the 2D rectangular mesh can be used to calculate collisions 
@@ -108,6 +118,7 @@ class GameObject
             return true;
         }
 
+        // TODO: need to resolve one more pixel of overlap, or maybe intersects needs adjust?
         void resolve(t_point position, t_vector sizePx)
         {
             T_INT32 x_overlap = 0LL;

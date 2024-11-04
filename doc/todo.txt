@@ -37,7 +37,10 @@ X handle sprite transparency
 - Game menus
 - player and enemies
 - health and damage
-- load sprites once and reuse data, maybe make a namespace DataLoader
+- load sprites once and reuse data, maybe make DataLoader logic in BufferIO
+    - register the file data to UID hash from string filename
+    - loader functions will reuse cached data if possible
+    - support optional garbage collection?
     - LoadTileMap
     - LoadSprite
     - LoadSpriteSheet
