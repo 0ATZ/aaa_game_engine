@@ -2,7 +2,6 @@
 #define RECTANGLE_H
 
 #include "PhysicsObject.h"
-#include "Tile.h"
 
 class Rectangle: public PhysicsObject
 {

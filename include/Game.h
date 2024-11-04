@@ -25,7 +25,7 @@ class Game
         GameObject * m_cursor;
         T_UINT16 m_objectCount;
         TileSet * m_tileSet;
-        TileMap * m_tileMap;
+        // TileMap * m_tileMap;
         bool running;
 
         // temp var for debug

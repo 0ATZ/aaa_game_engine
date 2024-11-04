@@ -3,26 +3,17 @@
 
 #include "BaseTypes.h"
 #include "GameTypes.h"
-#include "Tile.h"
+#include "SpriteSheet.h"
  
-class TileSet
+class TileSet : public SpriteSheet
 {
     public:
-        TileSet();
-        TileSet(t_tileset tileSet);
+        TileSet(const char *const filename, T_UINT16 tileCount, T_UINT16 tileSize);
 
-        t_index addTile(t_tile *tilePixels);
-        Tile *getTileFromID(t_index tileID);
-        
-        T_UINT16 getTileCount();
-        bool hasSpace();
-        bool isValid(t_index tileID);
+        t_vector getTileSize();
 
     private:
-
-        T_UINT16 m_tileCount;  // number of tiles added to the tileset
-        Tile * m_tileSet[TILESET_SIZE]; // pointers 
-
+        t_vector m_tileSizePx;
 };
 
 

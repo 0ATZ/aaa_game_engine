@@ -18,15 +18,15 @@ X Load tilesets from binary file sprite sheets
 ===================
 X Implement Physics collisions
 X SDL VSYNC and Hardware Acceleration
-- TileMap from file
 X Sprite Tile creator
 X mouse movement and clicks
 X mouse delay
 X cursor management
-- on click methods
-- TileMap creator
+X on click methods
+- TileMap from file
+- TileMap editor
 X dynamic viewport
-X streamline build process, cmake files? 
+X streamline build process, cmake files?
 - performance counters (FPS, CPU/RAM/VRAM usage)
 - 8bit sprite color palette? format sprites in indexed colors
 ==================
@@ -39,5 +39,8 @@ X handle sprite transparency
 - Game menus
 - player and enemies
 - health and damage
-- acceleration
-- object interactions
+==================
+- physics engine research
+- sorting alg
+- recursive collision detection and resolution
+- Vector2 operator overload (* + -)

@@ -16,7 +16,7 @@ Game::Game()
     running = true;
     m_objectCount = 0U;
     m_tileSet = nullptr;
-    m_tileMap = nullptr;
+    // m_tileMap = nullptr;
     m_intersect = false;
 }
 
@@ -29,42 +29,18 @@ bool Game::init()
     }
     GameWindow::set_viewport_mode(VIEW_FOLLOW_PLAYER_DYNAMIC);
     
+    m_tileSet = new TileSet("./assets/sprites/grass_sprites.bin", 36, 16);
 
-    // TODO: replace this logic with a spritesheet
-    t_tile black_square = {0};
-    t_tile white_square = {0};
-    t_tile baby_blue_square = {0};
-    t_tile baby_orange_square = {0};
-    for (int i = 0; i < TILE_SIZE; i++)
-    {
-        white_square[i] = 0xFFFFU;
-        baby_blue_square[i] = 0x8ebdU;
-        baby_orange_square[i] = 0xedcfU;
-    }
-    m_tileSet = new TileSet();
-    m_tileSet->addTile(&black_square);       // 0
-    m_tileSet->addTile(&white_square);       // 1
-    m_tileSet->addTile(&baby_blue_square);   // 2
-    m_tileSet->addTile(&baby_orange_square); // 3
+    // T_UINT16 tilemap_rows = 32U;
+    // T_UINT16 tilemap_cols = 32U;
+    // t_tilemap map = {0};
+    // for (int i = 0; i < (tilemap_rows * tilemap_cols); i++)
+    // {
+    //     map[i] = 21U;
+    // }
+    // m_tileMap = ;
 
-    T_UINT16 tilemap_rows = 32U;
-    T_UINT16 tilemap_cols = 32U;
-    t_tilemap checker_map = {0};
-    for (int i = 0; i < (tilemap_rows * tilemap_cols); i++)
-    {
-        // ... idk trial and error
-        checker_map[i] = ((i % 4) + (i / tilemap_cols)) % 4;
-    }
-    m_tileMap = new TileMap(m_tileSet, checker_map, tilemap_rows, tilemap_cols);
-
-    registerObject(m_tileMap);
-
-    std::cout << "TileSet count: " << m_tileSet->getTileCount() << std::endl;
-    
-    // m_redSquare = new Tile("./assets/sprites/red_16x16.bin");
-    // m_greenSquare = new Tile("./assets/sprites/green_16x16.bin");
-
-    
+    registerObject(new TileMap("./assets/tilemaps/testmap.bin", m_tileSet, 32U, 32U));
     registerObject(new TestBox({100,300}, 100U, 20U, PhysicsObject::WEIGHT_STATIC)); // cannot be moved by anything
     registerObject(new TestBox({100,100}, 100U, 100U));   // default lighter than player
     registerObject(new TestBox({500,500}, 75U, 50U));     // default lighter than player
