@@ -10,7 +10,7 @@ Cursor::Cursor()
     m_timer = 0ULL;
     m_position = {300, 300};
     m_sizePx = {5, 5};
-    m_sprite = nullptr;
+    // m_sprite = new Sprite("./assets/sprites/red_16x16.bin", 16,16);
 
     // GameWindow handles rendering of cursor 
     SpriteSheet sprites = SpriteSheet("./assets/sprites/cursors.bin", 3, 32, 32);
@@ -26,11 +26,7 @@ void Cursor::update(T_UINT64 dtime)
 {
     // offset the mouse position by the position of the camera
     // to get the "ingame" position of the cursor object
-    t_point cursorPosition = Vector2::add(
-        GameWindow::get_mouse_position(), 
-        GameWindow::get_viewport_position()
-    );
-    setCenter(cursorPosition);
+    setCenter(GameWindow::get_ingame_mouse_position());
     
     // get the key states from GameWindow
     T_UINT16 playerKeys = GameWindow::get_player_keys();
@@ -80,7 +76,8 @@ void Cursor::vOnClick()
 
 void Cursor::render()
 {
-    // do nothing
+    // Cursor render is not called in the main game loop
+    // GameWindow::render_sprite_viewport(m_sprite, m_position, {8,8});
 }
 
 void Cursor::destroy()

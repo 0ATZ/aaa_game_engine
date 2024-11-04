@@ -5,13 +5,25 @@
 MapEditor::MapEditor(const char *const filename, TileSet *tileSet, T_UINT16 numRows, T_UINT16 numCols):
     TileMap(filename, tileSet, numRows, numCols)
 {
-    m_cursorPosition = GameWindow::get_mouse_position();
-    m_tileIndex = 0U; 
+    m_tileIndex = 0U;
+    m_pressed = false;
 }
 
 void MapEditor::update(T_UINT64 dtime)
 {
-    m_cursorPosition = GameWindow::get_mouse_position();
+    T_UINT16 playerKeys = GameWindow::get_player_keys();
+    if (playerKeys & GameWindow::UP)
+    {
+        m_pressed = true;
+    }
+    else
+    {
+        if (m_pressed)
+        {
+            m_tileIndex = (m_tileIndex + 1) % m_tileSet->getNumSprites();
+            m_pressed = false;
+        }
+    }
 }
 
 void MapEditor::render()
@@ -22,7 +34,7 @@ void MapEditor::render()
     // Render a cursor with the selected tile 
     GameWindow::render_sprite(
         m_tileSet->getSpriteByID(m_tileIndex), 
-        Vector2::add(m_cursorPosition, m_scaledTileSize), 
+        Vector2::add(GameWindow::get_mouse_position(), m_scaledTileSize), 
         m_scaledTileSize
     );
 }
@@ -47,7 +59,8 @@ t_vector MapEditor::getRowCol(t_point point)
 
 void MapEditor::vOnClick()
 {
-    t_vector row_col = getRowCol(m_cursorPosition); 
+    t_vector row_col = getRowCol(GameWindow::get_ingame_mouse_position());
     TileMap::setTileID((T_UINT16) row_col.y, (T_UINT16) row_col.x, m_tileIndex);
-    // printf("clicked (%d, %d)!\n", row_col.x, row_col.y);
+    // printf("clicked (%d, %d)!\n", m_cursorPosition.x, m_cursorPosition.y);
+    // printf("pos (%d, %d)!\n", m_position.x, m_position.y);
 }

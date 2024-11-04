@@ -14,8 +14,8 @@ class MapEditor : public TileMap
         t_vector getRowCol(t_point point);
 
     private:
-        t_point m_cursorPosition;
         t_index m_tileIndex;
+        bool m_pressed;
 
 };
 

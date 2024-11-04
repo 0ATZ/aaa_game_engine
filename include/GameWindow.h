@@ -31,7 +31,10 @@ namespace GameWindow
     T_UINT16 get_player_keys();
     t_vector get_window_size();
     t_point get_mouse_position();
+    t_point get_ingame_mouse_position();
     t_point get_viewport_position();
+    t_point get_game_obj_position(t_point relative_position);
+    t_point get_relative_position(t_point game_obj_position);
     void center_viewport(t_point center);
     void update_viewport(T_UINT64 dtime, t_point player_position);
     void set_viewport_mode(t_viewport_mode mode);

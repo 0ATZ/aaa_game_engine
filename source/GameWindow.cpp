@@ -390,7 +390,7 @@ namespace GameWindow
     {
         if (view_port->intersects(position, size)) 
         {
-            t_point render_pos = Vector2::subtract(position, view_port->getPosition());
+            t_point render_pos = get_relative_position(position);
             render_sprite(sprite, render_pos, size);
         }
     }
@@ -418,13 +418,37 @@ namespace GameWindow
         return window_size;
     }
 
+    // get the position of the mouse relative to the screen
     t_point get_mouse_position()
     {
         return mouse_position;
     }
 
+    // get the position of the mouse relative to the game 
+    t_point get_ingame_mouse_position()
+    {
+        return get_game_obj_position(mouse_position);
+    }
+
+    // get the position of the viewport camera relative to the game
     t_point get_viewport_position()
     {
         return view_port->getPosition();
     }
+
+    // get the position of an object relative to the viewport
+    // this is where the object will appear on screen as seen by the "camera" 
+    t_point get_relative_position(t_point game_obj_position)
+    {
+        return Vector2::subtract(game_obj_position, view_port->getPosition());
+    }
+
+    // get the position of the object relative to the game world
+    // rendered screen is position biased to follow the viewport
+    // remove the bias to get the game position
+    t_point get_game_obj_position(t_point relative_position)
+    {
+        return Vector2::add(relative_position, view_port->getPosition());
+    }
+
 }
