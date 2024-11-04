@@ -29,11 +29,11 @@ TileMap::TileMap(const char * const filename, TileSet * tileSet, T_UINT16 numRow
         m_numCols = numCols;
     }
     
-    // calculate the width and height of the entire map
-    m_sizePx = Vector2::multiply({m_numRows, m_numCols}, m_tileSet->getTileSize());
-    
     // calculate the tile size after the scale / zoom 
     m_scaledTileSize = Vector2::scale(m_tileSet->getTileSize(), (T_FLOAT32)SCALE_DOUBLE);
+    
+    // calculate the width and height of the entire map
+    m_sizePx = Vector2::multiply({m_numRows, m_numCols}, m_scaledTileSize);
     
     // calculate the total number of tiles in this map
     m_numTiles = m_numRows * m_numCols;
