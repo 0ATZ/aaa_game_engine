@@ -69,7 +69,7 @@ void TileMap::render()
         for (T_UINT16 col = 0U; col < m_numCols; col++)
         {
             t_index L_tileID = getTileID(row, col);
-            Sprite * L_tile = m_tileSet->getSpriteByID(0);
+            Sprite * L_tile = m_tileSet->getSpriteByID(L_tileID);
             if (L_tile) 
             {
                 GameWindow::render_sprite_viewport(
