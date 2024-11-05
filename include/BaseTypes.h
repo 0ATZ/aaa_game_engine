@@ -4,10 +4,12 @@
 // platform types for windows 64 bit
 #include <cstdint>
 
+typedef unsigned char       T_UCHAR;
 typedef unsigned char       T_UINT8;
 typedef unsigned short      T_UINT16;
 typedef unsigned int        T_UINT32;
 typedef unsigned long long  T_UINT64;
+typedef char                T_CHAR;
 typedef char                T_INT8;
 typedef short               T_INT16;
 typedef int                 T_INT32;

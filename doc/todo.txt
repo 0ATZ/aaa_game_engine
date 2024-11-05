@@ -24,7 +24,7 @@ X mouse delay
 X cursor management
 X on click methods
 X TileMap from file
-- TileMap editor
+X TileMap editor
 X dynamic viewport
 X streamline build process, cmake files?
 ==================
@@ -35,6 +35,12 @@ X handle sprite transparency
     X https://wiki.libsdl.org/SDL2/SDL_CreateTextureFromSurface
 - Windows process priority
 - Game menus
+- improve tilemap editor controls
+    right click to copy tile ID
+    open menu to select tiles
+    hotkeys for tiles
+X save tilemap, keep track of the filename?
+- reverse masks for player keys
 - player and enemies
 - health and damage
 - load sprites once and reuse data, maybe make DataLoader logic in BufferIO
@@ -42,6 +48,7 @@ X handle sprite transparency
     - loader functions will reuse cached data if possible
     - support optional garbage collection?
     - LoadTileMap
+    - SaveTileMap
     - LoadSprite
     - LoadSpriteSheet
 - handle game object deletion and deregister from game

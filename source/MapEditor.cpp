@@ -1,29 +1,69 @@
 #include "MapEditor.h"
 #include "GameWindow.h"
+#include <algorithm>
 #include <stdio.h>
+#include "BufferIO.h"
 
 MapEditor::MapEditor(const char *const filename, TileSet *tileSet, T_UINT16 numRows, T_UINT16 numCols):
     TileMap(filename, tileSet, numRows, numCols)
 {
     m_tileIndex = 0U;
     m_pressed = false;
+    m_prevKeys = 0U;
+    
+    // // create null terminated filename string
+    const size_t FILENAME_LENGTH = std::min(strlen(filename), (MAX_FILENAME_LENGTH - (size_t)1U));
+    (void) memset(m_filename, 0, sizeof(m_filename));
+    (void) memcpy(m_filename, filename, FILENAME_LENGTH);
+}
+
+MapEditor::~MapEditor()
+{
+    delete[] m_filename;
 }
 
 void MapEditor::update(T_UINT64 dtime)
 {
-    T_UINT16 playerKeys = GameWindow::get_player_keys();
-    if (playerKeys & GameWindow::UP)
+    // TODO: put this logic into GameWindow (KeyReleases, KeyPresses, KeyState)
+    // XOR detects change between prev and current
+    //    AND (NOT current) masks out key presses, leaving key releases
+    // p ^ c & ~c
+    // 0 ^ 1 &  0 = 0
+    // 1 ^ 1 &  0 = 0
+    // 1 ^ 0 &  1 = 1
+
+    T_UINT16 currentKeys = GameWindow::get_player_keys();
+    T_UINT16 keyReleases = (m_prevKeys ^ currentKeys) & (~currentKeys);
+
+    if (keyReleases & GameWindow::UP)
     {
-        m_pressed = true;
+        m_tileIndex = (m_tileIndex + 1) % m_tileSet->getNumSprites();
     }
-    else
+    if (keyReleases & GameWindow::DOWN)
     {
-        if (m_pressed)
+        // TODO: why overflow cause bad index lol?
+        if (m_tileIndex > 0)
         {
-            m_tileIndex = (m_tileIndex + 1) % m_tileSet->getNumSprites();
-            m_pressed = false;
+            m_tileIndex = (m_tileIndex - 1) % m_tileSet->getNumSprites();
+        }
+        else
+        {
+            m_tileIndex = m_tileSet->getNumSprites() - 1;
         }
     }
+    if (keyReleases & GameWindow::LEFT)
+    {
+        if (saveMapFile())
+        {
+            printf("saved tilemap to: %s\n", m_filename);
+        }
+        else
+        {
+            printf("ERROR: tilemap save failed: %s\n", m_filename);
+        }
+    }
+
+    m_prevKeys = currentKeys;
 }
 
 void MapEditor::render()
@@ -55,6 +95,12 @@ t_vector MapEditor::getRowCol(t_point point)
         }
     }
     return row_col;
+}
+
+bool MapEditor::saveMapFile()
+{
+    T_UINT16 bytes_written = BufferIO::writeBuffer(m_filename, m_tileMap, m_numTiles, 1);
+    return (bytes_written > 0);
 }
 
 void MapEditor::vOnClick()
