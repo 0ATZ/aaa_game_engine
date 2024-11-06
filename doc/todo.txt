@@ -64,3 +64,4 @@ X reverse masks for player keys, USE XOR INSTEAD OF AND
 - Vector2 operator overload (* + -)
 - reorganize folder structure
 - performance counters (FPS, CPU/RAM/VRAM usage)
+- increase player keys to 32 bit unsigned int
