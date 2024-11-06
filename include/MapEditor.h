@@ -20,9 +20,7 @@ class MapEditor : public TileMap
         T_CHAR m_filename[MAX_FILENAME_LENGTH];
 
         t_index m_tileIndex;
-        bool m_pressed;
-        T_UINT16 m_prevKeys;
-
+        
 };
 
 

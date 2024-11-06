@@ -18,7 +18,7 @@ namespace GameWindow
 
     //TODO: abstract the texture pointer
     // typedef SDL_Texture t_texture
-    void * create_texture(t_pixel * pixels, T_UINT16 width, T_UINT16 height);
+    // void * create_texture(t_pixel * pixels, T_UINT16 width, T_UINT16 height);
     void * create_texture(Sprite * sprite);
     void render_texture(void *texture, t_point point, t_vector size);
     void render_sprite(Sprite *sprite, t_point point, t_vector size);
@@ -29,6 +29,8 @@ namespace GameWindow
 
     bool is_running();
     T_UINT16 get_player_keys();
+    T_UINT16 get_key_presses();
+    T_UINT16 get_key_releases();
     t_vector get_window_size();
     t_point get_mouse_position();
     t_point get_ingame_mouse_position();

@@ -8,8 +8,6 @@ MapEditor::MapEditor(const char *const filename, TileSet *tileSet, T_UINT16 numR
     TileMap(filename, tileSet, numRows, numCols)
 {
     m_tileIndex = 0U;
-    m_pressed = false;
-    m_prevKeys = 0U;
     
     // // create null terminated filename string
     const size_t FILENAME_LENGTH = std::min(strlen(filename), (MAX_FILENAME_LENGTH - (size_t)1U));
@@ -32,8 +30,7 @@ void MapEditor::update(T_UINT64 dtime)
     // 1 ^ 1 &  0 = 0
     // 1 ^ 0 &  1 = 1
 
-    T_UINT16 currentKeys = GameWindow::get_player_keys();
-    T_UINT16 keyReleases = (m_prevKeys ^ currentKeys) & (~currentKeys);
+    T_UINT16 keyReleases = GameWindow::get_key_releases();
 
     if (keyReleases & GameWindow::UP)
     {
@@ -62,8 +59,6 @@ void MapEditor::update(T_UINT64 dtime)
             printf("ERROR: tilemap save failed: %s\n", m_filename);
         }
     }
-
-    m_prevKeys = currentKeys;
 }
 
 void MapEditor::render()

@@ -14,6 +14,7 @@ namespace GameWindow
     SDL_Renderer * sdl_renderer;
     SDL_Cursor ** sdl_cursors;
     bool game_running;
+    T_UINT16 prev_player_keys;
     T_UINT16 player_keys;
     t_point mouse_position;
     t_vector window_size;
@@ -31,6 +32,7 @@ namespace GameWindow
 
         // initialize namespace variables 
         player_keys = 0U;
+        prev_player_keys = 0U;
         window_size = size;
    
         // initialize SDL video
@@ -79,6 +81,7 @@ namespace GameWindow
      */ 
     void process_events()
     {
+        prev_player_keys = player_keys;
         SDL_Event event;
         while (SDL_PollEvent(&event) != 0)
         {
@@ -120,16 +123,16 @@ namespace GameWindow
                     switch (event.key.keysym.sym)
                     {
                         case SDLK_w:
-                            player_keys &= (~UP);
+                            player_keys ^= UP;
                             break;
                         case SDLK_s:
-                            player_keys &= (~DOWN);
+                            player_keys ^= DOWN;
                             break;
                         case SDLK_a:
-                            player_keys &= (~LEFT);
+                            player_keys ^= LEFT;
                             break;
                         case SDLK_d:
-                            player_keys &= (~RIGHT);
+                            player_keys ^= RIGHT;
                             break;
                         default:
                             // nothing
@@ -171,71 +174,32 @@ namespace GameWindow
                     // process mouse button release
                     if (event.button.button == SDL_BUTTON_LEFT)
                     {
-                        player_keys &= (~MOUSE1);
+                        player_keys ^= MOUSE1;
                     }
                     else if (event.button.button == SDL_BUTTON_RIGHT)
                     {
-                        player_keys &= (~MOUSE2);
+                        player_keys ^= MOUSE2;
                     }
                     break;
                 }
                 case SDL_WINDOWEVENT:
-                {   
-                    switch (event.window.event)
+                {
+                    switch(event.window.event)
                     {
                         case SDL_WINDOWEVENT_FOCUS_LOST:
                         {
-                            // keyboard focus lost, deactivate keys
-                            player_keys &= (~KBD_MASK);
-                            break;
-                        }
-                        case SDL_WINDOWEVENT_LEAVE:
-                        {
-                            // mouse focus lost, deactivate mouse buttons
-                            player_keys &= (~MOUSE_MASK);
+                            // deactivate all keys
+                            player_keys = 0U;
+                            prev_player_keys = 0U;
                             break;
                         }
                         case SDL_WINDOWEVENT_FOCUS_GAINED:
                         {
-                            // recover relevant keyboard states when focus gained
-                            const T_UINT8 * keyState = SDL_GetKeyboardState(nullptr);
-                            if (keyState[SDL_SCANCODE_W])
-                            {
-                                player_keys |= UP;
-                            }
-                            if (keyState[SDL_SCANCODE_S])
-                            {
-                                player_keys |= DOWN;
-                            }
-                            if (keyState[SDL_SCANCODE_A])
-                            {
-                                player_keys |= LEFT;
-                            }
-                            if (keyState[SDL_SCANCODE_D])
-                            {
-                                player_keys |= RIGHT;
-                            }
-                            break;
-                        }
-                        case SDL_WINDOWEVENT_ENTER:
-                        {
-                            // recover the mouse cursor position and button states
-                            const T_UINT32 mouseState = SDL_GetMouseState(&(mouse_position.x), &(mouse_position.y));
-                            if (mouseState & SDL_BUTTON_LMASK)
-                            {
-                                player_keys |= MOUSE1;
-                            }
-                            if (mouseState & SDL_BUTTON_RMASK)
-                            {
-                                player_keys |= MOUSE2;
-                            }
-                            break;
-                        }
-                        default:
-                        {
+                            // do nothing
                             break;
                         }
                     }
+                    break;
                 }
                 default:
                 {
@@ -406,6 +370,18 @@ namespace GameWindow
     bool is_running()
     {
         return game_running;
+    }
+
+    T_UINT16 get_key_presses()
+    {
+        // prev state is different from current state, and current state is active
+        return ((prev_player_keys ^ player_keys) & player_keys);
+    }
+
+    T_UINT16 get_key_releases()
+    {
+        // prev state is different from current state, and prev state was active
+        return ((prev_player_keys ^ player_keys) & prev_player_keys);
     }
 
     T_UINT16 get_player_keys()
