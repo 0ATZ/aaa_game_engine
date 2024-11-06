@@ -7,7 +7,6 @@ class MapEditor : public TileMap
 {
     public: 
         MapEditor(const char * const filename, TileSet * tileSet, T_UINT16 numRows, T_UINT16 numCols);
-        ~MapEditor();
         void update(T_UINT64 dtime);
         void render();
         void vOnClick();

@@ -15,11 +15,6 @@ MapEditor::MapEditor(const char *const filename, TileSet *tileSet, T_UINT16 numR
     (void) memcpy(m_filename, filename, FILENAME_LENGTH);
 }
 
-MapEditor::~MapEditor()
-{
-    delete[] m_filename;
-}
-
 void MapEditor::update(T_UINT64 dtime)
 {
     // TODO: put this logic into GameWindow (KeyReleases, KeyPresses, KeyState)

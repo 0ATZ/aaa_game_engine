@@ -33,14 +33,17 @@ X handle sprite transparency
     X https://wiki.libsdl.org/SDL2/SDL_CreateRGBSurfaceWithFormatFrom
     X https://wiki.libsdl.org/SDL2/SDL_SetColorKey
     X https://wiki.libsdl.org/SDL2/SDL_CreateTextureFromSurface
-- Windows process priority
+X save tilemap, keep track of the filename?
+X reverse masks for player keys, USE XOR INSTEAD OF AND
+===============
+- recursive collision detection?
+- find some game art to test the engine 
 - Game menus
 - improve tilemap editor controls
     right click to copy tile ID
     open menu to select tiles
     hotkeys for tiles
-X save tilemap, keep track of the filename?
-- reverse masks for player keys
+===============
 - player and enemies
 - health and damage
 - load sprites once and reuse data, maybe make DataLoader logic in BufferIO
@@ -53,6 +56,7 @@ X save tilemap, keep track of the filename?
     - LoadSpriteSheet
 - handle game object deletion and deregister from game
 ==================
+- Windows process priority
 - 8bit sprite color palette? format sprites in indexed colors
 - physics engine research
 - sorting alg
