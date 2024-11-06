@@ -2,6 +2,7 @@
 #define MAPEDITOR_H
 
 #include "TileMap.h"
+#include "Sprite.h"
 
 class MapEditor : public TileMap
 {
@@ -20,6 +21,7 @@ class MapEditor : public TileMap
 
         t_index m_menuIndex;
         t_index m_tileIndex;
+        Sprite * m_borderSprite;
         
 };
 

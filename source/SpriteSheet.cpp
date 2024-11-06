@@ -61,7 +61,7 @@ Sprite *SpriteSheet::getSpriteByID(T_UINT16 spriteID)
     }
     else
     {
-        printf("spritesheet index out of range\n");
+        printf("spritesheet index out of range: %d\n", spriteID);
     }
     return L_sprite;
 }
