@@ -42,14 +42,25 @@ namespace GameWindow
     void set_viewport_mode(t_viewport_mode mode);
 
     // player key codes
-    const T_UINT16 UP     = 0x01U; // 0000 0001
-    const T_UINT16 DOWN   = 0x02U; // 0000 0010
-    const T_UINT16 LEFT   = 0x04U; // 0000 0100
-    const T_UINT16 RIGHT  = 0x08U; // 0000 1000
-    const T_UINT16 MOUSE1 = 0x10U; // 0001 0000
-    const T_UINT16 MOUSE2 = 0x20U; // 0010 0000
-    const T_UINT16 KBD_MASK = 0x15;   // 0000 1111
-    const T_UINT16 MOUSE_MASK = 0x30; // 0011 0000
+    const T_UINT16 UP     = 1U << 0;  // 0000 0000 0000 0001
+    const T_UINT16 DOWN   = 1U << 1;  // 0000 0000 0000 0010
+    const T_UINT16 LEFT   = 1U << 2;  // 0000 0000 0000 0100
+    const T_UINT16 RIGHT  = 1U << 3;  // 0000 0000 0000 1000
+    const T_UINT16 NUM0   = 1U << 4;  // 0000 0000 0001 0000
+    const T_UINT16 NUM1   = 1U << 5;  // 0000 0000 0010 0000
+    const T_UINT16 NUM2   = 1U << 6;  // 0000 0000 0100 0000
+    const T_UINT16 NUM3   = 1U << 7;  // 0000 0000 1000 0000
+    const T_UINT16 NUM4   = 1U << 8;  // 0000 0001 0000 0000
+    const T_UINT16 NUM5   = 1U << 9;  // 0000 0010 0000 0000
+    const T_UINT16 NUM6   = 1U << 10; // 0000 0100 0000 0000
+    const T_UINT16 NUM7   = 1U << 11; // 0000 1000 0000 0000
+    const T_UINT16 NUM8   = 1U << 12; // 0001 0000 0000 0000
+    const T_UINT16 NUM9   = 1U << 13; // 0010 0000 0000 0000
+    const T_UINT16 MOUSE1 = 1U << 14; // 0100 0000 0000 0000
+    const T_UINT16 MOUSE2 = 1U << 15; // 1000 0000 0000 0000
+
+    // const T_UINT16 KBD_MASK = 0x15;   // 0000 1111
+    // const T_UINT16 MOUSE_MASK = 0x30; // 0011 0000
 
 }
 

@@ -110,6 +110,36 @@ namespace GameWindow
                         case SDLK_d:
                             player_keys |= RIGHT;
                             break;
+                        case SDLK_1:
+                            player_keys |= NUM1;
+                            break;
+                        case SDLK_2:
+                            player_keys |= NUM2;
+                            break;
+                        case SDLK_3:
+                            player_keys |= NUM3;
+                            break;
+                        case SDLK_4:
+                            player_keys |= NUM4;
+                            break;
+                        case SDLK_5:
+                            player_keys |= NUM5;
+                            break;
+                        case SDLK_6:
+                            player_keys |= NUM6;
+                            break;
+                        case SDLK_7:
+                            player_keys |= NUM7;
+                            break;
+                        case SDLK_8:
+                            player_keys |= NUM8;
+                            break;
+                        case SDLK_9:
+                            player_keys |= NUM9;
+                            break;
+                        case SDLK_0:
+                            player_keys |= NUM0;
+                            break;
                         default:
                             // nothing
                             break;
@@ -133,6 +163,36 @@ namespace GameWindow
                             break;
                         case SDLK_d:
                             player_keys ^= RIGHT;
+                            break;
+                        case SDLK_1:
+                            player_keys ^= NUM1;
+                            break;
+                        case SDLK_2:
+                            player_keys ^= NUM2;
+                            break;
+                        case SDLK_3:
+                            player_keys ^= NUM3;
+                            break;
+                        case SDLK_4:
+                            player_keys ^= NUM4;
+                            break;
+                        case SDLK_5:
+                            player_keys ^= NUM5;
+                            break;
+                        case SDLK_6:
+                            player_keys ^= NUM6;
+                            break;
+                        case SDLK_7:
+                            player_keys ^= NUM7;
+                            break;
+                        case SDLK_8:
+                            player_keys ^= NUM8;
+                            break;
+                        case SDLK_9:
+                            player_keys ^= NUM9;
+                            break;
+                        case SDLK_0:
+                            player_keys ^= NUM0;
                             break;
                         default:
                             // nothing

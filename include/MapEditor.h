@@ -18,6 +18,7 @@ class MapEditor : public TileMap
         static const T_UINT32 MAX_FILENAME_LENGTH = 128UL;
         T_CHAR m_filename[MAX_FILENAME_LENGTH];
 
+        t_index m_menuIndex;
         t_index m_tileIndex;
         
 };
