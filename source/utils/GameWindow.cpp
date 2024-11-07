@@ -5,17 +5,17 @@
 
 namespace GameWindow
 {
-    extern const T_UINT16 UP;
-    extern const T_UINT16 DOWN;
-    extern const T_UINT16 LEFT;
-    extern const T_UINT16 RIGHT;
+    extern const T_UINT32 UP;
+    extern const T_UINT32 DOWN;
+    extern const T_UINT32 LEFT;
+    extern const T_UINT32 RIGHT;
 
     SDL_Window * sdl_window;
     SDL_Renderer * sdl_renderer;
     SDL_Cursor ** sdl_cursors;
     bool game_running;
-    T_UINT16 prev_player_keys;
-    T_UINT16 player_keys;
+    T_UINT32 prev_player_keys;
+    T_UINT32 player_keys;
     t_point mouse_position;
     t_vector window_size;
     ViewPort * view_port;
@@ -432,19 +432,19 @@ namespace GameWindow
         return game_running;
     }
 
-    T_UINT16 get_key_presses()
+    T_UINT32 get_key_presses()
     {
         // prev state is different from current state, and current state is active
         return ((prev_player_keys ^ player_keys) & player_keys);
     }
 
-    T_UINT16 get_key_releases()
+    T_UINT32 get_key_releases()
     {
         // prev state is different from current state, and prev state was active
         return ((prev_player_keys ^ player_keys) & prev_player_keys);
     }
 
-    T_UINT16 get_player_keys()
+    T_UINT32 get_player_keys()
     {
         return player_keys;
     }

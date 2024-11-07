@@ -29,7 +29,7 @@ void Cursor::update(T_UINT64 dtime)
     setCenter(GameWindow::get_ingame_mouse_position());
     
     // get the key states from GameWindow
-    T_UINT16 playerKeys = GameWindow::get_player_keys();
+    T_UINT32 playerKeys = GameWindow::get_player_keys();
     if (playerKeys & GameWindow::MOUSE1)
     {
         m_clicked = true;

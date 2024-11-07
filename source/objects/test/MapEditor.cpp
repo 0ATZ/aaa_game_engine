@@ -28,16 +28,16 @@ void MapEditor::update(T_UINT64 dtime)
     // 1 ^ 1 &  0 = 0
     // 1 ^ 0 &  1 = 1
 
-    T_UINT16 keyReleases = GameWindow::get_key_releases();
+    T_UINT32 keyPresses = GameWindow::get_key_presses();
 
     // press right to increment index
-    if (keyReleases & GameWindow::RIGHT)
+    if (keyPresses & GameWindow::RIGHT)
     {
         m_menuIndex = (m_menuIndex + 1) % m_tileSet->getNumSprites();
     }
 
     // press LEFT to decrement index
-    if (keyReleases & GameWindow::LEFT)
+    if (keyPresses & GameWindow::LEFT)
     {
         if (m_menuIndex > 0)
         {
@@ -49,7 +49,7 @@ void MapEditor::update(T_UINT64 dtime)
         }
     }
 
-    if (keyReleases & GameWindow::UP)
+    if (keyPresses & GameWindow::UP)
     {
         if (m_menuIndex >= 9)
         {
@@ -60,56 +60,56 @@ void MapEditor::update(T_UINT64 dtime)
         {
             m_menuIndex = m_tileSet->getNumSprites() - 9;
         }
-        printf("m_menuIndex: %d\n", m_menuIndex);
+        // printf("m_menuIndex: %d\n", m_menuIndex);
     }
 
-    if (keyReleases & GameWindow::DOWN)
+    if (keyPresses & GameWindow::DOWN)
     {
         m_menuIndex += 9;
         m_menuIndex %= m_tileSet->getNumSprites();
-        printf("m_menuIndex: %d\n", m_menuIndex);
+        // printf("m_menuIndex: %d\n", m_menuIndex);
     }
 
-    if (keyReleases & GameWindow::NUM1)
+    if (keyPresses & GameWindow::NUM1)
     {
         m_tileIndex = 0;
     }
-    else if (keyReleases & GameWindow::NUM2)
+    else if (keyPresses & GameWindow::NUM2)
     {
         m_tileIndex = 1;
     }
-    else if (keyReleases & GameWindow::NUM3)
+    else if (keyPresses & GameWindow::NUM3)
     {
         m_tileIndex = 2;
     }
-    else if (keyReleases & GameWindow::NUM4)
+    else if (keyPresses & GameWindow::NUM4)
     {
         m_tileIndex = 3;
     }
-    else if (keyReleases & GameWindow::NUM5)
+    else if (keyPresses & GameWindow::NUM5)
     {
         m_tileIndex = 4;
     }
-    else if (keyReleases & GameWindow::NUM6)
+    else if (keyPresses & GameWindow::NUM6)
     {
         m_tileIndex = 5;
     }
-    else if (keyReleases & GameWindow::NUM7)
+    else if (keyPresses & GameWindow::NUM7)
     {
         m_tileIndex = 6;
     }
-    else if (keyReleases & GameWindow::NUM8)
+    else if (keyPresses & GameWindow::NUM8)
     {
         m_tileIndex = 7;
     }
-    else if (keyReleases & GameWindow::NUM9)
+    else if (keyPresses & GameWindow::NUM9)
     {
         m_tileIndex = 8;
     }
     m_tileIndex %= m_tileSet->getNumSprites();
 
     // press zero to save
-    if (keyReleases & GameWindow::NUM0)
+    if (keyPresses & GameWindow::NUM0)
     {
         if (saveMapFile())
         {
@@ -142,6 +142,7 @@ void MapEditor::render()
     // render sprites corresponding to numkey selection 1-9
     for (int i = 0; i < 9; i ++)
     {
+        // TODO: dynamic screen ratio 
         int index = (m_menuIndex + i) % m_tileSet->getNumSprites();
         int xpos = 150 + (i * 40) + (i * 16);
 

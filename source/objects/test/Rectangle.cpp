@@ -30,7 +30,7 @@ bool Rectangle::init()
 
 void Rectangle::update(T_UINT64 dtime)
 {
-    T_UINT16 pKeys = GameWindow::get_player_keys();
+    T_UINT32 pKeys = GameWindow::get_player_keys();
     m_direction = { 0, 0 }; 
     if (pKeys & GameWindow::UP)
     {

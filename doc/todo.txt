@@ -40,7 +40,8 @@ X improve tilemap editor controls
     right click to copy tile ID
     open menu to select tiles
     hotkeys for tiles
-- reorganize folder structure
+X reorganize folder structure
+- increase player keys to 32 bit unsigned int
 - Game menus
 - find some game art to test the engine 
 - recursive collision detection?
@@ -64,4 +65,3 @@ X improve tilemap editor controls
 - recursive collision detection and resolution
 - Vector2 operator overload (* + -)
 - performance counters (FPS, CPU/RAM/VRAM usage)
-- increase player keys to 32 bit unsigned int
