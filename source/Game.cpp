@@ -3,7 +3,6 @@
 #include "Game.h"
 #include "Rectangle.h"
 #include "ViewPort.h"
-#include "sprite/TestMap.h"
 #include "Vector2.h"
 #include "TestBox.h"
 #include "Cursor.h"

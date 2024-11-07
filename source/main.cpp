@@ -11,12 +11,10 @@ using namespace std;
 
 int WinMain(void) {
     
-    
     Game game;
     if (!game.init()) {
         return 1;
     }
-    
     const T_UINT64 FRAME_DURATION_60FPS = 1000 / 60; // Frame duration for 60 FPS
     // const T_UINT64 FRAME_DURATION_120FPS = 1000 / 120; // Frame duration for 120 FPS
     // const T_UINT64 FRAME_DURATION_140FPS = 1000 / 140; // Frame duration for 140 FPS
