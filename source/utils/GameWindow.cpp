@@ -5,10 +5,6 @@
 
 namespace GameWindow
 {
-    extern const T_UINT32 UP;
-    extern const T_UINT32 DOWN;
-    extern const T_UINT32 LEFT;
-    extern const T_UINT32 RIGHT;
 
     SDL_Window * sdl_window;
     SDL_Renderer * sdl_renderer;
@@ -22,7 +18,7 @@ namespace GameWindow
 
     SDL_Surface *create_surface(Sprite *sprite);
     SDL_Cursor *create_cursor(Sprite * sprite, T_INT32 hotspot_x, T_INT32 hotspot_y);
-
+    T_UINT32 get_bitmask_from_keycode(SDL_Keycode keycode);
 
     bool initialize(t_vector size)
     {
@@ -96,109 +92,13 @@ namespace GameWindow
                 case SDL_KEYDOWN:
                 {
                     // keypress activates the corresponding bit
-                    switch (event.key.keysym.sym)
-                    {
-                        case SDLK_w:
-                            player_keys |= UP;
-                            break;
-                        case SDLK_s:
-                            player_keys |= DOWN;
-                            break;
-                        case SDLK_a:
-                            player_keys |= LEFT;
-                            break;
-                        case SDLK_d:
-                            player_keys |= RIGHT;
-                            break;
-                        case SDLK_1:
-                            player_keys |= NUM1;
-                            break;
-                        case SDLK_2:
-                            player_keys |= NUM2;
-                            break;
-                        case SDLK_3:
-                            player_keys |= NUM3;
-                            break;
-                        case SDLK_4:
-                            player_keys |= NUM4;
-                            break;
-                        case SDLK_5:
-                            player_keys |= NUM5;
-                            break;
-                        case SDLK_6:
-                            player_keys |= NUM6;
-                            break;
-                        case SDLK_7:
-                            player_keys |= NUM7;
-                            break;
-                        case SDLK_8:
-                            player_keys |= NUM8;
-                            break;
-                        case SDLK_9:
-                            player_keys |= NUM9;
-                            break;
-                        case SDLK_0:
-                            player_keys |= NUM0;
-                            break;
-                        default:
-                            // nothing
-                            break;
-                    }
-
+                    player_keys |= get_bitmask_from_keycode(event.key.keysym.sym);
                     break;
                 }
                 case SDL_KEYUP:
                 {
                     // keyrelease deactivates the corresponding bit
-                    switch (event.key.keysym.sym)
-                    {
-                        case SDLK_w:
-                            player_keys ^= UP;
-                            break;
-                        case SDLK_s:
-                            player_keys ^= DOWN;
-                            break;
-                        case SDLK_a:
-                            player_keys ^= LEFT;
-                            break;
-                        case SDLK_d:
-                            player_keys ^= RIGHT;
-                            break;
-                        case SDLK_1:
-                            player_keys ^= NUM1;
-                            break;
-                        case SDLK_2:
-                            player_keys ^= NUM2;
-                            break;
-                        case SDLK_3:
-                            player_keys ^= NUM3;
-                            break;
-                        case SDLK_4:
-                            player_keys ^= NUM4;
-                            break;
-                        case SDLK_5:
-                            player_keys ^= NUM5;
-                            break;
-                        case SDLK_6:
-                            player_keys ^= NUM6;
-                            break;
-                        case SDLK_7:
-                            player_keys ^= NUM7;
-                            break;
-                        case SDLK_8:
-                            player_keys ^= NUM8;
-                            break;
-                        case SDLK_9:
-                            player_keys ^= NUM9;
-                            break;
-                        case SDLK_0:
-                            player_keys ^= NUM0;
-                            break;
-                        default:
-                            // nothing
-                            break;
-                    }
-
+                    player_keys ^= get_bitmask_from_keycode(event.key.keysym.sym);
                     break;
                 }
                 case SDL_MOUSEMOTION:
@@ -245,7 +145,7 @@ namespace GameWindow
                 case SDL_WINDOWEVENT:
                 {
                     switch(event.window.event)
-                    {
+                    {// TODO: window events dont handle keys properly
                         case SDL_WINDOWEVENT_FOCUS_LOST:
                         {
                             // deactivate all keys
@@ -267,6 +167,93 @@ namespace GameWindow
                 }
             }
         }
+    }
+
+    T_UINT32 get_bitmask_from_keycode(SDL_Keycode keycode)
+    {
+        T_UINT32 bitmask = 0U;
+        switch (keycode)
+        {
+            case SDLK_0: 
+                bitmask = NUM0;
+                break;
+            case SDLK_1: 
+                bitmask = NUM1;
+                break;  
+            case SDLK_2: 
+                bitmask = NUM2;
+                break;  
+            case SDLK_3: 
+                bitmask = NUM3;
+                break;  
+            case SDLK_4: 
+                bitmask = NUM4;
+                break;  
+            case SDLK_5: 
+                bitmask = NUM5;
+                break;  
+            case SDLK_6: 
+                bitmask = NUM6;  
+                break;
+            case SDLK_7: 
+                bitmask = NUM7;
+                break;  
+            case SDLK_8: 
+                bitmask = NUM8;
+                break;  
+            case SDLK_9: 
+                bitmask = NUM9;
+                break;  
+            case SDLK_q: 
+                bitmask = QKEY;
+                break;  
+            case SDLK_w: 
+                bitmask = WKEY;
+                break;  
+            case SDLK_e: 
+                bitmask = EKEY;
+                break;
+            case SDLK_r: 
+                bitmask = RKEY;
+                break;
+            case SDLK_a: 
+                bitmask = AKEY;
+                break;  
+            case SDLK_s: 
+                bitmask = SKEY;
+                break;  
+            case SDLK_d: 
+                bitmask = DKEY;
+                break;  
+            case SDLK_f: 
+                bitmask = FKEY;
+                break;  
+            case SDLK_z: 
+                bitmask = ZKEY;
+                break;  
+            case SDLK_x: 
+                bitmask = XKEY;
+                break;  
+            case SDLK_c: 
+                bitmask = CKEY;
+                break;  
+            case SDLK_v: 
+                bitmask = VKEY;
+                break;  
+            case SDLK_TAB: 
+                bitmask = TAB;
+                break;  
+            case SDLK_LSHIFT: 
+                bitmask = SHIFT;
+                break; 
+            case SDLK_SPACE: 
+                bitmask = SPACE;
+                break; 
+            default:
+                bitmask = 0U;
+                break;
+        }
+        return bitmask;
     }
 
     void center_viewport(t_point center)
@@ -309,6 +296,7 @@ namespace GameWindow
         SDL_Quit();
     }
 
+    // user must call SDL_FreeSurface after done with the sdl surface object
     SDL_Surface *create_surface(Sprite *sprite)
     {
         SDL_Surface * L_surface = nullptr;

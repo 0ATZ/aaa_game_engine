@@ -42,22 +42,40 @@ namespace GameWindow
     void set_viewport_mode(t_viewport_mode mode);
 
     // player key codes
-    const T_UINT32 UP     = 1U << 0;  // 0000 0000 0000 0001
-    const T_UINT32 DOWN   = 1U << 1;  // 0000 0000 0000 0010
-    const T_UINT32 LEFT   = 1U << 2;  // 0000 0000 0000 0100
-    const T_UINT32 RIGHT  = 1U << 3;  // 0000 0000 0000 1000
-    const T_UINT32 NUM0   = 1U << 4;  // 0000 0000 0001 0000
-    const T_UINT32 NUM1   = 1U << 5;  // 0000 0000 0010 0000
-    const T_UINT32 NUM2   = 1U << 6;  // 0000 0000 0100 0000
-    const T_UINT32 NUM3   = 1U << 7;  // 0000 0000 1000 0000
-    const T_UINT32 NUM4   = 1U << 8;  // 0000 0001 0000 0000
-    const T_UINT32 NUM5   = 1U << 9;  // 0000 0010 0000 0000
-    const T_UINT32 NUM6   = 1U << 10; // 0000 0100 0000 0000
-    const T_UINT32 NUM7   = 1U << 11; // 0000 1000 0000 0000
-    const T_UINT32 NUM8   = 1U << 12; // 0001 0000 0000 0000
-    const T_UINT32 NUM9   = 1U << 13; // 0010 0000 0000 0000
-    const T_UINT32 MOUSE1 = 1U << 30; // 0100 0000 0000 0000
-    const T_UINT32 MOUSE2 = 1U << 31; // 1000 0000 0000 0000
+    const T_UINT32 NUM0   = 1U << 0; 
+    const T_UINT32 NUM1   = 1U << 1; 
+    const T_UINT32 NUM2   = 1U << 2; 
+    const T_UINT32 NUM3   = 1U << 3; 
+    const T_UINT32 NUM4   = 1U << 4; 
+    const T_UINT32 NUM5   = 1U << 5; 
+    const T_UINT32 NUM6   = 1U << 6; 
+    const T_UINT32 NUM7   = 1U << 7; 
+    const T_UINT32 NUM8   = 1U << 8; 
+    const T_UINT32 NUM9   = 1U << 9; 
+    const T_UINT32 QKEY   = 1U << 10;
+    const T_UINT32 WKEY   = 1U << 11;
+    const T_UINT32 EKEY   = 1U << 12;
+    const T_UINT32 RKEY   = 1U << 13;
+    const T_UINT32 AKEY   = 1U << 14;
+    const T_UINT32 SKEY   = 1U << 15;
+    const T_UINT32 DKEY   = 1U << 16;
+    const T_UINT32 FKEY   = 1U << 17;
+    const T_UINT32 ZKEY   = 1U << 18;
+    const T_UINT32 XKEY   = 1U << 19;
+    const T_UINT32 CKEY   = 1U << 20;
+    const T_UINT32 VKEY   = 1U << 21;
+    // 22 - 26 unimplemented
+    const T_UINT32 TAB    = 1U << 27;
+    const T_UINT32 SHIFT  = 1U << 28;
+    const T_UINT32 SPACE  = 1U << 29;
+    const T_UINT32 MOUSE1 = 1U << 30;
+    const T_UINT32 MOUSE2 = 1U << 31;
+
+    const T_UINT32 UP     = WKEY;
+    const T_UINT32 DOWN   = SKEY;
+    const T_UINT32 LEFT   = AKEY;
+    const T_UINT32 RIGHT  = DKEY;
+
 
     // const T_UINT16 KBD_MASK = 0x15;   // 0000 1111
     // const T_UINT16 MOUSE_MASK = 0x30; // 0011 0000
