@@ -36,13 +36,14 @@ X handle sprite transparency
 X save tilemap, keep track of the filename?
 X reverse masks for player keys, USE XOR INSTEAD OF AND
 ===============
-- recursive collision detection?
-- find some game art to test the engine 
-- Game menus
-- improve tilemap editor controls
+X improve tilemap editor controls
     right click to copy tile ID
     open menu to select tiles
     hotkeys for tiles
+- reorganize folder structure
+- Game menus
+- find some game art to test the engine 
+- recursive collision detection?
 ===============
 - player and enemies
 - health and damage
@@ -62,6 +63,5 @@ X reverse masks for player keys, USE XOR INSTEAD OF AND
 - sorting alg
 - recursive collision detection and resolution
 - Vector2 operator overload (* + -)
-- reorganize folder structure
 - performance counters (FPS, CPU/RAM/VRAM usage)
 - increase player keys to 32 bit unsigned int
