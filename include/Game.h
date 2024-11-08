@@ -6,6 +6,7 @@
 #include "PhysicsObject.h"
 #include "TileSet.h"
 #include "TileMap.h"
+#include "PhysicsEngine.h"
 
 class Game
 {
@@ -25,7 +26,7 @@ class Game
         GameObject * m_cursor;
         T_UINT16 m_objectCount;
         TileSet * m_tileSet;
-        // TileMap * m_tileMap;
+        PhysicsEngine * m_physicsEngine;
         bool running;
 
         // temp var for debug

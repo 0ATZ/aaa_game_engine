@@ -22,6 +22,7 @@ SOURCE=$(SOURCE_DIR)/Game.cpp \
 	$(SOURCE_DIR)/objects/test/Rectangle.cpp \
 	$(SOURCE_DIR)/objects/test/TestBox.cpp \
 	$(SOURCE_DIR)/objects/Cursor.cpp \
+	$(SOURCE_DIR)/objects/PhysicsEngine.cpp \
 	$(SOURCE_DIR)/objects/TileMap.cpp \
 	$(SOURCE_DIR)/objects/ViewPort.cpp \
 	$(SOURCE_DIR)/sprites/AnimatedSprite.cpp \
