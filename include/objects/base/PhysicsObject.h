@@ -20,7 +20,11 @@ class PhysicsObject : public GameObject
 
         // derived classes can perform custom actions on collision 
         virtual void vResolveCollision(PhysicsObject * obj) = 0;
-        
+
+        void setTempWeight(T_UINT16 weight);
+        T_UINT16 getTempWeight();
+        void resetTempWeight();
+
         void setWeight(T_UINT16 weight);
         T_UINT16 getWeight();
         void setSpeed(T_UINT32 speedPx);
@@ -36,10 +40,12 @@ class PhysicsObject : public GameObject
         // resolve the position of the object 
         void resolveCollision(PhysicsObject *obj);
 
+
         T_UINT32 m_speedPx; // pixels per frame
         t_vector m_direction;
         bool m_solid;
         T_UINT16 m_weight;
+        T_UINT16 m_tempWeight;
         
 };
 

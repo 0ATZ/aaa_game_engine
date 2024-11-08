@@ -22,6 +22,7 @@ PhysicsObject::PhysicsObject(T_INT32 x, T_INT32 y, T_UINT16 widthPx, T_UINT16 he
     m_sprite = nullptr;
     m_solid = true;
     m_weight = weight;
+    m_tempWeight = weight;
 }
 
 bool PhysicsObject::init()
@@ -86,6 +87,21 @@ void PhysicsObject::resolveCollision(PhysicsObject * obj)
             obj->resolve(m_position, m_sizePx);
         }
     }
+}
+
+void PhysicsObject::setTempWeight(T_UINT16 weight)
+{
+    m_tempWeight = weight;
+}
+
+T_UINT16 PhysicsObject::getTempWeight()
+{
+    return m_tempWeight;
+}
+
+void PhysicsObject::resetTempWeight()
+{
+    m_tempWeight = m_weight;
 }
 
 void PhysicsObject::setWeight(T_UINT16 weight)

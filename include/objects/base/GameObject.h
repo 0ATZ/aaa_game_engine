@@ -118,6 +118,27 @@ class GameObject
             return true;
         }
 
+
+        bool isTouching(t_point position, t_vector size)
+        {
+            if ((m_position.x + m_sizePx.x == position.x) ||
+                (m_position.x == position.x + size.x))
+            {
+                if ((m_position.y + m_sizePx.y) >= position.y &&
+                    m_position.y <= (position.y + size.y))
+                    return true;
+            }
+            
+            if ((m_position.y + m_sizePx.y == position.y) ||
+                (m_position.y == position.y + size.y)) 
+            {
+                if ((m_position.x + m_sizePx.x) >= position.x && 
+                    m_position.x <= (position.x + size.x)) 
+                    return true;
+            }
+            return false;    
+        }
+
         // TODO: need to resolve one more pixel of overlap, or maybe intersects needs adjust?
         void resolve(t_point position, t_vector sizePx)
         {
@@ -150,6 +171,8 @@ class GameObject
             // whichever direction requires the least movement
             if (x_overlap > 0 && y_overlap > 0)
             {
+                // x_overlap++;
+                // y_overlap++;
                 if (x_overlap <= y_overlap)
                 {
                     // resolve in the x direction
