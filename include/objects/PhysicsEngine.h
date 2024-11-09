@@ -14,6 +14,7 @@ class PhysicsEngine : public GameObject
         void destroy();
 
         bool registerObject(PhysicsObject *obj);
+        bool resolve(PhysicsObject *obj1, PhysicsObject *obj2);
         void resolveCollisions();
 
         void vOnClick();
